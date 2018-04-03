@@ -80,7 +80,6 @@ var question = [{
 var stream = (0, _inquirer.prompt)(question).then(function () {
 	var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-	s;
 	// options
 	var port = opts.port,
 	    hostname = opts.hostname,
@@ -122,8 +121,8 @@ var stream = (0, _inquirer.prompt)(question).then(function () {
 
 	// create https server
 	var options = {
-		key: _fsExtra2.default.readFileSync((0, _path.resolve)(__dirname, '../keys', 'key.pem')),
-		cert: _fsExtra2.default.readFileSync((0, _path.resolve)(__dirname, '../keys', 'cert.pem'))
+		key: (0, _fsExtra.readFileSync)((0, _path.resolve)(__dirname, '../keys', 'key.pem')),
+		cert: (0, _fsExtra.readFileSync)((0, _path.resolve)(__dirname, '../keys', 'cert.pem'))
 	};
 
 	_https2.default.createServer(options, app).listen(secure, function () {

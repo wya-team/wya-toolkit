@@ -21,11 +21,7 @@ program
 	.description('Just a new template')
 	.option('-t, --test_mode <mode>', 'add pepper')
 	.action((cmd, opts) => {
-		console.log(
-			'__tpl__ "%s" using %s mode', 
-			cmd, 
-			opts.test_mode
-		);
+		log(chalk`__tpl__ {red ${cmd}} using {red ${opts.test_mode}} mode`);
 		try {
 			require(res('__tpl__'))(cmd, opts);
 		} catch (e) {
@@ -33,12 +29,19 @@ program
 		}
 	});
 
-// 服务
+// 服务 终端执行：wya server
 program
 	.command('server')
 	.alias('s')
 	.description('Run static file server anywhere')
 	.action((opts) => require(res('server')));
+
+// 初始化项目 终端执行：wya init
+program
+	.command('init')
+	.alias('c')
+	.description('Create a new project')
+	.action((opts) => require(res('init')));
 
 // 任意匹配
 program

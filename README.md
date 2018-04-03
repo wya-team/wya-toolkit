@@ -22,6 +22,13 @@ node ./bin/wya
 #### 为更好的提示，参数提示用户输入，避免`-a -b --test ./`类似传参数的方式)
 
 - `wya server`: 随启随用的静态文件服务器
+- `wya init`: 初始化下载`wya`脚手架或者其他仓库
+
+## 待开发
+- `wya add route`: 根据规则创建相应文件
+- `wya add component`: 根据规则创建组件
+- `wya delete ....`
+- ...
 
 
 <!--  以下内容无视  -->

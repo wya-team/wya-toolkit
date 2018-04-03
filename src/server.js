@@ -1,5 +1,5 @@
 import { prompt } from 'inquirer';
-import fs from 'fs-extra';
+import fs, { readFileSync } from 'fs-extra';
 import chalk from 'chalk';
 
 import connect from 'connect';
@@ -11,7 +11,6 @@ import history from 'connect-history-api-fallback';
 import { resolve, join } from 'path';
 
 import { localIp, openURL } from './utils';
-
 
 const log = console.log;
 const question = [
@@ -50,7 +49,6 @@ const question = [
 
 const stream = prompt(question)
 	.then((opts = {}) => {
-		s;
 		// options
 		let { port, hostname, open, dir, fallback } = opts;
 		port = Number(port);
@@ -87,8 +85,8 @@ const stream = prompt(question)
 
 		// create https server
 		let options = {
-			key: fs.readFileSync(resolve(__dirname, '../keys', 'key.pem')),
-			cert: fs.readFileSync(resolve(__dirname, '../keys', 'cert.pem'))
+			key: readFileSync(resolve(__dirname, '../keys', 'key.pem')),
+			cert: readFileSync(resolve(__dirname, '../keys', 'cert.pem'))
 		};
 
 		https.createServer(options, app).listen(secure, function () {
