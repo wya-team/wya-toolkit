@@ -1,5 +1,4 @@
-'use strict';
-const { prompt } = require('inquirer');
+import { prompt } from 'inquirer';
 const question = [
 	{
 		type: 'input',
@@ -21,6 +20,10 @@ const question = [
 	}
 ];
 
-module.exports = prompt(question).then(({ name, place }) => {
-	
-});
+const stream = (cmd, opts) => {
+	return prompt(question).then(({ name, place }) => {
+		
+	});
+};
+
+export default stream;

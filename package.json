@@ -6,7 +6,8 @@
   "files": [
     "commands/**",
     "src/**",
-    "bin/**"
+    "bin/**",
+    "keys/**"
   ],
   "scripts": {
     "start": "npm run dev",
@@ -34,7 +35,11 @@
   "dependencies": {
     "chalk": "^2.3.2",
     "commander": "^2.15.1",
-    "inquirer": "^5.2.0"
+    "connect": "^3.6.6",
+    "connect-history-api-fallback": "^1.5.0",
+    "inquirer": "^5.2.0",
+    "serve-index": "^1.9.1",
+    "serve-static": "^1.13.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",

@@ -1,7 +1,10 @@
 'use strict';
 
-var _require = require('inquirer'),
-    prompt = _require.prompt;
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _inquirer = require('inquirer');
 
 var question = [{
 	type: 'input',
@@ -21,7 +24,11 @@ var question = [{
 	default: 'master'
 }];
 
-module.exports = prompt(question).then(function (_ref) {
-	var name = _ref.name,
-	    place = _ref.place;
-});
+var stream = function stream(cmd, opts) {
+	return (0, _inquirer.prompt)(question).then(function (_ref) {
+		var name = _ref.name,
+		    place = _ref.place;
+	});
+};
+
+exports.default = stream;

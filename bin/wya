@@ -1,27 +1,49 @@
 #!/usr/bin/env node
-
 process.env.NODE_PATH = __dirname + '/../node_modules/';
 
-const { resolve } = require('path');
-
-const res = command => resolve(__dirname, '../commands/', command);
-
+const chalk = require('chalk');
 const program = require('commander');
+const { resolve } = require('path');
+const res = command => resolve(__dirname, '../commands/', command);
+const log = console.log;
 
 program
 	.version(require('../package').version );
 
+// 使用指令参数 如 wya server;
 program
-	.usage('<command>');
+	.usage('<cmd>');
 
+// 设计模版 终端执行：wya _ cc -t test
 program
-	.command('__tpl__')
-	.description('Just a new template')
+	.command('__tpl__ <cmd>')
 	.alias('_')
-	.action(() => {
-		require(res('__tpl__'));
+	.description('Just a new template')
+	.option('-t, --test_mode <mode>', 'add pepper')
+	.action((cmd, opts) => {
+		console.log(
+			'__tpl__ "%s" using %s mode', 
+			cmd, 
+			opts.test_mode
+		);
+		try {
+			require(res('__tpl__'))(cmd, opts);
+		} catch (e) {
+			log(chalk`{red ${e}}`);
+		}
 	});
 
+// 服务
+program
+	.command('server')
+	.alias('s')
+	.description('Run static file server anywhere')
+	.action((opts) => require(res('server')));
+
+// 任意匹配
+program
+	.command('*')
+	.action((cmd) => log(chalk`{red Invalid mode ${cmd}}`));
 
 program.parse(process.argv);
 
