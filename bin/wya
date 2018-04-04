@@ -39,7 +39,7 @@ program
 // 初始化项目 终端执行：wya init
 program
 	.command('init')
-	.alias('c')
+	.alias('i')
 	.description('Create a new project')
 	.action((opts) => require(res('init')));
 
