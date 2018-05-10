@@ -34,8 +34,8 @@ const question = [
 		name: 'dir',
 		message: 'Where to in the project:',
 		when: (answers) => answers.type === 'routeforReact',
-		// default: `${process.cwd()}/src/pages/`
-		default: `${process.cwd()}/tmp/`
+		default: `${process.cwd()}/src/pages/`
+		// default: `${process.cwd()}/tmp/`
 	},
 ];
 

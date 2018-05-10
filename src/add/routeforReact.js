@@ -1,3 +1,4 @@
+import { prompt, Separator } from 'inquirer';
 import upath from 'upath';
 import chalk from 'chalk';
 const log = console.log;
@@ -59,25 +60,38 @@ export const routeforReact = (path, dir) => {
 		}
 	};
 	let names = Object.keys(obj);
-	names.forEach(key => {
-		let { name, path } = obj[key];
-		let fullpath = join(path);
-		log(chalk`{green ${key}}: {rgb(255,131,0) ${path}}`);
+	// log
+	names.forEach(key => log(chalk`{green ${key}}: {rgb(255,131,0) ${obj[key].path}}`));
 
-		let contents = '';
-		contents += `/**\n`;
-		contents += ` * ${name}\n`;
-		contents += ` */`;
-		// 文件不存在的情况下操作
-		if (!fs.existsSync(fullpath)) {
-			fs.outputFileSync(
-				fullpath,
-				typeof tpl[key] === 'function'
-					? tpl[key](name, action, { pathArr, componentArr, obj })
-					: contents
-			);
-		}
-	});
+	let question = {
+		type: 'confirm',
+		name: 'sure',
+		message: 'Please make sure ~',
+		default: true
+	};
+	return prompt(question)
+		.then((sure) => {
+			if (!sure) return null;
+			names.forEach(key => {
+				let { name, path } = obj[key];
+				let fullpath = join(path);
 
-	return obj;
+				let contents = '';
+				contents += `/**\n`;
+				contents += ` * ${name}\n`;
+				contents += ` */`;
+				// 文件不存在的情况下操作
+				if (!fs.existsSync(fullpath)) {
+					fs.outputFileSync(
+						fullpath,
+						typeof tpl[key] === 'function'
+							? tpl[key](name, action, { pathArr, componentArr, obj })
+							: contents
+					);
+				}
+			});
+		})
+		.catch(e => {
+			log(chalk`{red ${e}}`);
+		});
 };

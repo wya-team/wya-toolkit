@@ -43,8 +43,8 @@ var question = [{
 	when: function when(answers) {
 		return answers.type === 'routeforReact';
 	},
-	// default: `${process.cwd()}/src/pages/`
-	default: process.cwd() + '/tmp/'
+	default: process.cwd() + '/src/pages/'
+	// default: `${process.cwd()}/tmp/`
 }];
 
 var stream = (0, _inquirer.prompt)(question).then(function (_ref) {

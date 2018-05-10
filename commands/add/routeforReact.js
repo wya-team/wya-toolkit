@@ -5,7 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.routeforReact = undefined;
 
-var _templateObject = _taggedTemplateLiteral(['{green ', '}: {rgb(255,131,0) ', '}'], ['{green ', '}: {rgb(255,131,0) ', '}']);
+var _templateObject = _taggedTemplateLiteral(['{green ', '}: {rgb(255,131,0) ', '}'], ['{green ', '}: {rgb(255,131,0) ', '}']),
+    _templateObject2 = _taggedTemplateLiteral(['{red ', '}'], ['{red ', '}']);
+
+var _inquirer = require('inquirer');
 
 var _upath = require('upath');
 
@@ -87,23 +90,36 @@ var routeforReact = exports.routeforReact = function routeforReact(path, dir) {
 		}
 	};
 	var names = Object.keys(obj);
+	// log
 	names.forEach(function (key) {
-		var _obj$key = obj[key],
-		    name = _obj$key.name,
-		    path = _obj$key.path;
-
-		var fullpath = (0, _path.join)(path);
-		log((0, _chalk2.default)(_templateObject, key, path));
-
-		var contents = '';
-		contents += '/**\n';
-		contents += ' * ' + name + '\n';
-		contents += ' */';
-		// 文件不存在的情况下操作
-		if (!_fsExtra2.default.existsSync(fullpath)) {
-			_fsExtra2.default.outputFileSync(fullpath, typeof tpl[key] === 'function' ? tpl[key](name, action, { pathArr: pathArr, componentArr: componentArr, obj: obj }) : contents);
-		}
+		return log((0, _chalk2.default)(_templateObject, key, obj[key].path));
 	});
 
-	return obj;
+	var question = {
+		type: 'confirm',
+		name: 'sure',
+		message: 'Please make sure ~',
+		default: true
+	};
+	return (0, _inquirer.prompt)(question).then(function (sure) {
+		if (!sure) return null;
+		names.forEach(function (key) {
+			var _obj$key = obj[key],
+			    name = _obj$key.name,
+			    path = _obj$key.path;
+
+			var fullpath = (0, _path.join)(path);
+
+			var contents = '';
+			contents += '/**\n';
+			contents += ' * ' + name + '\n';
+			contents += ' */';
+			// 文件不存在的情况下操作
+			if (!_fsExtra2.default.existsSync(fullpath)) {
+				_fsExtra2.default.outputFileSync(fullpath, typeof tpl[key] === 'function' ? tpl[key](name, action, { pathArr: pathArr, componentArr: componentArr, obj: obj }) : contents);
+			}
+		});
+	}).catch(function (e) {
+		log((0, _chalk2.default)(_templateObject2, e));
+	});
 };
