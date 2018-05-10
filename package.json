@@ -1,13 +1,14 @@
 {
   "name": "wya-toolkit",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "wya-toolkit for js",
   "main": "index.js",
   "files": [
     "commands/**",
     "src/**",
     "bin/**",
-    "keys/**"
+    "keys/**",
+    "templates/**"
   ],
   "scripts": {
     "start": "npm run dev",
@@ -42,7 +43,8 @@
     "inquirer": "^5.2.0",
     "ora": "^2.0.0",
     "serve-index": "^1.9.1",
-    "serve-static": "^1.13.2"
+    "serve-static": "^1.13.2",
+    "upath": "^1.0.5"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

@@ -43,6 +43,13 @@ program
 	.description('Create a new project')
 	.action((opts) => require(res('init')));
 
+// 初始化项目 终端执行：wya add
+program
+	.command('add')
+	.alias('a')
+	.description('Add a new Route')
+	.action((opts) => require(res('add')));
+
 // 任意匹配
 program
 	.command('*')
