@@ -29,6 +29,8 @@ export const container = (name, action, opts = {}) => {
 	contents += `				param: param,\n`;
 	contents += `				ajaxType: 'GET',\n`;
 	contents += `				onSuccess: (res) => {\n`;
+	contents += `					//\n`;
+	contents += `				}\n`;
 	contents += `				onError: (res) => {\n`;
 	contents += `					//\n`;
 	contents += `				}\n`;
@@ -51,6 +53,7 @@ export const container = (name, action, opts = {}) => {
 	contents += `	};\n`;
 	contents += `}\n\n`;
 	contents += `function mapDispatchToProps(dispatch) {\n`;
+	contents += `	return {\n`;
 	contents += `		actions: bindActionCreators(creators, dispatch)\n`;
 	contents += `	};\n`;
 	contents += `}\n\n`;
