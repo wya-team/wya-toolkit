@@ -30,7 +30,7 @@ export const container = (name, action, opts = {}) => {
 	contents += `				ajaxType: 'GET',\n`;
 	contents += `				onSuccess: (res) => {\n`;
 	contents += `					//\n`;
-	contents += `				}\n`;
+	contents += `				},\n`;
 	contents += `				onError: (res) => {\n`;
 	contents += `					//\n`;
 	contents += `				}\n`;

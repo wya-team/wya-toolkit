@@ -39,7 +39,7 @@ var container = exports.container = function container(name, action) {
 	contents += '\t\t\t\tajaxType: \'GET\',\n';
 	contents += '\t\t\t\tonSuccess: (res) => {\n';
 	contents += '\t\t\t\t\t//\n';
-	contents += '\t\t\t\t}\n';
+	contents += '\t\t\t\t},\n';
 	contents += '\t\t\t\tonError: (res) => {\n';
 	contents += '\t\t\t\t\t//\n';
 	contents += '\t\t\t\t}\n';
