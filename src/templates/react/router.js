@@ -12,6 +12,7 @@ export const router = (name, action, opts = {}) => {
 	contents += `					require.ensure([], (require) => {\n`;
 	contents += `						cb(null, require('./Modules/${name}').default);\n`;
 	contents += `					});\n`;
+	contents += `				},\n`;
 	contents += `				onEnter: redirectUserToHome\n`;
 	contents += `			},\n`;
 	contents += `		]\n`;
