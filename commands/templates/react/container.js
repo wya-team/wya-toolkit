@@ -10,9 +10,9 @@ var container = exports.container = function container(name, action) {
 	    obj = opts.obj;
 
 	var actionType = componentArr.join('_').toUpperCase() + '_GET';
-	var data = '' + action + name[0].toUpperCase() + name.slice(1);
+	var data = '' + name[0].toLowerCase() + name.slice(1);
 	var contents = '';
-	contents += 'import React, { Component, Fragment } from \'react\';;\n';
+	contents += 'import React, { Component, Fragment } from \'react\';\n';
 	contents += 'import PropTypes from \'prop-types\';\n';
 	contents += 'import { bindActionCreators } from \'redux\';\n';
 	contents += 'import { connect } from \'react-redux\';\n';

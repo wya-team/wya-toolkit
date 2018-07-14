@@ -1,9 +1,9 @@
 export const container = (name, action, opts = {}) => {
 	const { pathArr, componentArr, obj } = opts;
 	let actionType = componentArr.join('_').toUpperCase() + '_GET';
-	let data = `${action}${name[0].toUpperCase()}${name.slice(1)}`;
+	let data = `${name[0].toLowerCase()}${name.slice(1)}`;
 	let contents = '';
-	contents += `import React, { Component, Fragment } from 'react';;\n`;
+	contents += `import React, { Component, Fragment } from 'react';\n`;
 	contents += `import PropTypes from 'prop-types';\n`;
 	contents += `import { bindActionCreators } from 'redux';\n`;
 	contents += `import { connect } from 'react-redux';\n`;
