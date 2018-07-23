@@ -17,7 +17,7 @@ var reducer = exports.reducer = function reducer(name, action) {
 	contents += '};\n';
 	contents += 'export const ' + action + name[0].toUpperCase() + name.slice(1) + ' = (state = initialState, action) => {\n';
 	contents += '\tswitch (action.type) {\n';
-	contents += '\t\tcase types.' + componentArr.join('_').toUpperCase() + ' + \'_GET\':\n';
+	contents += '\t\tcase types.' + componentArr.join('_').toUpperCase() + '_GET + \'_SUCCESS\':\n';
 	contents += '\t\t\treturn state;\n';
 	contents += '\t\tdefault:\n';
 	contents += '\t\t\treturn state;\n';
