@@ -13,7 +13,7 @@ export const router = (name, action, opts = {}) => {
 	contents += `						cb(null, require('./Modules/${name}').default);\n`;
 	contents += `					});\n`;
 	contents += `				},\n`;
-	contents += `				onEnter: redirectUserToHome\n`;
+	contents += `				onEnter: redirectUserToLogin\n`;
 	contents += `			},\n`;
 	contents += `		]\n`;
 	contents += `	},\n`;
