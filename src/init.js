@@ -29,11 +29,22 @@ const question = [
 		name: 'repository',
 		message: 'Select repository:',
 		choices: [
-			new Separator(' = For project = '),
+			new Separator(' = For js project = '),
+			'wya-team/vue-env#master',
 			'wya-team/react-env#master',
-			'wya-team/react-env#wya-env-v1',
 			'wya-team/rn-env#master',
 			'wya-team/wechat-env#master',
+			'wya-team/wya-webpack#master',
+			'wya-team/wya-rollup#master',
+
+			new Separator(' = For native project = '),
+			'wya-team/android-env#master',
+			'wya-team/android-template#master',
+			'wya-team/WYAiOSEnv#master',
+			'wya-team/WYAiOSTemplate#master',
+			'wya-team/WYASwiftEnv#master',
+			'wya-team/WYASwiftTemplate#master',
+
 			'none'
 		],
 		default: 'none'

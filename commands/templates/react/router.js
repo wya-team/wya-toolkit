@@ -22,7 +22,7 @@ var router = exports.router = function router(name, action) {
 	contents += '\t\t\t\t\t\tcb(null, require(\'./Modules/' + name + '\').default);\n';
 	contents += '\t\t\t\t\t});\n';
 	contents += '\t\t\t\t},\n';
-	contents += '\t\t\t\tonEnter: redirectUserToHome\n';
+	contents += '\t\t\t\tonEnter: redirectUserToLogin\n';
 	contents += '\t\t\t},\n';
 	contents += '\t\t]\n';
 	contents += '\t},\n';

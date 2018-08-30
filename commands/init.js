@@ -50,7 +50,7 @@ var question = [{
 	type: 'list',
 	name: 'repository',
 	message: 'Select repository:',
-	choices: [new _inquirer.Separator(' = For project = '), 'wya-team/react-env#master', 'wya-team/react-env#wya-env-v1', 'wya-team/rn-env#master', 'wya-team/wechat-env#master', 'none'],
+	choices: [new _inquirer.Separator(' = For js project = '), 'wya-team/vue-env#master', 'wya-team/react-env#master', 'wya-team/rn-env#master', 'wya-team/wechat-env#master', 'wya-team/wya-webpack#master', 'wya-team/wya-rollup#master', new _inquirer.Separator(' = For native project = '), 'wya-team/android-env#master', 'wya-team/android-template#master', 'wya-team/WYAiOSEnv#master', 'wya-team/WYAiOSTemplate#master', 'wya-team/WYASwiftEnv#master', 'wya-team/WYASwiftTemplate#master', 'none'],
 	default: 'none'
 }, {
 	type: 'input',
