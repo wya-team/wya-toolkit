@@ -1,6 +1,6 @@
 {
   "name": "wya-toolkit",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "wya-toolkit for js",
   "main": "index.js",
   "files": [
@@ -13,8 +13,8 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "npm run all",
-    "serve": "rm -rf ./commands && cross-env NODE_ENV=development babel src --out-dir commands --watch",
-    "build": "rm -rf ./commands && npm run lint:fix && cross-env NODE_ENV=production babel src --out-dir commands && npm publish",
+    "serve": "rm -rf ./commands && cross-env NODE_ENV=development babel src --out-dir commands --copy-files --ignore **.test.js,**.md,examples/**, --watch",
+    "build": "rm -rf ./commands && npm run lint:fix && cross-env NODE_ENV=production babel src --out-dir commands --copy-files --ignore **.test.js,**.md,examples/**, && npm publish",
     "lint": "esw ./src/ ./bin/wya",
     "lint:fix": "npm run lint -- --fix",
     "lint:watch": "npm run lint -- --fix --watch",
@@ -42,9 +42,11 @@
     "fs-extra": "^5.0.0",
     "inquirer": "^5.2.0",
     "ora": "^2.0.0",
+    "screenshot-desktop": "^1.5.2",
     "serve-index": "^1.9.1",
     "serve-static": "^1.13.2",
-    "upath": "^1.0.5"
+    "upath": "^1.0.5",
+    "ws": "^6.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

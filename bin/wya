@@ -29,6 +29,13 @@ program
 		}
 	});
 
+// 局域网共享屏幕 终端执行：wya screen
+program
+	.command('screen')
+	.alias('sc')
+	.description('Run static file screen anywhere')
+	.action((opts) => require(res('screen')));
+
 // 服务 终端执行：wya server
 program
 	.command('server')
