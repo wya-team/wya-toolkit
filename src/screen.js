@@ -39,7 +39,7 @@ const stream = prompt(question)
 		let { port, hostname, delay } = opts;
 
 		const server = http.createServer((req, res) => {
-			let pathname = resolve(process.cwd(), './commands/screen/index.html');
+			let pathname = resolve(__dirname, './screen/index.html');
 			fs.exists(pathname, (exists) => {
 
 				res.writeHead(200, { "Content-Type": "text/html" });

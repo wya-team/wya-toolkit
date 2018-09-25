@@ -68,7 +68,7 @@ var stream = (0, _inquirer.prompt)(question).then(function () {
 
 
 	var server = _http2.default.createServer(function (req, res) {
-		var pathname = (0, _path.resolve)(process.cwd(), './commands/screen/index.html');
+		var pathname = (0, _path.resolve)(__dirname, './screen/index.html');
 		_fs2.default.exists(pathname, function (exists) {
 
 			res.writeHead(200, { "Content-Type": "text/html" });
