@@ -50,8 +50,8 @@ const question = [
 		name: 'dir',
 		message: 'Where to in the project:',
 		when: (answers) => answers.type !== 'none',
-		default: `${process.cwd()}/src/pages/`,
-		// default: `${process.cwd()}/tmp/`,
+		// default: `${process.cwd()}/src/pages/`,
+		default: `${process.cwd()}/tmp/src/pages/`,
 		validate (val) {
 			// if (val === `${process.cwd()}/tmp/`) {
 			// 	shell.rm('-rf', 'tmp');

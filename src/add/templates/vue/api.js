@@ -1,3 +1,5 @@
+import { getNewContent } from './utils/helper';
+
 export const api = (opts = {}) => {
 	const { name, mutation, pathArr, project, obj } = opts;
 	
@@ -16,31 +18,21 @@ export const apiOverride = (content, opts = {}) => {
 	const { name, mutation, pathArr, project, obj } = opts;
 	
 	try {
-		if (content.substr(-1) !== '\n') {
-			content += '\n';
-		}
-		// 需要注入的参数
-		let newContent = '';
-		newContent += `	${pathArr.join('_').toUpperCase()}_GET: ''`;
+		let importContent = undefined;
+		let injectContent = `	${pathArr.join('_').toUpperCase()}_GET: ''`;
 
-		let txtSplit = `\n};\n`;
+		let importSplit = undefined;
+		let injectSplit = `\n};\n`;
 
-		let splitContent = content.split(txtSplit);
-
-		if (splitContent[0] && splitContent[0].includes(newContent) === false) {
-			let tag = '';
-			if (splitContent[0].substr(-1) === ',') {
-				tag = `\n`;
-			} else if (splitContent[0].substr(-2) === ',\n') {
-				tag = '';
-			} else {
-				tag = ",\n";
-			}
-			splitContent[0] += `${tag}${newContent}`;
-		}
-
-		return splitContent.slice(1).reduce((pre, cur) => pre + txtSplit + cur, splitContent[0]);
+		return getNewContent({
+			content,
+			importContent,
+			injectContent,
+			importSplit,
+			injectSplit
+		});
 	} catch (e) {
+		console.log(e);
 		return content;
 	}
 };

@@ -4,7 +4,7 @@ export const component = (opts = {}) => {
 
 	contents += `<template>\n`;
 	contents += `	<div>\n`;
-	contents += `		__tpl__\n`;
+	contents += `		__tpl__, ${pathArr.join('-')}\n`;
 	contents += `	</div>\n`;
 	contents += `</template>\n\n`;
 
