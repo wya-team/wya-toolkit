@@ -1,5 +1,5 @@
-export const reducer = (name, action, opts = {}) => {
-	const { pathArr, componentArr, obj } = opts;
+export const reducer = (opts = {}) => {
+	const { name, action, pathArr, componentArr, obj } = opts;
 	let contents = '';
 	contents += `import * as types from '@constants/actions/${action}';\n`;
 	contents += `const initialState = {\n`;

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.routeForReact = undefined;
+exports.routeForVue = undefined;
 
 var _templateObject = _taggedTemplateLiteral(['{green ', '}: {rgb(255,131,0) ', '}'], ['{green ', '}: {rgb(255,131,0) ', '}']),
     _templateObject2 = _taggedTemplateLiteral(['{red ', '}'], ['{red ', '}']);
@@ -24,7 +24,7 @@ var _fsExtra2 = _interopRequireDefault(_fsExtra);
 
 var _path = require('path');
 
-var _index = require('./templates/react/index');
+var _index = require('./templates/vue/index');
 
 var tpl = _interopRequireWildcard(_index);
 
@@ -35,58 +35,54 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 var log = console.log;
-var routeForReact = exports.routeForReact = function routeForReact(path, dir) {
+var routeForVue = exports.routeForVue = function routeForVue(path, dir, project) {
 	var pathArr = path.replace(/\({0,}\//g, '-').replace(/([a-z\dA-Z])([A-Z])/g, '$1-$2').toLowerCase().split('-').filter(function (item) {
 		return item && !item.includes(':');
 	});
+
 	// 0
 	if (pathArr.length === 0) return;
 	// 1
 	if (pathArr.length === 1) pathArr[1] = 'main';
 
-	var componentArr = pathArr.map(function (item) {
-		return '' + item[0].toUpperCase() + item.slice(1);
-	});
-
 	/**
-  * container action reducer component
+  * container mutation reducer component
   */
-	var container = componentArr.join('');
-	var action = pathArr[0];
-	var reducer = '' + pathArr[1] + componentArr.slice(2).join('');
+	var container = pathArr.join('-');
+	var mutation = pathArr[0];
+	var module = pathArr.slice(1).join('-');
 	var component = '__tpl__';
 	var obj = {
 		router: {
 			name: container,
-			path: _upath2.default.normalize(dir + 'containers/' + componentArr[0] + '/App.js')
+			path: _upath2.default.normalize(dir + 'containers/' + pathArr[0] + '/app.js')
 		},
 		container: {
 			name: container,
-			path: _upath2.default.normalize(dir + 'containers/' + componentArr[0] + '/Modules/' + container + '.js')
+			path: _upath2.default.normalize(dir + 'containers/' + pathArr[0] + '/modules/' + container + '.vue')
 		},
 		component: {
 			name: component,
-			path: _upath2.default.normalize(dir + 'components/' + componentArr[0] + '/' + componentArr.slice(1).join('') + '/' + component + '.js')
+			path: _upath2.default.normalize(dir + 'components/' + pathArr[0] + '/' + module + '/' + component + '.vue')
 		},
-		action: {
-			name: action,
-			path: _upath2.default.normalize(dir + 'constants/actions/' + action + '.js')
-		},
-		creator: {
-			name: action,
-			path: _upath2.default.normalize(dir + 'actions/' + action + '.js')
+		/**
+   * strore
+   */
+		mutation: {
+			name: mutation,
+			path: _upath2.default.normalize(dir + 'stores/mutations/' + mutation + '.js')
 		},
 		api: {
-			name: action,
-			path: _upath2.default.normalize(dir + 'constants/api/' + action + '.js')
+			name: mutation,
+			path: _upath2.default.normalize(dir + 'stores/apis/' + mutation + '.js')
 		},
-		reducer: {
-			name: reducer,
-			path: _upath2.default.normalize(dir + 'reducers/' + action + '/' + reducer + '.js')
+		module: {
+			name: module,
+			path: _upath2.default.normalize(dir + 'stores/modules/' + mutation + '/' + module + '.js')
 		},
-		rootReducer: {
-			name: reducer,
-			path: _upath2.default.normalize(dir + 'reducers/' + action + '/root.js')
+		rootModule: {
+			name: module,
+			path: _upath2.default.normalize(dir + 'stores/modules/' + mutation + '/root.js')
 		}
 	};
 	var names = Object.keys(obj);
@@ -99,10 +95,11 @@ var routeForReact = exports.routeForReact = function routeForReact(path, dir) {
 		type: 'confirm',
 		name: 'sure',
 		message: 'Please make sure ~',
-		default: true
+		default: false
 	};
 	return (0, _inquirer.prompt)(question).then(function (res) {
 		if (!res.sure) return null;
+		(0, _chalk2.default)('waiting...');
 		names.forEach(function (key) {
 			var _obj$key = obj[key],
 			    name = _obj$key.name,
@@ -116,7 +113,7 @@ var routeForReact = exports.routeForReact = function routeForReact(path, dir) {
 			contents += ' */';
 			// 文件不存在的情况下操作
 			if (!_fsExtra2.default.existsSync(fullpath)) {
-				_fsExtra2.default.outputFileSync(fullpath, typeof tpl[key] === 'function' ? tpl[key]({ name: name, action: action, pathArr: pathArr, componentArr: componentArr, obj: obj }) : contents);
+				_fsExtra2.default.outputFileSync(fullpath, typeof tpl[key] === 'function' ? tpl[key]({ name: name, mutation: mutation, pathArr: pathArr, project: project, module: module, obj: obj }) : contents);
 			}
 		});
 	}).catch(function (e) {

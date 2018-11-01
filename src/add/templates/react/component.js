@@ -1,5 +1,5 @@
-export const component = (name, action, opts = {}) => {
-	const { pathArr, componentArr, obj } = opts;
+export const component = (opts = {}) => {
+	const { name, action, pathArr, componentArr, obj } = opts;
 	let actionType = componentArr.join('_').toUpperCase() + '_GET';
 	let contents = '';
 	contents += `import React, { Component } from 'react';\n`;

@@ -3,9 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-var container = exports.container = function container(name, action) {
-	var opts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-	var pathArr = opts.pathArr,
+var container = exports.container = function container() {
+	var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	var name = opts.name,
+	    action = opts.action,
+	    pathArr = opts.pathArr,
 	    componentArr = opts.componentArr,
 	    obj = opts.obj;
 

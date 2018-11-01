@@ -1,5 +1,5 @@
-export const container = (name, action, opts = {}) => {
-	const { pathArr, componentArr, obj } = opts;
+export const container = (opts = {}) => {
+	const { name, action, pathArr, componentArr, obj } = opts;
 	let actionType = componentArr.join('_').toUpperCase() + '_GET';
 	let data = `${name[0].toLowerCase()}${name.slice(1)}`;
 	let contents = '';

@@ -1,6 +1,6 @@
-export const rootReducer = (name, action, opts = {}) => {
-	const { pathArr, componentArr, obj } = opts;
-	let data = `${action}${name[0].toUpperCase()}${name.slice(1)}`;
+export const rootModule = (opts = {}) => {
+	const { name, mutation, pathArr, componentArr, obj } = opts;
+	let data = `${mutation}${name[0].toUpperCase()}${name.slice(1)}`;
 	let contents = '';
 	contents += `import { ${data} } from './${name}';\n`;
 	contents += `export default {\n`;

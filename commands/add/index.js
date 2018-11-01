@@ -4,11 +4,20 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _routeforReact = require('./routeforReact');
+var _routeForReact = require('./routeForReact');
 
-Object.defineProperty(exports, 'routeforReact', {
+Object.defineProperty(exports, 'routeForReact', {
   enumerable: true,
   get: function get() {
-    return _routeforReact.routeforReact;
+    return _routeForReact.routeForReact;
+  }
+});
+
+var _routeForVue = require('./routeForVue');
+
+Object.defineProperty(exports, 'routeForVue', {
+  enumerable: true,
+  get: function get() {
+    return _routeForVue.routeForVue;
   }
 });

@@ -1,5 +1,5 @@
-export const action = (name, action, opts = {}) => {
-	const { pathArr, componentArr, obj } = opts;
+export const action = (opts = {}) => {
+	const { name, action, pathArr, componentArr, obj } = opts;
 	let actionType = componentArr.join('_').toUpperCase() + '_GET';
 	let contents = '';
 	contents += `/**\n`;

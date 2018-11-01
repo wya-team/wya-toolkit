@@ -1,5 +1,5 @@
-export const creator = (name, action, opts = {}) => {
-	const { pathArr, componentArr, obj } = opts;
+export const creator = (opts = {}) => {
+	const { name, action, pathArr, componentArr, obj } = opts;
 	let contents = '';
 	contents += `import * as types from '@constants/actions/${action}';\n`;
 	contents += `/**\n`;

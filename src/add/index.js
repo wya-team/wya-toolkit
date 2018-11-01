@@ -1,4 +1,2 @@
-/**
- * 目前只有一个
- */
-export { routeforReact } from './routeforReact';
+export { routeForReact } from './routeForReact';
+export { routeForVue } from './routeForVue';

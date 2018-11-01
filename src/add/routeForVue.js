@@ -4,59 +4,57 @@ import chalk from 'chalk';
 const log = console.log;
 import fs, { writeFile } from 'fs-extra';
 import { resolve, join } from 'path';
-import * as tpl from './templates/react/index';
-export const routeForReact = (path, dir) => {
+import * as tpl from './templates/vue/index';
+export const routeForVue = (path, dir, project) => {
 	let pathArr = path.replace(/\({0,}\//g, '-')
 		.replace(/([a-z\dA-Z])([A-Z])/g, '$1-$2')
 		.toLowerCase()
 		.split('-')
 		.filter(item => item && !item.includes(':'));
+
 	// 0
 	if (pathArr.length === 0) return;
 	// 1
 	if (pathArr.length === 1) pathArr[1] = 'main';
 
-	let componentArr = pathArr.map(item => `${item[0].toUpperCase()}${item.slice(1)}`);
-
 	/**
-	 * container action reducer component
+	 * container mutation reducer component
 	 */
-	let container = componentArr.join('');
-	let action = pathArr[0];
-	let reducer = `${pathArr[1]}${componentArr.slice(2).join('')}`;
+	let container = pathArr.join('-');
+	let mutation = pathArr[0];
+	let module = pathArr.slice(1).join('-');
 	let component = `__tpl__`;
 	let obj = {
 		router: {
 			name: container,
-			path: upath.normalize(`${dir}containers/${componentArr[0]}/App.js`)
+			path: upath.normalize(`${dir}containers/${pathArr[0]}/app.js`)
 		},
 		container: {
 			name: container,
-			path: upath.normalize(`${dir}containers/${componentArr[0]}/Modules/${container}.js`)
+			path: upath.normalize(`${dir}containers/${pathArr[0]}/modules/${container}.vue`)
 		},
 		component: {
 			name: component,
-			path: upath.normalize(`${dir}components/${componentArr[0]}/${componentArr.slice(1).join('')}/${component}.js`)
+			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/${component}.vue`)
 		},
-		action: {
-			name: action,
-			path: upath.normalize(`${dir}constants/actions/${action}.js`)
-		},
-		creator: {
-			name: action,
-			path: upath.normalize(`${dir}actions/${action}.js`)
+		/**
+		 * strore
+		 */
+		mutation: {
+			name: mutation,
+			path: upath.normalize(`${dir}stores/mutations/${mutation}.js`)
 		},
 		api: {
-			name: action,
-			path: upath.normalize(`${dir}constants/api/${action}.js`)
+			name: mutation,
+			path: upath.normalize(`${dir}stores/apis/${mutation}.js`)
 		},
-		reducer: {
-			name: reducer,
-			path: upath.normalize(`${dir}reducers/${action}/${reducer}.js`)
+		module: {
+			name: module,
+			path: upath.normalize(`${dir}stores/modules/${mutation}/${module}.js`)
 		},
-		rootReducer: {
-			name: reducer,
-			path: upath.normalize(`${dir}reducers/${action}/root.js`)
+		rootModule: {
+			name: module,
+			path: upath.normalize(`${dir}stores/modules/${mutation}/root.js`)
 		}
 	};
 	let names = Object.keys(obj);
@@ -67,11 +65,12 @@ export const routeForReact = (path, dir) => {
 		type: 'confirm',
 		name: 'sure',
 		message: 'Please make sure ~',
-		default: true
+		default: false
 	};
 	return prompt(question)
 		.then((res) => {
 			if (!res.sure) return null;
+			chalk('waiting...');
 			names.forEach(key => {
 				let { name, path } = obj[key];
 				let fullpath = join(path);
@@ -85,7 +84,7 @@ export const routeForReact = (path, dir) => {
 					fs.outputFileSync(
 						fullpath,
 						typeof tpl[key] === 'function'
-							? tpl[key]({ name, action, pathArr, componentArr, obj })
+							? tpl[key]({ name, mutation, pathArr, project, module, obj })
 							: contents
 					);
 				}
