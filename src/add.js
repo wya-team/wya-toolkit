@@ -23,7 +23,6 @@ const question = [
 		name: 'project',
 		message: 'Project Name:',
 		when: (answers) => answers.type === 'routeForVue',
-		default: 'tpl',
 		validate (val) {
 			if (val === '') {
 				return 'Project Name is required!';

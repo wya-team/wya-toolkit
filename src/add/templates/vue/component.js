@@ -16,6 +16,7 @@ export const component = (opts = {}) => {
 	contents += `	data() {\n`;
 	contents += `		return {\n`;
 	contents += `		};\n`;
+	contents += `	},\n`;
 	contents += `	created() {\n`;
 	contents += `	},\n`;
 	contents += `	methods: {\n`;

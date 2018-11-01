@@ -68,7 +68,7 @@ export const rootApi = (content, opts = {}) => {
 		after = _after.slice(1).reduce((pre, cur) => pre + afterSplit + cur, _after[0]);
 
 		// 返回
-		return _content.slice(2).reduce((pre, cur) => pre + afterSplit + cur, before + beforeSplit + after);
+		return _content.slice(2).reduce((pre, cur) => pre + beforeSplit + cur, before + beforeSplit + after);
 	} catch (e) {
 		console.log(e);
 		return content;
