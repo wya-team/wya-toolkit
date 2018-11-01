@@ -5,6 +5,7 @@ const log = console.log;
 import fs, { writeFile } from 'fs-extra';
 import { resolve, join } from 'path';
 import * as tpl from './templates/vue/index';
+import * as tplOverride from './templates/vue/override/index';
 export const routeForVue = (path, dir, project) => {
 	let pathArr = path.replace(/\({0,}\//g, '-')
 		.replace(/([a-z\dA-Z])([A-Z])/g, '$1-$2')
@@ -57,6 +58,20 @@ export const routeForVue = (path, dir, project) => {
 			path: upath.normalize(`${dir}stores/modules/${mutation}/root.js`)
 		}
 	};
+
+	let overrides = {
+		rootApi: {
+			path: upath.normalize(`${dir}stores/apis/root.js`)
+		},
+		rootRoute: {
+			path: upath.normalize(`${dir}routers/routes.js`)
+		},
+		rootModules: {
+			path: upath.normalize(`${dir}stores/modules/root.js`)
+		}
+	};
+
+
 	let names = Object.keys(obj);
 	// log
 	names.forEach(key => log(chalk`{green ${key}}: {rgb(255,131,0) ${obj[key].path}}`));
@@ -75,19 +90,49 @@ export const routeForVue = (path, dir, project) => {
 				let { name, path } = obj[key];
 				let fullpath = join(path);
 
-				let contents = '';
-				contents += `/**\n`;
-				contents += ` * ${name}\n`;
-				contents += ` */`;
-				// 文件不存在的情况下操作
+				let content = '';
+				content += `/**\n`;
+				content += ` * ${name}\n`;
+				content += ` */`;
 				if (!fs.existsSync(fullpath)) {
+					// 文件不存在的情况下操作
+					log(chalk`{green ${key}}: {rgb(255,131,0) created}`);
 					fs.outputFileSync(
 						fullpath,
 						typeof tpl[key] === 'function'
 							? tpl[key]({ name, mutation, pathArr, project, module, obj })
-							: contents
+							: content
+					);
+				} else if (typeof tpl[`${key}Override`] === 'function') {
+					// 文件存在，重写相关
+					log(chalk`{yellow ${key}}: {rgb(255,131,0) override}`);
+					fs.outputFileSync(
+						fullpath,
+						tpl[`${key}Override`](
+							fs.readFileSync(fullpath, 'utf-8'),
+							{ name, mutation, pathArr, project, module, obj }
+						)
 					);
 				}
+			});
+
+			Object.keys(overrides).forEach(key => {
+				let { path } = overrides[key];
+				let fullpath = join(path);
+				if (fs.existsSync(fullpath) && typeof tplOverride[key] === 'function') {
+					// 文件存在，重写相关
+					log(chalk`{yellow ${key}}: {rgb(255,131,0) override}`);
+
+					fs.outputFileSync(
+						fullpath,
+						tplOverride[key](
+							fs.readFileSync(fullpath, 'utf-8'),
+							{ mutation, pathArr, project, module, obj }
+						)
+					);
+					
+				}
+				
 			});
 		})
 		.catch(e => {

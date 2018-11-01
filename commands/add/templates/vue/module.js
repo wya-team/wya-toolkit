@@ -14,7 +14,7 @@ var _module = function _module() {
 
 	var extra = pathArr.slice(1).map(function (item) {
 		return '' + item[0].toUpperCase() + item.slice(1);
-	});
+	}).join('');
 
 	var contents = '';
 

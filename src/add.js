@@ -54,9 +54,9 @@ const question = [
 		default: `${process.cwd()}/src/pages/`,
 		// default: `${process.cwd()}/tmp/`,
 		validate (val) {
-			if (val === `${process.cwd()}/tmp/`) {
-				shell.rm('-rf', 'tmp');
-			}
+			// if (val === `${process.cwd()}/tmp/`) {
+			// 	shell.rm('-rf', 'tmp');
+			// }
 			return true;
 		}
 	},

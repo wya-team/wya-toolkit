@@ -6,7 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 exports.routeForVue = undefined;
 
 var _templateObject = _taggedTemplateLiteral(['{green ', '}: {rgb(255,131,0) ', '}'], ['{green ', '}: {rgb(255,131,0) ', '}']),
-    _templateObject2 = _taggedTemplateLiteral(['{red ', '}'], ['{red ', '}']);
+    _templateObject2 = _taggedTemplateLiteral(['{green ', '}: {rgb(255,131,0) created}'], ['{green ', '}: {rgb(255,131,0) created}']),
+    _templateObject3 = _taggedTemplateLiteral(['{yellow ', '}: {rgb(255,131,0) override}'], ['{yellow ', '}: {rgb(255,131,0) override}']),
+    _templateObject4 = _taggedTemplateLiteral(['{red ', '}'], ['{red ', '}']);
 
 var _inquirer = require('inquirer');
 
@@ -27,6 +29,10 @@ var _path = require('path');
 var _index = require('./templates/vue/index');
 
 var tpl = _interopRequireWildcard(_index);
+
+var _index2 = require('./templates/vue/override/index');
+
+var tplOverride = _interopRequireWildcard(_index2);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -85,6 +91,19 @@ var routeForVue = exports.routeForVue = function routeForVue(path, dir, project)
 			path: _upath2.default.normalize(dir + 'stores/modules/' + mutation + '/root.js')
 		}
 	};
+
+	var overrides = {
+		rootApi: {
+			path: _upath2.default.normalize(dir + 'stores/apis/root.js')
+		},
+		rootRoute: {
+			path: _upath2.default.normalize(dir + 'routers/routes.js')
+		},
+		rootModules: {
+			path: _upath2.default.normalize(dir + 'stores/modules/root.js')
+		}
+	};
+
 	var names = Object.keys(obj);
 	// log
 	names.forEach(function (key) {
@@ -107,16 +126,33 @@ var routeForVue = exports.routeForVue = function routeForVue(path, dir, project)
 
 			var fullpath = (0, _path.join)(path);
 
-			var contents = '';
-			contents += '/**\n';
-			contents += ' * ' + name + '\n';
-			contents += ' */';
-			// 文件不存在的情况下操作
+			var content = '';
+			content += '/**\n';
+			content += ' * ' + name + '\n';
+			content += ' */';
 			if (!_fsExtra2.default.existsSync(fullpath)) {
-				_fsExtra2.default.outputFileSync(fullpath, typeof tpl[key] === 'function' ? tpl[key]({ name: name, mutation: mutation, pathArr: pathArr, project: project, module: module, obj: obj }) : contents);
+				// 文件不存在的情况下操作
+				log((0, _chalk2.default)(_templateObject2, key));
+				_fsExtra2.default.outputFileSync(fullpath, typeof tpl[key] === 'function' ? tpl[key]({ name: name, mutation: mutation, pathArr: pathArr, project: project, module: module, obj: obj }) : content);
+			} else if (typeof tpl[key + 'Override'] === 'function') {
+				// 文件存在，重写相关
+				log((0, _chalk2.default)(_templateObject3, key));
+				_fsExtra2.default.outputFileSync(fullpath, tpl[key + 'Override'](_fsExtra2.default.readFileSync(fullpath, 'utf-8'), { name: name, mutation: mutation, pathArr: pathArr, project: project, module: module, obj: obj }));
+			}
+		});
+
+		Object.keys(overrides).forEach(function (key) {
+			var path = overrides[key].path;
+
+			var fullpath = (0, _path.join)(path);
+			if (_fsExtra2.default.existsSync(fullpath) && typeof tplOverride[key] === 'function') {
+				// 文件存在，重写相关
+				log((0, _chalk2.default)(_templateObject3, key));
+
+				_fsExtra2.default.outputFileSync(fullpath, tplOverride[key](_fsExtra2.default.readFileSync(fullpath, 'utf-8'), { mutation: mutation, pathArr: pathArr, project: project, module: module, obj: obj }));
 			}
 		});
 	}).catch(function (e) {
-		log((0, _chalk2.default)(_templateObject2, e));
+		log((0, _chalk2.default)(_templateObject4, e));
 	});
 };

@@ -17,3 +17,20 @@ var mutation = exports.mutation = function mutation() {
 	contents += 'export const ' + mutationType + ' = \'' + mutationType + '\';\n';
 	return contents;
 };
+
+var mutationOverride = exports.mutationOverride = function mutationOverride(content) {
+	var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	var name = opts.name,
+	    pathArr = opts.pathArr,
+	    obj = opts.obj;
+
+	var mutationType = pathArr.join('_').toUpperCase() + '_GET';
+	var newContent = '';
+	newContent += 'export const ' + mutationType + ' = \'' + mutationType + '\';';
+
+	if (content.includes(newContent) === false) {
+		content += newContent + '\n';
+	}
+
+	return content;
+};

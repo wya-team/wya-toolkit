@@ -68,9 +68,9 @@ var question = [{
 	default: process.cwd() + '/src/pages/',
 	// default: `${process.cwd()}/tmp/`,
 	validate: function validate(val) {
-		if (val === process.cwd() + '/tmp/') {
-			_shelljs2.default.rm('-rf', 'tmp');
-		}
+		// if (val === `${process.cwd()}/tmp/`) {
+		// 	shell.rm('-rf', 'tmp');
+		// }
 		return true;
 	}
 }];

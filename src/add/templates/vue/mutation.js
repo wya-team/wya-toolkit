@@ -8,3 +8,17 @@ export const mutation = (opts = {}) => {
 	contents += `export const ${mutationType} = '${mutationType}';\n`;
 	return contents;
 };
+
+export const mutationOverride = (content, opts = {}) => {
+	const { name, pathArr, obj } = opts;
+	let mutationType = pathArr.join('_').toUpperCase() + '_GET';
+	let newContent = '';
+	newContent += `export const ${mutationType} = '${mutationType}';`;
+
+	if (content.includes(newContent) === false) {
+		content += `${newContent}\n`;
+	}
+
+	return content;
+};
+
