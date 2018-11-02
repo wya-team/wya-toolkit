@@ -1,7 +1,7 @@
 import { getNewContent } from './utils/helper';
 
 export const router = (opts = {}) => {
-	const { name, mutation, pathArr, project, obj } = opts;
+	const { mutation, pathArr, project, obj } = opts;
 	let contents = '';
 
 	contents += `export const ${mutation}Config = [\n`;
@@ -20,7 +20,7 @@ export const router = (opts = {}) => {
 };
 
 export const routerOverride = (content, opts = {}) => {
-	const { name, mutation, pathArr, project, obj } = opts;
+	const { mutation, pathArr, project, obj } = opts;
 	try {
 		let importContent = undefined;
 		let injectContent = '';

@@ -1,7 +1,7 @@
 import { getNewContent } from '../utils/helper';
 
 export const rootModules = (content, opts = {}) => {
-	const { name, mutation, pathArr, componentArr, obj } = opts;
+	const { mutation, pathArr, componentArr, obj } = opts;
 	try {
 		let importContent = `import ${mutation} from './${mutation}/root';`;
 		let injectContent = `	...${mutation}`;

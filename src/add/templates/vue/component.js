@@ -1,5 +1,5 @@
 export const component = (opts = {}) => {
-	const { name, mutation, pathArr, project, obj } = opts;
+	const { mutation, pathArr, project, obj } = opts;
 	let contents = '';
 
 	contents += `<template>\n`;

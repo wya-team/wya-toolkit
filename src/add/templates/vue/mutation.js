@@ -1,5 +1,5 @@
 export const mutation = (opts = {}) => {
-	const { name, pathArr, obj } = opts;
+	const { pathArr, obj } = opts;
 	let mutationType = pathArr.join('_').toUpperCase() + '_GET';
 	let contents = '';
 	contents += `/**\n`;
@@ -10,7 +10,7 @@ export const mutation = (opts = {}) => {
 };
 
 export const mutationOverride = (content, opts = {}) => {
-	const { name, pathArr, obj } = opts;
+	const { pathArr, obj } = opts;
 	let mutationType = pathArr.join('_').toUpperCase() + '_GET';
 	let newContent = '';
 	newContent += `export const ${mutationType} = '${mutationType}';`;

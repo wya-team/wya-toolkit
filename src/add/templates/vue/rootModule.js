@@ -16,7 +16,7 @@ export const rootModule = (opts = {}) => {
 };
 
 export const rootModuleOverride = (content, opts = {}) => {
-	const { name, mutation, pathArr, componentArr, obj } = opts;
+	const { mutation, pathArr, componentArr, obj } = opts;
 	try {
 		let extra = pathArr.slice(1).map(item => `${item[0].toUpperCase()}${item.slice(1)}`).join('');
 		let pathName = `${pathArr.slice(1).join('-')}`;

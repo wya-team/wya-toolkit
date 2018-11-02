@@ -1,7 +1,7 @@
 import { getNewContent } from './utils/helper';
 
 export const api = (opts = {}) => {
-	const { name, mutation, pathArr, project, obj } = opts;
+	const { mutation, pathArr, project, obj } = opts;
 	
 	let contents = '';
 	contents += `const api = {\n`;
@@ -15,7 +15,7 @@ export const api = (opts = {}) => {
 };
 
 export const apiOverride = (content, opts = {}) => {
-	const { name, mutation, pathArr, project, obj } = opts;
+	const { mutation, pathArr, project, obj } = opts;
 	
 	try {
 		let importContent = undefined;

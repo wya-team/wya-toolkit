@@ -1,5 +1,5 @@
 export const module = (opts = {}) => {
-	const { name, mutation, pathArr, project, obj } = opts;
+	const { mutation, pathArr, project, obj } = opts;
 
 	let extra = pathArr.slice(1).map(item => `${item[0].toUpperCase()}${item.slice(1)}`).join('');
 

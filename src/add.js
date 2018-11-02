@@ -32,6 +32,31 @@ const question = [
 		}
 	},
 	{
+		type: 'list',
+		name: 'template',
+		message: 'Select template:',
+		when: (answers) => answers.type === 'routeForVue',
+		choices: [
+			new Separator(' = For template = '),
+			'basic',
+			'paging'
+		],
+		default: 'basic'
+	},
+	{
+		type: 'list',
+		name: 'mode',
+		message: 'Select mode:',
+		when: (answers) => answers.template === 'paging',
+		choices: [
+			new Separator(' = For template = '),
+			'table',
+			'piece',
+			'native'
+		],
+		default: 'table'
+	},
+	{
 		type: 'input',
 		name: 'path',
 		message: 'RoutePath is required:',
@@ -51,24 +76,25 @@ const question = [
 		message: 'Where to in the project:',
 		when: (answers) => answers.type !== 'none',
 		// default: `${process.cwd()}/src/pages/`,
+		// default: `${process.cwd()}/tmp/`,
 		default: `${process.cwd()}/tmp/src/pages/`,
 		validate (val) {
-			// if (val === `${process.cwd()}/tmp/`) {
-			// 	shell.rm('-rf', 'tmp');
-			// }
+			if (val === `${process.cwd()}/tmp/`) {
+				shell.rm('-rf', 'tmp');
+			}
 			return true;
 		}
 	},
 	
 ];
 
-const stream = prompt(question).then(({ type, path, dir, project }) => {
-	switch (type) {
+const stream = prompt(question).then((res) => {
+	switch (res.type) {
 		case "routeForReact":
-			routeForReact(path, dir);
+			routeForReact(res);
 			break;
 		case "routeForVue":
-			routeForVue(path, dir, project);
+			routeForVue(res);
 			break;
 		default:
 			log('need to do!');

@@ -5,7 +5,7 @@ const log = console.log;
 import fs, { writeFile } from 'fs-extra';
 import { resolve, join } from 'path';
 import * as tpl from './templates/react/index';
-export const routeForReact = (path, dir) => {
+export const routeForReact = ({ path, dir }) => {
 	let pathArr = path.replace(/\({0,}\//g, '-')
 		.replace(/([a-z\dA-Z])([A-Z])/g, '$1-$2')
 		.toLowerCase()

@@ -1,7 +1,7 @@
 import { getNewContent } from '../utils/helper';
 
 export const rootRoute = (content, opts = {}) => {
-	const { name, mutation, pathArr, componentArr, obj } = opts;
+	const { mutation, pathArr, componentArr, obj } = opts;
 	try {
 		let importContent = `import { ${mutation}Config } from '../containers/${mutation}/app';`;
 		let injectContent = `				...${mutation}Config`;

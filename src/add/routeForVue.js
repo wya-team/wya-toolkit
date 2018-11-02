@@ -5,8 +5,10 @@ const log = console.log;
 import fs, { writeFile } from 'fs-extra';
 import { resolve, join } from 'path';
 import * as tpl from './templates/vue/index';
-import * as tplOverride from './templates/vue/override/index';
-export const routeForVue = (path, dir, project) => {
+import * as rootTpl from './templates/vue/root/index';
+import * as pagingTpl from './templates/vue/paging/index';
+
+export const routeForVue = ({ path, dir, project, template, mode }) => {
 	let pathArr = path.replace(/\({0,}\//g, '-')
 		.replace(/([a-z\dA-Z])([A-Z])/g, '$1-$2')
 		.toLowerCase()
@@ -24,42 +26,35 @@ export const routeForVue = (path, dir, project) => {
 	let container = pathArr.join('-');
 	let mutation = pathArr[0];
 	let module = pathArr.slice(1).join('-');
-	let component = `__tpl__`;
-	let obj = {
+
+	let basicConfig = {
 		router: {
-			name: container,
 			path: upath.normalize(`${dir}containers/${pathArr[0]}/app.js`)
 		},
 		container: {
-			name: container,
 			path: upath.normalize(`${dir}containers/${pathArr[0]}/modules/${container}.vue`)
 		},
 		component: {
-			name: component,
-			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/${component}.vue`)
+			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/__tpl__.vue`)
 		},
 		/**
 		 * strore
 		 */
 		mutation: {
-			name: mutation,
 			path: upath.normalize(`${dir}stores/mutations/${mutation}.js`)
 		},
 		api: {
-			name: mutation,
 			path: upath.normalize(`${dir}stores/apis/${mutation}.js`)
 		},
 		module: {
-			name: module,
 			path: upath.normalize(`${dir}stores/modules/${mutation}/${module}.js`)
 		},
 		rootModule: {
-			name: module,
 			path: upath.normalize(`${dir}stores/modules/${mutation}/root.js`)
 		}
 	};
 
-	let overrides = {
+	let rootConfig = {
 		rootApi: {
 			path: upath.normalize(`${dir}stores/apis/root.js`)
 		},
@@ -71,10 +66,24 @@ export const routeForVue = (path, dir, project) => {
 		}
 	};
 
+	let pagingConfig = {
+		mutation: basicConfig.mutation,
+		api: basicConfig.api,
+		module: basicConfig.module,
+		container: basicConfig.container,
+		filter: {
+			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/filter.vue`)
+		},
+		item: {
+			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/item.${mode === 'table' ? 'js' : 'vue'}`)
+		},
+		list: {
+			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/list.vue`)
+		}
+	};
 
-	let names = Object.keys(obj);
 	// log
-	names.forEach(key => log(chalk`{green ${key}}: {rgb(255,131,0) ${obj[key].path}}`));
+	Object.keys(basicConfig).forEach(key => log(chalk`{green ${key}}: {rgb(255,131,0) ${basicConfig[key].path}}`));
 
 	let question = {
 		type: 'confirm',
@@ -85,14 +94,14 @@ export const routeForVue = (path, dir, project) => {
 	return prompt(question)
 		.then((res) => {
 			if (!res.sure) return null;
-			chalk('waiting...');
-			names.forEach(key => {
-				let { name, path } = obj[key];
+			log(chalk('waiting...'));
+			Object.keys(basicConfig).forEach(key => {
+				let { path } = basicConfig[key];
 				let fullpath = join(path);
 
 				let content = '';
 				content += `/**\n`;
-				content += ` * ${name}\n`;
+				content += ` * 请注释相关信息\n`;
 				content += ` */`;
 				if (!fs.existsSync(fullpath)) {
 					// 文件不存在的情况下操作
@@ -100,7 +109,7 @@ export const routeForVue = (path, dir, project) => {
 					fs.outputFileSync(
 						fullpath,
 						typeof tpl[key] === 'function'
-							? tpl[key]({ name, mutation, pathArr, project, module, obj })
+							? tpl[key]({ mutation, pathArr, project, module })
 							: content
 					);
 				} else if (typeof tpl[`${key}Override`] === 'function') {
@@ -110,30 +119,49 @@ export const routeForVue = (path, dir, project) => {
 						fullpath,
 						tpl[`${key}Override`](
 							fs.readFileSync(fullpath, 'utf-8'),
-							{ name, mutation, pathArr, project, module, obj }
+							{ mutation, pathArr, project, module }
 						)
 					);
 				}
 			});
 
-			Object.keys(overrides).forEach(key => {
-				let { path } = overrides[key];
+			Object.keys(rootConfig).forEach(key => {
+				let { path } = rootConfig[key];
 				let fullpath = join(path);
-				if (fs.existsSync(fullpath) && typeof tplOverride[key] === 'function') {
+				if (fs.existsSync(fullpath) && typeof rootTpl[key] === 'function') {
 					// 文件存在，重写相关
 					log(chalk`{yellow ${key}}: {rgb(255,131,0) override}`);
 
 					fs.outputFileSync(
 						fullpath,
-						tplOverride[key](
+						rootTpl[key](
 							fs.readFileSync(fullpath, 'utf-8'),
-							{ mutation, pathArr, project, module, obj }
+							{ mutation, pathArr, project, module }
 						)
 					);
 					
 				}
-				
 			});
+			if (template === 'paging') {
+				fs.removeSync(basicConfig.component.path);
+
+				Object.keys(pagingConfig).forEach(key => {
+					let { path } = pagingConfig[key];
+					let fullpath = join(path);
+					if (typeof pagingTpl[key] === 'function') {
+						log(chalk`{yellow ${key}}: {rgb(255,131,0) ${fs.existsSync(fullpath) ? 'override' : 'created'}}`);
+
+						fs.outputFileSync(
+							fullpath,
+							pagingTpl[key](
+								fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
+								{ mutation, pathArr, project, module, mode }
+							)
+						);
+						
+					}
+				});
+			}
 		})
 		.catch(e => {
 			log(chalk`{red ${e}}`);
