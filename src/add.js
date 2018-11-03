@@ -39,13 +39,26 @@ const question = [
 		choices: [
 			new Separator(' = For template = '),
 			'basic',
-			'paging'
+			'paging',
+			'form'
 		],
 		default: 'basic'
 	},
 	{
 		type: 'list',
-		name: 'mode',
+		name: 'pagingType',
+		message: 'Select type:',
+		when: (answers) => answers.template === 'paging',
+		choices: [
+			new Separator(' = For template = '),
+			'basic',
+			'tabs'
+		],
+		default: 'basic'
+	},
+	{
+		type: 'list',
+		name: 'pagingMode',
 		message: 'Select mode:',
 		when: (answers) => answers.template === 'paging',
 		choices: [
@@ -75,12 +88,12 @@ const question = [
 		name: 'dir',
 		message: 'Where to in the project:',
 		when: (answers) => answers.type !== 'none',
-		// default: `${process.cwd()}/src/pages/`,
+		default: `${process.cwd()}/src/pages/`,
 		// default: `${process.cwd()}/tmp/`,
-		default: `${process.cwd()}/tmp/src/pages/`,
+		// default: `${process.cwd()}/tmp/src/pages/`,
 		validate (val) {
 			if (val === `${process.cwd()}/tmp/`) {
-				shell.rm('-rf', 'tmp');
+				// shell.rm('-rf', 'tmp');
 			}
 			return true;
 		}

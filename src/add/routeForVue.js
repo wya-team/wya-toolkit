@@ -7,8 +7,9 @@ import { resolve, join } from 'path';
 import * as tpl from './templates/vue/index';
 import * as rootTpl from './templates/vue/root/index';
 import * as pagingTpl from './templates/vue/paging/index';
+import * as formTpl from './templates/vue/form/index';
 
-export const routeForVue = ({ path, dir, project, template, mode }) => {
+export const routeForVue = ({ path, dir, project, template, pagingMode, pagingType }) => {
 	let pathArr = path.replace(/\({0,}\//g, '-')
 		.replace(/([a-z\dA-Z])([A-Z])/g, '$1-$2')
 		.toLowerCase()
@@ -75,11 +76,18 @@ export const routeForVue = ({ path, dir, project, template, mode }) => {
 			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/filter.vue`)
 		},
 		item: {
-			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/item.${mode === 'table' ? 'js' : 'vue'}`)
+			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/item.${pagingMode === 'table' ? 'js' : 'vue'}`)
 		},
 		list: {
-			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/list.vue`)
+			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/${pagingType === 'tabs' ? 'tabs-' : ''}list.vue`)
 		}
+	};
+
+	let formConfig = {
+		container: basicConfig.container,
+		component: {
+			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/content.vue`)
+		},
 	};
 
 	// log
@@ -155,13 +163,35 @@ export const routeForVue = ({ path, dir, project, template, mode }) => {
 							fullpath,
 							pagingTpl[key](
 								fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
-								{ mutation, pathArr, project, module, mode }
+								{ mutation, pathArr, project, module, pagingMode, pagingType }
 							)
 						);
 						
 					}
 				});
 			}
+
+			if (template === 'form') {
+				fs.removeSync(basicConfig.component.path);
+
+				Object.keys(formConfig).forEach(key => {
+					let { path } = formConfig[key];
+					let fullpath = join(path);
+					if (typeof formTpl[key] === 'function') {
+						log(chalk`{yellow ${key}}: {rgb(255,131,0) ${fs.existsSync(fullpath) ? 'override' : 'created'}}`);
+
+						fs.outputFileSync(
+							fullpath,
+							formTpl[key](
+								fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
+								{ mutation, pathArr, project, module }
+							)
+						);
+						
+					}
+				});
+			}
+
 		})
 		.catch(e => {
 			log(chalk`{red ${e}}`);

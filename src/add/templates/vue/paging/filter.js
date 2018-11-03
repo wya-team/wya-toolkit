@@ -1,7 +1,7 @@
 import { getNewContent } from '../utils/helper';
 
 export const filter = (content, opts = {}) => {
-	const { mutation, pathArr, project, obj, mode } = opts;
+	const { mutation, pathArr, project, obj, pagingMode: mode } = opts;
 	let extra = pathArr.slice(1).map(item => `${item[0].toUpperCase()}${item.slice(1)}`).join('');
 
 	let mutationType = `${pathArr.join('_').toUpperCase()}`;
