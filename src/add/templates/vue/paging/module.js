@@ -59,7 +59,7 @@ export const module = (content, opts = {}) => {
 		}
 		contents += `		};\n`;
 		contents += `	},\n`;
-		contents += `	${pagingType}_RESET(state, payload) {\n`;
+		contents += `	${pagingType}_RESET(state, { type }) {\n`;
 		contents += `		state.listInfo = {\n`;
 		contents += `			...initialState.listInfo,\n`;
 		switch (type) {

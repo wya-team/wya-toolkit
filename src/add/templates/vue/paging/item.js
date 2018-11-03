@@ -73,7 +73,7 @@ export const item = (content, opts = {}) => {
 				contents += `			this.$store.commit('${pagingType}_INIT');\n`;
 				contents += `		},\n`;
 				contents += `		handleResetCur() {\n`;
-				contents += `			this.$store.commit('${pagingType}_RESET');\n`;
+				contents += `			this.$store.commit('${pagingType}_RESET', { type: this.type });\n`;
 				contents += `		},\n`;
 				contents += `		handleLinkTo() {\n`;
 				contents += `			this.$router.push('/');\n`;
@@ -103,7 +103,7 @@ export const item = (content, opts = {}) => {
 				contents += `			this.$store.commit('${pagingType}_INIT');\n`;
 				contents += `		},\n`;
 				contents += `		handleResetCur() {\n`;
-				contents += `			this.$store.commit('${pagingType}_RESET');\n`;
+				contents += `			this.$store.commit('${pagingType}_RESET', { type: this.type });\n`;
 				contents += `		}\n`;
 				contents += `	}\n`;
 				contents += `};\n`;
@@ -179,7 +179,7 @@ export const item = (content, opts = {}) => {
 				contents += `			this.$store.commit('${pagingType}_INIT');\n`;
 				contents += `		},\n`;
 				contents += `		handleResetCur() {\n`;
-				contents += `			this.$store.commit('${pagingType}_RESET');\n`;
+				contents += `			this.$store.commit('${pagingType}_RESET', { type: this.type });\n`;
 				contents += `		},\n`;
 				contents += `		handleLinkTo() {\n`;
 				contents += `			this.$router.push('/');\n`;
