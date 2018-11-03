@@ -205,7 +205,7 @@ export const list = (content, opts = {}) => {
 		contents += `	},\n`;
 		contents += `	methods: {\n`;
 		contents += `		loadData(page, pageSize) {\n`;
-		contents += `			const { query = {} } = this.$route;\n`;
+		contents += `			let { query = {} } = getParseUrl();\n`;
 		contents += `			return this.request({\n`;
 		contents += `				url: types.${pagingType}_GET,\n`;
 		contents += `				type: 'GET',\n`;
@@ -232,8 +232,9 @@ export const list = (content, opts = {}) => {
 				contents += `		handleChange(type) {\n`;
 				contents += `			this.type = type;\n`;
 				contents += `\n`;
-				contents += `			let query = {\n`;
-				contents += `				...this.$route.query,\n`;
+				contents += `			let { query = {} } = getParseUrl(); // this.$route需要设置paging.sync\n`;
+				contents += `			query = {\n`;
+				contents += `				...query,\n`;
 				contents += `				type,\n`;
 				contents += `				page: this.current[type]\n`;
 				contents += `			};\n`;
