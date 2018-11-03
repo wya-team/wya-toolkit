@@ -35,7 +35,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 var log = console.log;
-var routeForReact = exports.routeForReact = function routeForReact(path, dir) {
+var routeForReact = exports.routeForReact = function routeForReact(_ref) {
+	var path = _ref.path,
+	    dir = _ref.dir;
+
 	var pathArr = path.replace(/\({0,}\//g, '-').replace(/([a-z\dA-Z])([A-Z])/g, '$1-$2').toLowerCase().split('-').filter(function (item) {
 		return item && !item.includes(':');
 	});

@@ -35,7 +35,6 @@ var question = [{
 	when: function when(answers) {
 		return answers.type === 'routeForVue';
 	},
-	default: 'tpl',
 	validate: function validate(val) {
 		if (val === '') {
 			return 'Project Name is required!';
@@ -43,6 +42,33 @@ var question = [{
 			return true;
 		}
 	}
+}, {
+	type: 'list',
+	name: 'template',
+	message: 'Select template:',
+	when: function when(answers) {
+		return answers.type === 'routeForVue';
+	},
+	choices: [new _inquirer.Separator(' = For template = '), 'basic', 'paging', 'form'],
+	default: 'basic'
+}, {
+	type: 'list',
+	name: 'pagingType',
+	message: 'Select type:',
+	when: function when(answers) {
+		return answers.template === 'paging';
+	},
+	choices: [new _inquirer.Separator(' = For template = '), 'basic', 'tabs'],
+	default: 'basic'
+}, {
+	type: 'list',
+	name: 'pagingMode',
+	message: 'Select mode:',
+	when: function when(answers) {
+		return answers.template === 'paging';
+	},
+	choices: [new _inquirer.Separator(' = For template = '), 'table', 'piece', 'native'],
+	default: 'table'
 }, {
 	type: 'input',
 	name: 'path',
@@ -67,26 +93,22 @@ var question = [{
 	},
 	default: process.cwd() + '/src/pages/',
 	// default: `${process.cwd()}/tmp/`,
+	// default: `${process.cwd()}/tmp/src/pages/`,
 	validate: function validate(val) {
-		// if (val === `${process.cwd()}/tmp/`) {
-		// 	shell.rm('-rf', 'tmp');
-		// }
+		if (val === process.cwd() + '/tmp/') {
+			// shell.rm('-rf', 'tmp');
+		}
 		return true;
 	}
 }];
 
-var stream = (0, _inquirer.prompt)(question).then(function (_ref) {
-	var type = _ref.type,
-	    path = _ref.path,
-	    dir = _ref.dir,
-	    project = _ref.project;
-
-	switch (type) {
+var stream = (0, _inquirer.prompt)(question).then(function (res) {
+	switch (res.type) {
 		case "routeForReact":
-			(0, _index.routeForReact)(path, dir);
+			(0, _index.routeForReact)(res);
 			break;
 		case "routeForVue":
-			(0, _index.routeForVue)(path, dir, project);
+			(0, _index.routeForVue)(res);
 			break;
 		default:
 			log('need to do!');

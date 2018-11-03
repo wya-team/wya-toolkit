@@ -5,8 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var component = exports.component = function component() {
 	var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	var name = opts.name,
-	    mutation = opts.mutation,
+	var mutation = opts.mutation,
 	    pathArr = opts.pathArr,
 	    project = opts.project,
 	    obj = opts.obj;
@@ -15,7 +14,7 @@ var component = exports.component = function component() {
 
 	contents += '<template>\n';
 	contents += '\t<div>\n';
-	contents += '\t\t__tpl__\n';
+	contents += '\t\t__tpl__, ' + pathArr.join('-') + '\n';
 	contents += '\t</div>\n';
 	contents += '</template>\n\n';
 
@@ -27,6 +26,7 @@ var component = exports.component = function component() {
 	contents += '\tdata() {\n';
 	contents += '\t\treturn {\n';
 	contents += '\t\t};\n';
+	contents += '\t},\n';
 	contents += '\tcreated() {\n';
 	contents += '\t},\n';
 	contents += '\tmethods: {\n';

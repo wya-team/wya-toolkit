@@ -8,7 +8,8 @@ exports.routeForVue = undefined;
 var _templateObject = _taggedTemplateLiteral(['{green ', '}: {rgb(255,131,0) ', '}'], ['{green ', '}: {rgb(255,131,0) ', '}']),
     _templateObject2 = _taggedTemplateLiteral(['{green ', '}: {rgb(255,131,0) created}'], ['{green ', '}: {rgb(255,131,0) created}']),
     _templateObject3 = _taggedTemplateLiteral(['{yellow ', '}: {rgb(255,131,0) override}'], ['{yellow ', '}: {rgb(255,131,0) override}']),
-    _templateObject4 = _taggedTemplateLiteral(['{red ', '}'], ['{red ', '}']);
+    _templateObject4 = _taggedTemplateLiteral(['{yellow ', '}: {rgb(255,131,0) ', '}'], ['{yellow ', '}: {rgb(255,131,0) ', '}']),
+    _templateObject5 = _taggedTemplateLiteral(['{red ', '}'], ['{red ', '}']);
 
 var _inquirer = require('inquirer');
 
@@ -30,9 +31,17 @@ var _index = require('./templates/vue/index');
 
 var tpl = _interopRequireWildcard(_index);
 
-var _index2 = require('./templates/vue/override/index');
+var _index2 = require('./templates/vue/root/index');
 
-var tplOverride = _interopRequireWildcard(_index2);
+var rootTpl = _interopRequireWildcard(_index2);
+
+var _index3 = require('./templates/vue/paging/index');
+
+var pagingTpl = _interopRequireWildcard(_index3);
+
+var _index4 = require('./templates/vue/form/index');
+
+var formTpl = _interopRequireWildcard(_index4);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -41,7 +50,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 var log = console.log;
-var routeForVue = exports.routeForVue = function routeForVue(path, dir, project) {
+var routeForVue = exports.routeForVue = function routeForVue(_ref) {
+	var path = _ref.path,
+	    dir = _ref.dir,
+	    project = _ref.project,
+	    template = _ref.template,
+	    pagingMode = _ref.pagingMode,
+	    pagingType = _ref.pagingType;
+
 	var pathArr = path.replace(/\({0,}\//g, '-').replace(/([a-z\dA-Z])([A-Z])/g, '$1-$2').toLowerCase().split('-').filter(function (item) {
 		return item && !item.includes(':');
 	});
@@ -57,42 +73,35 @@ var routeForVue = exports.routeForVue = function routeForVue(path, dir, project)
 	var container = pathArr.join('-');
 	var mutation = pathArr[0];
 	var module = pathArr.slice(1).join('-');
-	var component = '__tpl__';
-	var obj = {
+
+	var basicConfig = {
 		router: {
-			name: container,
 			path: _upath2.default.normalize(dir + 'containers/' + pathArr[0] + '/app.js')
 		},
 		container: {
-			name: container,
 			path: _upath2.default.normalize(dir + 'containers/' + pathArr[0] + '/modules/' + container + '.vue')
 		},
 		component: {
-			name: component,
-			path: _upath2.default.normalize(dir + 'components/' + pathArr[0] + '/' + module + '/' + component + '.vue')
+			path: _upath2.default.normalize(dir + 'components/' + pathArr[0] + '/' + module + '/__tpl__.vue')
 		},
 		/**
    * strore
    */
 		mutation: {
-			name: mutation,
 			path: _upath2.default.normalize(dir + 'stores/mutations/' + mutation + '.js')
 		},
 		api: {
-			name: mutation,
 			path: _upath2.default.normalize(dir + 'stores/apis/' + mutation + '.js')
 		},
 		module: {
-			name: module,
 			path: _upath2.default.normalize(dir + 'stores/modules/' + mutation + '/' + module + '.js')
 		},
 		rootModule: {
-			name: module,
 			path: _upath2.default.normalize(dir + 'stores/modules/' + mutation + '/root.js')
 		}
 	};
 
-	var overrides = {
+	var rootConfig = {
 		rootApi: {
 			path: _upath2.default.normalize(dir + 'stores/apis/root.js')
 		},
@@ -104,10 +113,32 @@ var routeForVue = exports.routeForVue = function routeForVue(path, dir, project)
 		}
 	};
 
-	var names = Object.keys(obj);
+	var pagingConfig = {
+		mutation: basicConfig.mutation,
+		api: basicConfig.api,
+		module: basicConfig.module,
+		container: basicConfig.container,
+		filter: {
+			path: _upath2.default.normalize(dir + 'components/' + pathArr[0] + '/' + module + '/filter.vue')
+		},
+		item: {
+			path: _upath2.default.normalize(dir + 'components/' + pathArr[0] + '/' + module + '/item.' + (pagingMode === 'table' ? 'js' : 'vue'))
+		},
+		list: {
+			path: _upath2.default.normalize(dir + 'components/' + pathArr[0] + '/' + module + '/' + (pagingType === 'tabs' ? 'tabs-' : '') + 'list.vue')
+		}
+	};
+
+	var formConfig = {
+		container: basicConfig.container,
+		component: {
+			path: _upath2.default.normalize(dir + 'components/' + pathArr[0] + '/' + module + '/content.vue')
+		}
+	};
+
 	// log
-	names.forEach(function (key) {
-		return log((0, _chalk2.default)(_templateObject, key, obj[key].path));
+	Object.keys(basicConfig).forEach(function (key) {
+		return log((0, _chalk2.default)(_templateObject, key, basicConfig[key].path));
 	});
 
 	var question = {
@@ -118,41 +149,68 @@ var routeForVue = exports.routeForVue = function routeForVue(path, dir, project)
 	};
 	return (0, _inquirer.prompt)(question).then(function (res) {
 		if (!res.sure) return null;
-		(0, _chalk2.default)('waiting...');
-		names.forEach(function (key) {
-			var _obj$key = obj[key],
-			    name = _obj$key.name,
-			    path = _obj$key.path;
+		log((0, _chalk2.default)('waiting...'));
+		Object.keys(basicConfig).forEach(function (key) {
+			var path = basicConfig[key].path;
 
 			var fullpath = (0, _path.join)(path);
 
 			var content = '';
 			content += '/**\n';
-			content += ' * ' + name + '\n';
+			content += ' * \u8BF7\u6CE8\u91CA\u76F8\u5173\u4FE1\u606F\n';
 			content += ' */';
 			if (!_fsExtra2.default.existsSync(fullpath)) {
 				// 文件不存在的情况下操作
 				log((0, _chalk2.default)(_templateObject2, key));
-				_fsExtra2.default.outputFileSync(fullpath, typeof tpl[key] === 'function' ? tpl[key]({ name: name, mutation: mutation, pathArr: pathArr, project: project, module: module, obj: obj }) : content);
+				_fsExtra2.default.outputFileSync(fullpath, typeof tpl[key] === 'function' ? tpl[key]({ mutation: mutation, pathArr: pathArr, project: project, module: module }) : content);
 			} else if (typeof tpl[key + 'Override'] === 'function') {
 				// 文件存在，重写相关
 				log((0, _chalk2.default)(_templateObject3, key));
-				_fsExtra2.default.outputFileSync(fullpath, tpl[key + 'Override'](_fsExtra2.default.readFileSync(fullpath, 'utf-8'), { name: name, mutation: mutation, pathArr: pathArr, project: project, module: module, obj: obj }));
+				_fsExtra2.default.outputFileSync(fullpath, tpl[key + 'Override'](_fsExtra2.default.readFileSync(fullpath, 'utf-8'), { mutation: mutation, pathArr: pathArr, project: project, module: module }));
 			}
 		});
 
-		Object.keys(overrides).forEach(function (key) {
-			var path = overrides[key].path;
+		Object.keys(rootConfig).forEach(function (key) {
+			var path = rootConfig[key].path;
 
 			var fullpath = (0, _path.join)(path);
-			if (_fsExtra2.default.existsSync(fullpath) && typeof tplOverride[key] === 'function') {
+			if (_fsExtra2.default.existsSync(fullpath) && typeof rootTpl[key] === 'function') {
 				// 文件存在，重写相关
 				log((0, _chalk2.default)(_templateObject3, key));
 
-				_fsExtra2.default.outputFileSync(fullpath, tplOverride[key](_fsExtra2.default.readFileSync(fullpath, 'utf-8'), { mutation: mutation, pathArr: pathArr, project: project, module: module, obj: obj }));
+				_fsExtra2.default.outputFileSync(fullpath, rootTpl[key](_fsExtra2.default.readFileSync(fullpath, 'utf-8'), { mutation: mutation, pathArr: pathArr, project: project, module: module }));
 			}
 		});
+		if (template === 'paging') {
+			_fsExtra2.default.removeSync(basicConfig.component.path);
+
+			Object.keys(pagingConfig).forEach(function (key) {
+				var path = pagingConfig[key].path;
+
+				var fullpath = (0, _path.join)(path);
+				if (typeof pagingTpl[key] === 'function') {
+					log((0, _chalk2.default)(_templateObject4, key, _fsExtra2.default.existsSync(fullpath) ? 'override' : 'created'));
+
+					_fsExtra2.default.outputFileSync(fullpath, pagingTpl[key](_fsExtra2.default.existsSync(fullpath) ? _fsExtra2.default.readFileSync(fullpath, 'utf-8') : '', { mutation: mutation, pathArr: pathArr, project: project, module: module, pagingMode: pagingMode, pagingType: pagingType }));
+				}
+			});
+		}
+
+		if (template === 'form') {
+			_fsExtra2.default.removeSync(basicConfig.component.path);
+
+			Object.keys(formConfig).forEach(function (key) {
+				var path = formConfig[key].path;
+
+				var fullpath = (0, _path.join)(path);
+				if (typeof formTpl[key] === 'function') {
+					log((0, _chalk2.default)(_templateObject4, key, _fsExtra2.default.existsSync(fullpath) ? 'override' : 'created'));
+
+					_fsExtra2.default.outputFileSync(fullpath, formTpl[key](_fsExtra2.default.existsSync(fullpath) ? _fsExtra2.default.readFileSync(fullpath, 'utf-8') : '', { mutation: mutation, pathArr: pathArr, project: project, module: module }));
+				}
+			});
+		}
 	}).catch(function (e) {
-		log((0, _chalk2.default)(_templateObject4, e));
+		log((0, _chalk2.default)(_templateObject5, e));
 	});
 };

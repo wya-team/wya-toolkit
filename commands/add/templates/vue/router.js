@@ -3,10 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+exports.routerOverride = exports.router = undefined;
+
+var _helper = require('./utils/helper');
+
 var router = exports.router = function router() {
 	var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	var name = opts.name,
-	    mutation = opts.mutation,
+	var mutation = opts.mutation,
 	    pathArr = opts.pathArr,
 	    project = opts.project,
 	    obj = opts.obj;
@@ -20,7 +23,7 @@ var router = exports.router = function router() {
 	contents += '\t},\n';
 
 	contents += '\t{\n';
-	contents += '\t\tpath: \'' + pathArr.join('/') + '\',\n';
+	contents += '\t\tpath: \'/' + pathArr.join('/') + '\',\n';
 	contents += '\t\tname: \'' + pathArr.join('-') + '\',\n';
 	contents += '\t\tcomponent: () => import(\'./modules/' + pathArr.join('-') + '.vue\')\n';
 	contents += '\t}';
@@ -30,43 +33,30 @@ var router = exports.router = function router() {
 
 var routerOverride = exports.routerOverride = function routerOverride(content) {
 	var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-	var name = opts.name,
-	    mutation = opts.mutation,
+	var mutation = opts.mutation,
 	    pathArr = opts.pathArr,
 	    project = opts.project,
 	    obj = opts.obj;
 
 	try {
-		if (content.substr(-1) !== '\n') {
-			content += '\n';
-		}
-		// 需要注入的参数
-		var newContent = '';
-		newContent += '\t{\n';
-		newContent += '\t\tpath: \'' + pathArr.join('/') + '\',\n';
-		newContent += '\t\tname: \'' + pathArr.join('-') + '\',\n';
-		newContent += '\t\tcomponent: () => import(\'./modules/' + pathArr.join('-') + '.vue\')\n';
-		newContent += '\t}';
+		var importContent = undefined;
+		var injectContent = '';
+		injectContent += '\t{\n';
+		injectContent += '\t\tpath: \'/' + pathArr.join('/') + '\',\n';
+		injectContent += '\t\tname: \'' + pathArr.join('-') + '\',\n';
+		injectContent += '\t\tcomponent: () => import(\'./modules/' + pathArr.join('-') + '.vue\')\n';
+		injectContent += '\t}';
 
-		var txtSplit = '\n];\n';
+		var importSplit = undefined;
+		var injectSplit = '\n];\n';
 
-		var splitContent = content.split(txtSplit);
-
-		if (splitContent[0] && splitContent[0].includes(newContent) === false) {
-			var tag = '';
-			if (splitContent[0].substr(-1) === ',') {
-				tag = '\n';
-			} else if (splitContent[0].substr(-2) === ',\n') {
-				tag = '';
-			} else {
-				tag = ",\n";
-			}
-			splitContent[0] += '' + tag + newContent;
-		}
-
-		return splitContent.slice(1).reduce(function (pre, cur) {
-			return pre + txtSplit + cur;
-		}, splitContent[0]);
+		return (0, _helper.getNewContent)({
+			content: content,
+			importContent: importContent,
+			injectContent: injectContent,
+			importSplit: importSplit,
+			injectSplit: injectSplit
+		});
 	} catch (e) {
 		return content;
 	}

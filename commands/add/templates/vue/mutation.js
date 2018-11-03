@@ -5,8 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var mutation = exports.mutation = function mutation() {
 	var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	var name = opts.name,
-	    pathArr = opts.pathArr,
+	var pathArr = opts.pathArr,
 	    obj = opts.obj;
 
 	var mutationType = pathArr.join('_').toUpperCase() + '_GET';
@@ -20,8 +19,7 @@ var mutation = exports.mutation = function mutation() {
 
 var mutationOverride = exports.mutationOverride = function mutationOverride(content) {
 	var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-	var name = opts.name,
-	    pathArr = opts.pathArr,
+	var pathArr = opts.pathArr,
 	    obj = opts.obj;
 
 	var mutationType = pathArr.join('_').toUpperCase() + '_GET';

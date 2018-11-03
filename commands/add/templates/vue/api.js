@@ -3,10 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+exports.apiOverride = exports.api = undefined;
+
+var _helper = require('./utils/helper');
+
 var api = exports.api = function api() {
 	var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	var name = opts.name,
-	    mutation = opts.mutation,
+	var mutation = opts.mutation,
 	    pathArr = opts.pathArr,
 	    project = opts.project,
 	    obj = opts.obj;
@@ -25,41 +28,28 @@ var api = exports.api = function api() {
 
 var apiOverride = exports.apiOverride = function apiOverride(content) {
 	var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-	var name = opts.name,
-	    mutation = opts.mutation,
+	var mutation = opts.mutation,
 	    pathArr = opts.pathArr,
 	    project = opts.project,
 	    obj = opts.obj;
 
 
 	try {
-		if (content.substr(-1) !== '\n') {
-			content += '\n';
-		}
-		// 需要注入的参数
-		var newContent = '';
-		newContent += '\t' + pathArr.join('_').toUpperCase() + '_GET: \'\'';
+		var importContent = undefined;
+		var injectContent = '\t' + pathArr.join('_').toUpperCase() + '_GET: \'\'';
 
-		var txtSplit = '\n};\n';
+		var importSplit = undefined;
+		var injectSplit = '\n};\n';
 
-		var splitContent = content.split(txtSplit);
-
-		if (splitContent[0] && splitContent[0].includes(newContent) === false) {
-			var tag = '';
-			if (splitContent[0].substr(-1) === ',') {
-				tag = '\n';
-			} else if (splitContent[0].substr(-2) === ',\n') {
-				tag = '';
-			} else {
-				tag = ",\n";
-			}
-			splitContent[0] += '' + tag + newContent;
-		}
-
-		return splitContent.slice(1).reduce(function (pre, cur) {
-			return pre + txtSplit + cur;
-		}, splitContent[0]);
+		return (0, _helper.getNewContent)({
+			content: content,
+			importContent: importContent,
+			injectContent: injectContent,
+			importSplit: importSplit,
+			injectSplit: injectSplit
+		});
 	} catch (e) {
+		console.log(e);
 		return content;
 	}
 };

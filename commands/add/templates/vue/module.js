@@ -5,8 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var _module = function _module() {
 	var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	var name = opts.name,
-	    mutation = opts.mutation,
+	var mutation = opts.mutation,
 	    pathArr = opts.pathArr,
 	    project = opts.project,
 	    obj = opts.obj;
