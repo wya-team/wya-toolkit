@@ -132,7 +132,7 @@ export const component = (content, opts = {}) => {
 	contents += `</template>\n`;
 	contents += `\n`;
 	contents += `<script>\n`;
-	contents += `import * as types from '@mutations/${mutation}';\n`;
+	// contents += `import * as types from '@mutations/${mutation}';\n`;
 	contents += `import { \n`;
 	contents += `	Form, FormItem, Input, InputNumber, \n`;
 	contents += `	Select, Option, DatePicker, Cascader, Message\n`;

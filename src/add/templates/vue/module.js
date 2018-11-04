@@ -5,7 +5,7 @@ export const module = (opts = {}) => {
 
 	let contents = '';
 
-	contents += `// import * as types from '@mutations/${mutation}';\n\n`;
+	// contents += `// import * as types from '@mutations/${mutation}';\n\n`;
 	contents += `const initialState = {\n`;
 	contents += `	data: ''\n`;
 	contents += `};\n\n`;

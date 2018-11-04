@@ -41,9 +41,9 @@ export const routeForVue = ({ path, dir, project, template, pagingMode, pagingTy
 		/**
 		 * strore
 		 */
-		mutation: {
-			path: upath.normalize(`${dir}stores/mutations/${mutation}.js`)
-		},
+		// mutation: {
+		// 	path: upath.normalize(`${dir}stores/mutations/${mutation}.js`)
+		// },
 		api: {
 			path: upath.normalize(`${dir}stores/apis/${mutation}.js`)
 		},
@@ -68,7 +68,7 @@ export const routeForVue = ({ path, dir, project, template, pagingMode, pagingTy
 	};
 
 	let pagingConfig = {
-		mutation: basicConfig.mutation,
+		// mutation: basicConfig.mutation,
 		api: basicConfig.api,
 		module: basicConfig.module,
 		container: basicConfig.container,

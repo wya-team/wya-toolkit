@@ -130,7 +130,7 @@ export const list = (content, opts = {}) => {
 		}
 		contents += `import { Paging } from 'wya-vc';\n`;
 		contents += `import { getParseUrl, getHashUrl } from '@utils/utils';\n`;
-		contents += `import * as types from '@stores/mutations/${mutation}';\n`;
+		// contents += `import * as types from '@stores/mutations/${mutation}';\n`;
 		contents += `// item\n`;
 
 		switch (mode) {
@@ -207,7 +207,7 @@ export const list = (content, opts = {}) => {
 		contents += `		loadData(page, pageSize) {\n`;
 		contents += `			let { query = {} } = getParseUrl();\n`;
 		contents += `			return this.request({\n`;
-		contents += `				url: types.${pagingType}_GET,\n`;
+		contents += `				url: '${pagingType}_GET',\n`;
 		contents += `				type: 'GET',\n`;
 		contents += `				param: {\n`;
 		contents += `					...query,\n`;
