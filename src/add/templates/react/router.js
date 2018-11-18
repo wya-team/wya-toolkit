@@ -1,7 +1,7 @@
 export const router = (opts = {}) => {
 	const { name, action, pathArr, componentArr, obj } = opts;
 	let contents = '';
-	contents += `import { redirectUserToLogin, redirectUserToHome } from '@router/auth';\n`;
+	contents += `import { redirectUserToLogin, redirectUserToHome } from '@routers/auth';\n`;
 	contents += `export const ${action}Config = [\n`;
 	contents += `	{\n`;
 	contents += `		path: '/${action}',\n`;
