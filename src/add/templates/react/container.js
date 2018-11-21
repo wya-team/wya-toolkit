@@ -7,8 +7,7 @@ export const container = (opts = {}) => {
 	contents += `import PropTypes from 'prop-types';\n`;
 	contents += `import { bindActionCreators } from 'redux';\n`;
 	contents += `import { connect } from 'react-redux';\n`;
-	contents += `import * as creators from '@actions/${action}';\n`;
-	contents += `import * as types from '@constants/actions/${action}';\n`;
+	contents += `import * as creators from '@stores/actions';\n\n`;
 	contents += `// 公用组件\n`;
 	contents += `// import SetTitle from '@components/_common/SetTitle/SetTitle';\n`;
 	contents += `// 业务组件\n`;
@@ -23,7 +22,7 @@ export const container = (opts = {}) => {
 	contents += `	loadData($props){\n`;
 	contents += `		return;\n`;
 	contents += `		if ($props.${data}.isFetching === 0) {\n`;
-	contents += `			let url = types.${actionType};\n`;
+	contents += `			let url = '${actionType}';\n`;
 	contents += `			let param = {};\n\n`;
 	contents += `			let params = {\n`;
 	contents += `				param: param,\n`;

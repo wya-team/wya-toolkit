@@ -38,25 +38,17 @@ export const routeForReact = ({ path, dir }) => {
 			name: component,
 			path: upath.normalize(`${dir}components/${componentArr[0]}/${componentArr.slice(1).join('')}/${component}.js`)
 		},
-		action: {
-			name: action,
-			path: upath.normalize(`${dir}constants/actions/${action}.js`)
-		},
-		creator: {
-			name: action,
-			path: upath.normalize(`${dir}actions/${action}.js`)
-		},
 		api: {
 			name: action,
-			path: upath.normalize(`${dir}constants/api/${action}.js`)
+			path: upath.normalize(`${dir}stores/apis/${action}.js`)
 		},
 		reducer: {
 			name: reducer,
-			path: upath.normalize(`${dir}reducers/${action}/${reducer}.js`)
+			path: upath.normalize(`${dir}stores/reducers/${action}/${reducer}.js`)
 		},
 		rootReducer: {
 			name: reducer,
-			path: upath.normalize(`${dir}reducers/${action}/root.js`)
+			path: upath.normalize(`${dir}stores/reducers/${action}/root.js`)
 		}
 	};
 	let names = Object.keys(obj);
