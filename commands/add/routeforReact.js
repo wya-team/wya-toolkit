@@ -71,25 +71,17 @@ var routeForReact = exports.routeForReact = function routeForReact(_ref) {
 			name: component,
 			path: _upath2.default.normalize(dir + 'components/' + componentArr[0] + '/' + componentArr.slice(1).join('') + '/' + component + '.js')
 		},
-		action: {
-			name: action,
-			path: _upath2.default.normalize(dir + 'constants/actions/' + action + '.js')
-		},
-		creator: {
-			name: action,
-			path: _upath2.default.normalize(dir + 'actions/' + action + '.js')
-		},
 		api: {
 			name: action,
-			path: _upath2.default.normalize(dir + 'constants/api/' + action + '.js')
+			path: _upath2.default.normalize(dir + 'stores/apis/' + action + '.js')
 		},
 		reducer: {
 			name: reducer,
-			path: _upath2.default.normalize(dir + 'reducers/' + action + '/' + reducer + '.js')
+			path: _upath2.default.normalize(dir + 'stores/reducers/' + action + '/' + reducer + '.js')
 		},
 		rootReducer: {
 			name: reducer,
-			path: _upath2.default.normalize(dir + 'reducers/' + action + '/root.js')
+			path: _upath2.default.normalize(dir + 'stores/reducers/' + action + '/root.js')
 		}
 	};
 	var names = Object.keys(obj);

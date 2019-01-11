@@ -18,8 +18,7 @@ var container = exports.container = function container() {
 	contents += 'import PropTypes from \'prop-types\';\n';
 	contents += 'import { bindActionCreators } from \'redux\';\n';
 	contents += 'import { connect } from \'react-redux\';\n';
-	contents += 'import * as creators from \'@actions/' + action + '\';\n';
-	contents += 'import * as types from \'@constants/actions/' + action + '\';\n';
+	contents += 'import * as creators from \'@stores/actions\';\n\n';
 	contents += '// \u516C\u7528\u7EC4\u4EF6\n';
 	contents += '// import SetTitle from \'@components/_common/SetTitle/SetTitle\';\n';
 	contents += '// \u4E1A\u52A1\u7EC4\u4EF6\n';
@@ -34,7 +33,7 @@ var container = exports.container = function container() {
 	contents += '\tloadData($props){\n';
 	contents += '\t\treturn;\n';
 	contents += '\t\tif ($props.' + data + '.isFetching === 0) {\n';
-	contents += '\t\t\tlet url = types.' + actionType + ';\n';
+	contents += '\t\t\tlet url = \'' + actionType + '\';\n';
 	contents += '\t\t\tlet param = {};\n\n';
 	contents += '\t\t\tlet params = {\n';
 	contents += '\t\t\t\tparam: param,\n';

@@ -74,7 +74,7 @@ var _module = function _module(content) {
 		}
 		contents += '\t\t};\n';
 		contents += '\t},\n';
-		contents += '\t' + pagingType + '_RESET(state, payload) {\n';
+		contents += '\t' + pagingType + '_RESET(state, { type }) {\n';
 		contents += '\t\tstate.listInfo = {\n';
 		contents += '\t\t\t...initialState.listInfo,\n';
 		switch (type) {

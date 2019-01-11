@@ -87,9 +87,9 @@ var routeForVue = exports.routeForVue = function routeForVue(_ref) {
 		/**
    * strore
    */
-		mutation: {
-			path: _upath2.default.normalize(dir + 'stores/mutations/' + mutation + '.js')
-		},
+		// mutation: {
+		// 	path: upath.normalize(`${dir}stores/mutations/${mutation}.js`)
+		// },
 		api: {
 			path: _upath2.default.normalize(dir + 'stores/apis/' + mutation + '.js')
 		},
@@ -106,7 +106,7 @@ var routeForVue = exports.routeForVue = function routeForVue(_ref) {
 			path: _upath2.default.normalize(dir + 'stores/apis/root.js')
 		},
 		rootRoute: {
-			path: _upath2.default.normalize(dir + 'routers/routes.js')
+			path: _upath2.default.normalize(dir + 'routers/routes.dist.js')
 		},
 		rootModules: {
 			path: _upath2.default.normalize(dir + 'stores/modules/root.js')
@@ -114,7 +114,7 @@ var routeForVue = exports.routeForVue = function routeForVue(_ref) {
 	};
 
 	var pagingConfig = {
-		mutation: basicConfig.mutation,
+		// mutation: basicConfig.mutation,
 		api: basicConfig.api,
 		module: basicConfig.module,
 		container: basicConfig.container,

@@ -14,6 +14,10 @@ var _shelljs = require('shelljs');
 
 var _shelljs2 = _interopRequireDefault(_shelljs);
 
+var _upath = require('upath');
+
+var _upath2 = _interopRequireDefault(_upath);
+
 var _index = require('./add/index');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -91,9 +95,9 @@ var question = [{
 	when: function when(answers) {
 		return answers.type !== 'none';
 	},
-	default: process.cwd() + '/src/pages/',
-	// default: `${process.cwd()}/tmp/`,
-	// default: `${process.cwd()}/tmp/src/pages/`,
+	default: _upath2.default.normalize(process.cwd() + '/src/pages/'),
+	// default: upath.normalize(`${process.cwd()}/tmp/`),
+	// default: upath.normalize(`${process.cwd()}/tmp/src/pages/`),
 	validate: function validate(val) {
 		if (val === process.cwd() + '/tmp/') {
 			// shell.rm('-rf', 'tmp');

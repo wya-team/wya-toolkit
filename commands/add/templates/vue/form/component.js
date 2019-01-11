@@ -142,7 +142,7 @@ var component = exports.component = function component(content) {
 	contents += '</template>\n';
 	contents += '\n';
 	contents += '<script>\n';
-	contents += 'import * as types from \'@mutations/' + mutation + '\';\n';
+	// contents += `import * as types from '@mutations/${mutation}';\n`;
 	contents += 'import { \n';
 	contents += '\tForm, FormItem, Input, InputNumber, \n';
 	contents += '\tSelect, Option, DatePicker, Cascader, Message\n';

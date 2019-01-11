@@ -17,7 +17,7 @@ var _module = function _module() {
 
 	var contents = '';
 
-	contents += '// import * as types from \'@mutations/' + mutation + '\';\n\n';
+	// contents += `// import * as types from '@mutations/${mutation}';\n\n`;
 	contents += 'const initialState = {\n';
 	contents += '\tdata: \'\'\n';
 	contents += '};\n\n';

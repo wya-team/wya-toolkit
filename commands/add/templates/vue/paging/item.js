@@ -88,7 +88,7 @@ var item = exports.item = function item(content) {
 				contents += '\t\t\tthis.$store.commit(\'' + pagingType + '_INIT\');\n';
 				contents += '\t\t},\n';
 				contents += '\t\thandleResetCur() {\n';
-				contents += '\t\t\tthis.$store.commit(\'' + pagingType + '_RESET\');\n';
+				contents += '\t\t\tthis.$store.commit(\'' + pagingType + '_RESET\', { type: this.type });\n';
 				contents += '\t\t},\n';
 				contents += '\t\thandleLinkTo() {\n';
 				contents += '\t\t\tthis.$router.push(\'/\');\n';
@@ -118,7 +118,7 @@ var item = exports.item = function item(content) {
 				contents += '\t\t\tthis.$store.commit(\'' + pagingType + '_INIT\');\n';
 				contents += '\t\t},\n';
 				contents += '\t\thandleResetCur() {\n';
-				contents += '\t\t\tthis.$store.commit(\'' + pagingType + '_RESET\');\n';
+				contents += '\t\t\tthis.$store.commit(\'' + pagingType + '_RESET\', { type: this.type });\n';
 				contents += '\t\t}\n';
 				contents += '\t}\n';
 				contents += '};\n';
@@ -194,7 +194,7 @@ var item = exports.item = function item(content) {
 				contents += '\t\t\tthis.$store.commit(\'' + pagingType + '_INIT\');\n';
 				contents += '\t\t},\n';
 				contents += '\t\thandleResetCur() {\n';
-				contents += '\t\t\tthis.$store.commit(\'' + pagingType + '_RESET\');\n';
+				contents += '\t\t\tthis.$store.commit(\'' + pagingType + '_RESET\', { type: this.type });\n';
 				contents += '\t\t},\n';
 				contents += '\t\thandleLinkTo() {\n';
 				contents += '\t\t\tthis.$router.push(\'/\');\n';

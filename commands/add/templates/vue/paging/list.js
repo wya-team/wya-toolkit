@@ -146,7 +146,7 @@ var list = exports.list = function list(content) {
 		}
 		contents += 'import { Paging } from \'wya-vc\';\n';
 		contents += 'import { getParseUrl, getHashUrl } from \'@utils/utils\';\n';
-		contents += 'import * as types from \'@stores/mutations/' + mutation + '\';\n';
+		// contents += `import * as types from '@stores/mutations/${mutation}';\n`;
 		contents += '// item\n';
 
 		switch (mode) {
@@ -221,9 +221,9 @@ var list = exports.list = function list(content) {
 		contents += '\t},\n';
 		contents += '\tmethods: {\n';
 		contents += '\t\tloadData(page, pageSize) {\n';
-		contents += '\t\t\tconst { query = {} } = this.$route;\n';
+		contents += '\t\t\tlet { query = {} } = getParseUrl();\n';
 		contents += '\t\t\treturn this.request({\n';
-		contents += '\t\t\t\turl: types.' + pagingType + '_GET,\n';
+		contents += '\t\t\t\turl: \'' + pagingType + '_GET\',\n';
 		contents += '\t\t\t\ttype: \'GET\',\n';
 		contents += '\t\t\t\tparam: {\n';
 		contents += '\t\t\t\t\t...query,\n';
@@ -248,8 +248,9 @@ var list = exports.list = function list(content) {
 				contents += '\t\thandleChange(type) {\n';
 				contents += '\t\t\tthis.type = type;\n';
 				contents += '\n';
-				contents += '\t\t\tlet query = {\n';
-				contents += '\t\t\t\t...this.$route.query,\n';
+				contents += '\t\t\tlet { query = {} } = getParseUrl(); // this.$route\u9700\u8981\u8BBE\u7F6Epaging.sync\n';
+				contents += '\t\t\tquery = {\n';
+				contents += '\t\t\t\t...query,\n';
 				contents += '\t\t\t\ttype,\n';
 				contents += '\t\t\t\tpage: this.current[type]\n';
 				contents += '\t\t\t};\n';

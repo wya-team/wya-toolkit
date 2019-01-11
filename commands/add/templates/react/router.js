@@ -12,7 +12,7 @@ var router = exports.router = function router() {
 	    obj = opts.obj;
 
 	var contents = '';
-	contents += 'import { redirectUserToLogin, redirectUserToHome } from \'@router/auth\';\n';
+	contents += 'import { redirectUserToLogin, redirectUserToHome } from \'@routers/auth\';\n';
 	contents += 'export const ' + action + 'Config = [\n';
 	contents += '\t{\n';
 	contents += '\t\tpath: \'/' + action + '\',\n';
