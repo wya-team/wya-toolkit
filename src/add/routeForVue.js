@@ -60,7 +60,7 @@ export const routeForVue = ({ path, dir, project, template, pagingMode, pagingTy
 			path: upath.normalize(`${dir}stores/apis/root.js`)
 		},
 		rootRoute: {
-			path: upath.normalize(`${dir}routers/routes.js`)
+			path: upath.normalize(`${dir}routers/routes.dist.js`)
 		},
 		rootModules: {
 			path: upath.normalize(`${dir}stores/modules/root.js`)
