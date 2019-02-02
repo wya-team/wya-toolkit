@@ -95,9 +95,9 @@ var question = [{
 	when: function when(answers) {
 		return answers.type !== 'none';
 	},
-	default: _upath2.default.normalize(process.cwd() + '/src/pages/'),
+	// default: upath.normalize(`${process.cwd()}/src/pages/`),
 	// default: upath.normalize(`${process.cwd()}/tmp/`),
-	// default: upath.normalize(`${process.cwd()}/tmp/src/pages/`),
+	default: _upath2.default.normalize(process.cwd() + '/tmp/src/pages/'),
 	validate: function validate(val) {
 		if (val === process.cwd() + '/tmp/') {
 			// shell.rm('-rf', 'tmp');

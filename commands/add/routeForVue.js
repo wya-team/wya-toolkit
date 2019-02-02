@@ -108,6 +108,9 @@ var routeForVue = exports.routeForVue = function routeForVue(_ref) {
 		rootRoute: {
 			path: _upath2.default.normalize(dir + 'routers/routes.dist.js')
 		},
+		_rootRoute: {
+			path: _upath2.default.normalize(dir + 'routers/routes.dev.js')
+		},
 		rootModules: {
 			path: _upath2.default.normalize(dir + 'stores/modules/root.js')
 		}
@@ -173,12 +176,14 @@ var routeForVue = exports.routeForVue = function routeForVue(_ref) {
 		Object.keys(rootConfig).forEach(function (key) {
 			var path = rootConfig[key].path;
 
+			var _key = key.replace(/\_/g, '');
+
 			var fullpath = (0, _path.join)(path);
-			if (_fsExtra2.default.existsSync(fullpath) && typeof rootTpl[key] === 'function') {
+			if (_fsExtra2.default.existsSync(fullpath) && typeof rootTpl[_key] === 'function') {
 				// 文件存在，重写相关
 				log((0, _chalk2.default)(_templateObject3, key));
 
-				_fsExtra2.default.outputFileSync(fullpath, rootTpl[key](_fsExtra2.default.readFileSync(fullpath, 'utf-8'), { mutation: mutation, pathArr: pathArr, project: project, module: module }));
+				_fsExtra2.default.outputFileSync(fullpath, rootTpl[_key](_fsExtra2.default.readFileSync(fullpath, 'utf-8'), { mutation: mutation, pathArr: pathArr, project: project, module: module }));
 			}
 		});
 		if (template === 'paging') {

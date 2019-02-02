@@ -6,7 +6,7 @@ export const rootRoute = (content, opts = {}) => {
 		let importContent = `import { ${mutation}Config } from '../containers/${mutation}/app';`;
 		let injectContent = `				...${mutation}Config`;
 
-		let importSplit = `\nexport const routeConfig = {\n`;
+		let importSplit = `\nexport default {\n`;
 		let injectSplit = `\n			]\n		},\n`;
 
 		return getNewContent({

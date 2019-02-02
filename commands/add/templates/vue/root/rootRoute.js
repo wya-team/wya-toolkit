@@ -18,7 +18,7 @@ var rootRoute = exports.rootRoute = function rootRoute(content) {
 		var importContent = 'import { ' + mutation + 'Config } from \'../containers/' + mutation + '/app\';';
 		var injectContent = '\t\t\t\t...' + mutation + 'Config';
 
-		var importSplit = '\nexport const routeConfig = {\n';
+		var importSplit = '\nexport default {\n';
 		var injectSplit = '\n\t\t\t]\n\t\t},\n';
 
 		return (0, _helper.getNewContent)({

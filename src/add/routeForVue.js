@@ -62,6 +62,9 @@ export const routeForVue = ({ path, dir, project, template, pagingMode, pagingTy
 		rootRoute: {
 			path: upath.normalize(`${dir}routers/routes.dist.js`)
 		},
+		_rootRoute: {
+			path: upath.normalize(`${dir}routers/routes.dev.js`)
+		},
 		rootModules: {
 			path: upath.normalize(`${dir}stores/modules/root.js`)
 		}
@@ -135,14 +138,16 @@ export const routeForVue = ({ path, dir, project, template, pagingMode, pagingTy
 
 			Object.keys(rootConfig).forEach(key => {
 				let { path } = rootConfig[key];
+				let _key = key.replace(/\_/g, '');
+
 				let fullpath = join(path);
-				if (fs.existsSync(fullpath) && typeof rootTpl[key] === 'function') {
+				if (fs.existsSync(fullpath) && typeof rootTpl[_key] === 'function') {
 					// 文件存在，重写相关
 					log(chalk`{yellow ${key}}: {rgb(255,131,0) override}`);
 
 					fs.outputFileSync(
 						fullpath,
-						rootTpl[key](
+						rootTpl[_key](
 							fs.readFileSync(fullpath, 'utf-8'),
 							{ mutation, pathArr, project, module }
 						)
