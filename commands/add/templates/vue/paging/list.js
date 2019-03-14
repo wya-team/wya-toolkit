@@ -69,7 +69,7 @@ var list = exports.list = function list(content) {
 
 				switch (mode) {
 					case 'table':
-						contents += '\t\t<' + project + '-item />\n';
+						contents += '\t\t\t\t<' + project + '-item />\n';
 						break;
 					case 'piece':
 						contents += '\t\t\t\t<' + project + '-item \n';
@@ -77,17 +77,16 @@ var list = exports.list = function list(content) {
 						contents += '\t\t\t\t\tv-bind="it"\n';
 						contents += '\t\t\t\t\tclass="_item"\n';
 						contents += '\t\t\t\t/> \n';
-						contents += '\t\t\t</vc-paging>\n';
 						break;
 					case 'native':
 						contents += '\t\t\t>\n';
 						contents += '\t\t\t\t<' + project + '-item slot-scope="it" v-bind="it" />\n';
-						contents += '\t\t\t</vc-paging>\n';
 						break;
 					default:
 
 				}
-				contents += '\t\t</vc-tab-pane>\n';
+				contents += '\t\t\t</vc-paging>\n';
+				contents += '\t\t</vc-tabs-pane>\n';
 				contents += '\t</vc-tabs>\n';
 				contents += '</template>\n';
 				break;

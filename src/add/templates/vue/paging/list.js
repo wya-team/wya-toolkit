@@ -53,7 +53,7 @@ export const list = (content, opts = {}) => {
 
 				switch (mode) {
 					case 'table':
-						contents += `		<${project}-item />\n`;
+						contents += `				<${project}-item />\n`;
 						break;
 					case 'piece':
 						contents += `				<${project}-item \n`;
@@ -61,17 +61,16 @@ export const list = (content, opts = {}) => {
 						contents += `					v-bind="it"\n`;
 						contents += `					class="_item"\n`;
 						contents += `				/> \n`;
-						contents += `			</vc-paging>\n`;
 						break;
 					case 'native':
 						contents += `			>\n`;
 						contents += `				<${project}-item slot-scope="it" v-bind="it" />\n`;
-						contents += `			</vc-paging>\n`;
 						break;
 					default :
 						
 				}
-				contents += `		</vc-tab-pane>\n`;
+				contents += `			</vc-paging>\n`;
+				contents += `		</vc-tabs-pane>\n`;
 				contents += `	</vc-tabs>\n`;
 				contents += `</template>\n`;
 				break;	
