@@ -16,14 +16,14 @@ export const list = (content, opts = {}) => {
 		switch (type) {
 			case 'tabs':
 				contents += `<template>\n`;
-				contents += `	<i-tabs \n`;
+				contents += `	<vc-tabs \n`;
 				contents += `		:value="type" \n`;
 				contents += `		:animated="false"\n`;
 				contents += `		type="card" \n`;
 				contents += `		style="margin-top: 20px"\n`;
-				contents += `		@on-click="handleChange"\n`;
+				contents += `		@click="handleChange"\n`;
 				contents += `	>\n`;
-				contents += `		<i-tab-pane \n`;
+				contents += `		<vc-tabs-pane \n`;
 				contents += `			v-for="(item) in tabs"\n`;
 				contents += `			:key="item.value"\n`;
 				contents += `			:label="item.label" \n`;
@@ -32,7 +32,6 @@ export const list = (content, opts = {}) => {
 				contents += `			<vc-paging\n`;
 				switch (mode) {
 					case 'native':
-					case 'table':
 						contents += `				:columns="columns"\n`;
 						break;
 					default :
@@ -42,6 +41,7 @@ export const list = (content, opts = {}) => {
 				contents += `				:type="item.value"\n`;
 				contents += `				:data-source="listInfo[item.value].data"\n`;
 				contents += `				:total="listInfo[item.value].total"\n`;
+				contents += `				:count="listInfo[item.value].count"\n`;
 				contents += `				:reset="listInfo[item.value].reset"\n`;
 				contents += `				:current.sync="current[item.value]"\n`;
 				contents += `				:history="true"\n`;
@@ -49,12 +49,13 @@ export const list = (content, opts = {}) => {
 				contents += `				class="v-${pathArr.join('-')}-list"\n`;	
 				contents += `				mode="${mode}"\n`;
 				contents += `				@page-size-change="handleChangePageSize"\n`;
+				contents += `			>\n`;
+
 				switch (mode) {
 					case 'table':
-						contents += `			/>\n`;
+						contents += `		<${project}-item />\n`;
 						break;
 					case 'piece':
-						contents += `			>\n`;
 						contents += `				<${project}-item \n`;
 						contents += `					slot-scope="it"\n`;
 						contents += `					v-bind="it"\n`;
@@ -70,8 +71,8 @@ export const list = (content, opts = {}) => {
 					default :
 						
 				}
-				contents += `		</i-tab-pane>\n`;
-				contents += `	</i-tabs>\n`;
+				contents += `		</vc-tab-pane>\n`;
+				contents += `	</vc-tabs>\n`;
 				contents += `</template>\n`;
 				break;	
 			default :
@@ -94,12 +95,13 @@ export const list = (content, opts = {}) => {
 				contents += `		mode="${mode}"\n`;
 				contents += `		class="g-m-t-20 v-${pathArr.join('-')}-list"\n`;
 				contents += `		@page-size-change="handleChangePageSize"\n`;
+				contents += `	>\n`;
+
 				switch (mode) {
 					case 'table':
-						contents += `	/>\n`;
+						contents += `<${project}-item />\n`;
 						break;
 					case 'piece':
-						contents += `	>\n`;
 						contents += `		<${project}-item \n`;
 						contents += `			slot-scope="it"\n`;
 						contents += `			v-bind="it"\n`;
@@ -120,59 +122,15 @@ export const list = (content, opts = {}) => {
 		}
 		contents += `\n`;
 		contents += `<script>\n`;
-		switch (type) {
-			case 'tabs':
-				contents += `import { Tabs, TabPane } from 'iview';\n`;
-				
-				break;
-			default :
-				
-		}
-		contents += `import { Paging } from 'wya-vc';\n`;
-		contents += `import { getParseUrl, getHashUrl } from '@utils/utils';\n`;
-		// contents += `import * as types from '@stores/mutations/${mutation}';\n`;
-		contents += `// item\n`;
+		contents += `import { URL } from '@utils/utils';\n`;
+		contents += `import Item from './item';\n`;
 
-		switch (mode) {
-			case 'table':
-				contents += `import item from './item';\n`;
-				break;
-			default :
-				contents += `import Item from './item';\n`;
-				break;
-		}
-		
 		contents += `\n`;
 		contents += `export default {\n`;
 		contents += `	name: '${project}-table',\n`;
 		contents += `	components: {\n`;
-		contents += `		'vc-paging': Paging,\n`;
-		switch (type) {
-			case 'tabs':
-				contents += `		'i-tabs': Tabs,\n`;
-				contents += `		'i-tab-pane': TabPane,\n`;
-			default :
-				
-		}
-		switch (mode) {
-			case 'native':
-			case 'piece':
-				contents += `		'${project}-item': Item,\n`;
-				break;
-			default :
-				
-		}
-
+		contents += `		'${project}-item': Item,\n`;
 		contents += `	},\n`;
-
-		switch (mode) {
-			case 'table':
-				contents += `	mixins: [item],\n`;
-				break;
-			default :
-				
-		}
-		
 		contents += `	data() {\n`;
 		contents += `		const { query } = this.$route;\n\n`;
 		contents += `		return {\n`;
@@ -205,7 +163,7 @@ export const list = (content, opts = {}) => {
 		contents += `	},\n`;
 		contents += `	methods: {\n`;
 		contents += `		loadData(page, pageSize) {\n`;
-		contents += `			let { query = {} } = getParseUrl();\n`;
+		contents += `			let { query = {} } = URL.parse();\n`;
 		contents += `			return this.request({\n`;
 		contents += `				url: '${pagingType}_GET',\n`;
 		contents += `				type: 'GET',\n`;
@@ -232,13 +190,13 @@ export const list = (content, opts = {}) => {
 				contents += `		handleChange(type) {\n`;
 				contents += `			this.type = type;\n`;
 				contents += `\n`;
-				contents += `			let { query = {} } = getParseUrl(); // this.$route需要设置paging.sync\n`;
+				contents += `			let { query = {} } = URL.parse(); // this.$route需要设置paging.sync\n`;
 				contents += `			query = {\n`;
 				contents += `				...query,\n`;
 				contents += `				type,\n`;
 				contents += `				page: this.current[type]\n`;
 				contents += `			};\n`;
-				contents += `			this.$router.replace(getHashUrl('/${pathArr.join('/')}', { ...query }));\n`;
+				contents += `			this.$router.replace(URL.merge({ path: '/${pathArr.join('/')}' , query }));\n`;
 				contents += `		},\n`;
 			default :
 				

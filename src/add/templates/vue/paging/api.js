@@ -6,7 +6,7 @@ export const api = (content, opts = {}) => {
 	try {
 		if (pathArr.includes('list') === false) {
 			let importContent = undefined;
-			let injectContent = `	${pathArr.join('_').toUpperCase()}_LIST_GET: '/list'`;
+			let injectContent = `	${pathArr.join('_').toUpperCase()}_LIST_GET: '/orders/orders/list.json'`;
 
 			let importSplit = undefined;
 			let injectSplit = `\n};\n`;

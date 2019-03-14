@@ -79,7 +79,7 @@ export const routeForVue = ({ path, dir, project, template, pagingMode, pagingTy
 			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/filter.vue`)
 		},
 		item: {
-			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/item.${pagingMode === 'table' ? 'js' : 'vue'}`)
+			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/item.vue`)
 		},
 		list: {
 			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/${pagingType === 'tabs' ? 'tabs-' : ''}list.vue`)

@@ -18,7 +18,7 @@ var api = exports.api = function api(content) {
 	try {
 		if (pathArr.includes('list') === false) {
 			var importContent = undefined;
-			var injectContent = '\t' + pathArr.join('_').toUpperCase() + '_LIST_GET: \'/list\'';
+			var injectContent = '\t' + pathArr.join('_').toUpperCase() + '_LIST_GET: \'/orders/orders/list.json\'';
 
 			var importSplit = undefined;
 			var injectSplit = '\n};\n';

@@ -23,7 +23,7 @@ export const component = (opts = {}) => {
 	contents += `	},\n`;
 	contents += `};\n`;
 	contents += `</script>\n\n`;
-	contents += `<style lang="scss" scoped>\n`;
+	contents += `<style lang="scss">\n`;
 	contents += `</style>\n`;
 	return contents;
 };

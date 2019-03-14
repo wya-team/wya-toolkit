@@ -42,7 +42,7 @@ export const module = (content, opts = {}) => {
 			case 'tabs':
 				contents += `			[type]: {\n`;
 				contents += `				...state.listInfo[type],\n`;
-				contents += `				total: data.totalCount,\n`;
+				contents += `				...data.page,\n`;
 				contents += `				data: {\n`;
 				contents += `					...state.listInfo[type].data,\n`;
 				contents += `					[page]: data.list\n`;
@@ -50,7 +50,7 @@ export const module = (content, opts = {}) => {
 				contents += `			}\n`;
 				break;
 			default :
-				contents += `			total: data.totalCount,\n`;
+				contents += `			...data.page,\n`;
 				contents += `			data: {\n`;
 				contents += `				...state.listInfo.data,\n`;
 				contents += `				[page]: data.list\n`;

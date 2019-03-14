@@ -1,8 +1,8 @@
-# wya-toolkit
+# @wya/toolkit
 [![npm][npm-image]][npm-url] [![changelog][changelog-image]][changelog-url]
 - 安装
 ```vim
-npm i wya-toolkit -g
+npm i @wya/toolkit -g
 ```
 
 - 本地调试的时候，在根目录下执行
@@ -42,5 +42,5 @@ node ./bin/wya
 [changelog-image]: https://img.shields.io/badge/changelog-md-blue.svg
 [changelog-url]: CHANGELOG.md
 
-[npm-image]: https://img.shields.io/npm/v/wya-toolkit.svg
-[npm-url]: https://www.npmjs.com/package/wya-toolkit
+[npm-image]: https://img.shields.io/npm/v/@wya/toolkit.svg
+[npm-url]: https://www.npmjs.com/package/@wya/toolkit

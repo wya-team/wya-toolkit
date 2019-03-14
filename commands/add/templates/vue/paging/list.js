@@ -32,14 +32,14 @@ var list = exports.list = function list(content) {
 		switch (type) {
 			case 'tabs':
 				contents += '<template>\n';
-				contents += '\t<i-tabs \n';
+				contents += '\t<vc-tabs \n';
 				contents += '\t\t:value="type" \n';
 				contents += '\t\t:animated="false"\n';
 				contents += '\t\ttype="card" \n';
 				contents += '\t\tstyle="margin-top: 20px"\n';
-				contents += '\t\t@on-click="handleChange"\n';
+				contents += '\t\t@click="handleChange"\n';
 				contents += '\t>\n';
-				contents += '\t\t<i-tab-pane \n';
+				contents += '\t\t<vc-tabs-pane \n';
 				contents += '\t\t\tv-for="(item) in tabs"\n';
 				contents += '\t\t\t:key="item.value"\n';
 				contents += '\t\t\t:label="item.label" \n';
@@ -48,7 +48,6 @@ var list = exports.list = function list(content) {
 				contents += '\t\t\t<vc-paging\n';
 				switch (mode) {
 					case 'native':
-					case 'table':
 						contents += '\t\t\t\t:columns="columns"\n';
 						break;
 					default:
@@ -58,6 +57,7 @@ var list = exports.list = function list(content) {
 				contents += '\t\t\t\t:type="item.value"\n';
 				contents += '\t\t\t\t:data-source="listInfo[item.value].data"\n';
 				contents += '\t\t\t\t:total="listInfo[item.value].total"\n';
+				contents += '\t\t\t\t:count="listInfo[item.value].count"\n';
 				contents += '\t\t\t\t:reset="listInfo[item.value].reset"\n';
 				contents += '\t\t\t\t:current.sync="current[item.value]"\n';
 				contents += '\t\t\t\t:history="true"\n';
@@ -65,12 +65,13 @@ var list = exports.list = function list(content) {
 				contents += '\t\t\t\tclass="v-' + pathArr.join('-') + '-list"\n';
 				contents += '\t\t\t\tmode="' + mode + '"\n';
 				contents += '\t\t\t\t@page-size-change="handleChangePageSize"\n';
+				contents += '\t\t\t>\n';
+
 				switch (mode) {
 					case 'table':
-						contents += '\t\t\t/>\n';
+						contents += '\t\t<' + project + '-item />\n';
 						break;
 					case 'piece':
-						contents += '\t\t\t>\n';
 						contents += '\t\t\t\t<' + project + '-item \n';
 						contents += '\t\t\t\t\tslot-scope="it"\n';
 						contents += '\t\t\t\t\tv-bind="it"\n';
@@ -86,8 +87,8 @@ var list = exports.list = function list(content) {
 					default:
 
 				}
-				contents += '\t\t</i-tab-pane>\n';
-				contents += '\t</i-tabs>\n';
+				contents += '\t\t</vc-tab-pane>\n';
+				contents += '\t</vc-tabs>\n';
 				contents += '</template>\n';
 				break;
 			default:
@@ -110,12 +111,13 @@ var list = exports.list = function list(content) {
 				contents += '\t\tmode="' + mode + '"\n';
 				contents += '\t\tclass="g-m-t-20 v-' + pathArr.join('-') + '-list"\n';
 				contents += '\t\t@page-size-change="handleChangePageSize"\n';
+				contents += '\t>\n';
+
 				switch (mode) {
 					case 'table':
-						contents += '\t/>\n';
+						contents += '<' + project + '-item />\n';
 						break;
 					case 'piece':
-						contents += '\t>\n';
 						contents += '\t\t<' + project + '-item \n';
 						contents += '\t\t\tslot-scope="it"\n';
 						contents += '\t\t\tv-bind="it"\n';
@@ -136,59 +138,15 @@ var list = exports.list = function list(content) {
 		}
 		contents += '\n';
 		contents += '<script>\n';
-		switch (type) {
-			case 'tabs':
-				contents += 'import { Tabs, TabPane } from \'iview\';\n';
-
-				break;
-			default:
-
-		}
-		contents += 'import { Paging } from \'wya-vc\';\n';
-		contents += 'import { getParseUrl, getHashUrl } from \'@utils/utils\';\n';
-		// contents += `import * as types from '@stores/mutations/${mutation}';\n`;
-		contents += '// item\n';
-
-		switch (mode) {
-			case 'table':
-				contents += 'import item from \'./item\';\n';
-				break;
-			default:
-				contents += 'import Item from \'./item\';\n';
-				break;
-		}
+		contents += 'import { URL } from \'@utils/utils\';\n';
+		contents += 'import Item from \'./item\';\n';
 
 		contents += '\n';
 		contents += 'export default {\n';
 		contents += '\tname: \'' + project + '-table\',\n';
 		contents += '\tcomponents: {\n';
-		contents += '\t\t\'vc-paging\': Paging,\n';
-		switch (type) {
-			case 'tabs':
-				contents += '\t\t\'i-tabs\': Tabs,\n';
-				contents += '\t\t\'i-tab-pane\': TabPane,\n';
-			default:
-
-		}
-		switch (mode) {
-			case 'native':
-			case 'piece':
-				contents += '\t\t\'' + project + '-item\': Item,\n';
-				break;
-			default:
-
-		}
-
+		contents += '\t\t\'' + project + '-item\': Item,\n';
 		contents += '\t},\n';
-
-		switch (mode) {
-			case 'table':
-				contents += '\tmixins: [item],\n';
-				break;
-			default:
-
-		}
-
 		contents += '\tdata() {\n';
 		contents += '\t\tconst { query } = this.$route;\n\n';
 		contents += '\t\treturn {\n';
@@ -221,7 +179,7 @@ var list = exports.list = function list(content) {
 		contents += '\t},\n';
 		contents += '\tmethods: {\n';
 		contents += '\t\tloadData(page, pageSize) {\n';
-		contents += '\t\t\tlet { query = {} } = getParseUrl();\n';
+		contents += '\t\t\tlet { query = {} } = URL.parse();\n';
 		contents += '\t\t\treturn this.request({\n';
 		contents += '\t\t\t\turl: \'' + pagingType + '_GET\',\n';
 		contents += '\t\t\t\ttype: \'GET\',\n';
@@ -248,13 +206,13 @@ var list = exports.list = function list(content) {
 				contents += '\t\thandleChange(type) {\n';
 				contents += '\t\t\tthis.type = type;\n';
 				contents += '\n';
-				contents += '\t\t\tlet { query = {} } = getParseUrl(); // this.$route\u9700\u8981\u8BBE\u7F6Epaging.sync\n';
+				contents += '\t\t\tlet { query = {} } = URL.parse(); // this.$route\u9700\u8981\u8BBE\u7F6Epaging.sync\n';
 				contents += '\t\t\tquery = {\n';
 				contents += '\t\t\t\t...query,\n';
 				contents += '\t\t\t\ttype,\n';
 				contents += '\t\t\t\tpage: this.current[type]\n';
 				contents += '\t\t\t};\n';
-				contents += '\t\t\tthis.$router.replace(getHashUrl(\'/' + pathArr.join('/') + '\', { ...query }));\n';
+				contents += '\t\t\tthis.$router.replace(URL.merge({ path: \'/' + pathArr.join('/') + '\' , query }));\n';
 				contents += '\t\t},\n';
 			default:
 

@@ -57,7 +57,7 @@ var _module = function _module(content) {
 			case 'tabs':
 				contents += '\t\t\t[type]: {\n';
 				contents += '\t\t\t\t...state.listInfo[type],\n';
-				contents += '\t\t\t\ttotal: data.totalCount,\n';
+				contents += '\t\t\t\t...data.page,\n';
 				contents += '\t\t\t\tdata: {\n';
 				contents += '\t\t\t\t\t...state.listInfo[type].data,\n';
 				contents += '\t\t\t\t\t[page]: data.list\n';
@@ -65,7 +65,7 @@ var _module = function _module(content) {
 				contents += '\t\t\t}\n';
 				break;
 			default:
-				contents += '\t\t\ttotal: data.totalCount,\n';
+				contents += '\t\t\t...data.page,\n';
 				contents += '\t\t\tdata: {\n';
 				contents += '\t\t\t\t...state.listInfo.data,\n';
 				contents += '\t\t\t\t[page]: data.list\n';

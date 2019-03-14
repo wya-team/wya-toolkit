@@ -1,6 +1,6 @@
 {
-  "name": "wya-toolkit",
-  "version": "0.3.3",
+  "name": "@wya/toolkit",
+  "version": "1.0.0",
   "description": "wya-toolkit for js",
   "main": "index.js",
   "files": [
@@ -14,7 +14,7 @@
     "start": "npm run dev",
     "dev": "npm run all",
     "serve": "rm -rf ./commands && cross-env NODE_ENV=development babel src --out-dir commands --copy-files --ignore **.test.js,**.md,examples/**, --watch",
-    "build": "rm -rf ./commands && npm run lint:fix && cross-env NODE_ENV=production babel src --out-dir commands --copy-files --ignore **.test.js,**.md,examples/**, && npm publish",
+    "build": "rm -rf ./commands && npm run lint:fix && cross-env NODE_ENV=production babel src --out-dir commands --copy-files --ignore **.test.js,**.md,examples/**,  && npm publish --access public",
     "lint": "esw ./src/ ./bin/wya",
     "lint:fix": "npm run lint -- --fix",
     "lint:watch": "npm run lint -- --fix --watch",

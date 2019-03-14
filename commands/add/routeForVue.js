@@ -125,7 +125,7 @@ var routeForVue = exports.routeForVue = function routeForVue(_ref) {
 			path: _upath2.default.normalize(dir + 'components/' + pathArr[0] + '/' + module + '/filter.vue')
 		},
 		item: {
-			path: _upath2.default.normalize(dir + 'components/' + pathArr[0] + '/' + module + '/item.' + (pagingMode === 'table' ? 'js' : 'vue'))
+			path: _upath2.default.normalize(dir + 'components/' + pathArr[0] + '/' + module + '/item.vue')
 		},
 		list: {
 			path: _upath2.default.normalize(dir + 'components/' + pathArr[0] + '/' + module + '/' + (pagingType === 'tabs' ? 'tabs-' : '') + 'list.vue')

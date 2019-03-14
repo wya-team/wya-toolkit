@@ -2,7 +2,7 @@ export const container = (content, opts = {}) => {
 	const { mutation, pathArr, project, obj, pagingType: type } = opts;
 	let contents = '';
 	contents += `<template>\n`;
-	contents += `	<set-title title="${pathArr.join("-")}" class="g-tabs-card" style="padding: 20px">\n`;
+	contents += `	<set-title title="${pathArr.join("-")}"  style="padding: 16px 24px 24px">\n`;
 	contents += `		<${project}-filter />\n`;
 	contents += `		<${project}-${type === 'tabs' ? 'tabs-' : ''}list />\n`;
 	contents += `	</set-title>\n`;
