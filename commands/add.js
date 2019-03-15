@@ -120,6 +120,7 @@ var fn = function fn(res, force) {
 				break;
 			case "routeForVue":
 				(0, _index.routeForVue)(res, force);
+				// console.log(res);
 				break;
 			default:
 				log('need to do!');
@@ -133,11 +134,13 @@ var fn = function fn(res, force) {
 var transform = function transform() {
 	var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
-	return {
+	var result = {
 		template: ['form', 'basic', 'paging'].includes(arr[0]) ? arr[0] : undefined,
 		pagingType: ['tabs', 'basic'].includes(arr[1]) ? arr[1] : undefined,
 		pagingMode: ['native', 'piece', 'table'].includes(arr[2]) ? arr[2] : undefined
 	};
+	console.log(result, arr);
+	return result;;
 };
 
 var loopMake = function loopMake(opts) {
@@ -148,7 +151,7 @@ var loopMake = function loopMake(opts) {
 	    rest = _objectWithoutProperties(_ref, ['routes']);
 
 	config.routes.forEach(function (item, index) {
-		fn(_extends({}, rest, item, transform(item)), true);
+		fn(_extends({}, rest, item, transform(item.template)), true);
 	});
 };
 var stream = function stream(opts) {

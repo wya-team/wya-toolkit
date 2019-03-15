@@ -112,6 +112,7 @@ const fn = (res, force) => {
 				break;
 			case "routeForVue":
 				routeForVue(res, force);
+				// console.log(res);
 				break;
 			default:
 				log('need to do!');
@@ -124,18 +125,20 @@ const fn = (res, force) => {
 };
 
 const transform = (arr = []) => {
-	return {
+	let result = {
 		template: ['form', 'basic', 'paging'].includes(arr[0]) ? arr[0] : undefined,
 		pagingType: ['tabs', 'basic'].includes(arr[1]) ? arr[1] : undefined,
 		pagingMode: ['native', 'piece', 'table'].includes(arr[2]) ? arr[2] : undefined,
 	};
+	console.log(result, arr);
+	return result; ;
 };
 
 const loopMake = (opts) => {
 	let config = require(resolve(process.cwd(), opts.config));
 	const { routes, ...rest } = config.default || config;
 	config.routes.forEach((item, index) => {
-		fn({ ...rest, ...item, ...transform(item) }, true);
+		fn({ ...rest, ...item, ...transform(item.template) }, true);
 	});
 };
 const stream = (opts) => {
