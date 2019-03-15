@@ -171,7 +171,7 @@ export const routeForVue = ({ path, dir, project, template, pagingMode, pagingTy
 						fullpath,
 						pagingTpl[key](
 							fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
-							{ mutation, pathArr, project, module, pagingMode, pagingType, extra, title }
+							{ mutation, pathArr, project, module, pagingMode, pagingType, extra, title, route }
 						)
 					);
 					

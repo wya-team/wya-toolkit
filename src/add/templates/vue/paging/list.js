@@ -1,7 +1,7 @@
 import { getNewContent } from '../utils/helper';
 
 export const list = (content, opts = {}) => {
-	const { mutation, pathArr, project, obj, pagingMode: mode, pagingType: type } = opts;
+	const { mutation, pathArr, project, obj, pagingMode: mode, pagingType: type, route } = opts;
 	let extra = pathArr.slice(1).map(item => `${item[0].toUpperCase()}${item.slice(1)}`).join('');
 
 	let mutationType = `${pathArr.join('_').toUpperCase()}`;
@@ -80,7 +80,6 @@ export const list = (content, opts = {}) => {
 				contents += `		ref="tableTarget"\n`;
 				switch (mode) {
 					case 'native':
-					case 'table':
 						contents += `		:columns="columns"\n`;
 						break;
 					default :
@@ -194,7 +193,7 @@ export const list = (content, opts = {}) => {
 				contents += `				type,\n`;
 				contents += `				page: this.current[type]\n`;
 				contents += `			};\n`;
-				contents += `			this.$router.replace(URL.merge({ path: '/${pathArr.join('/')}' , query }));\n`;
+				contents += `			this.$router.replace(URL.merge({ path: '${route}', query }));\n`;
 				contents += `		},\n`;
 			default :
 				

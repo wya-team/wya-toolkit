@@ -64,7 +64,7 @@ export const item = (content, opts = {}) => {
 				contents += `			this.$store.commit('${pagingType}_INIT');\n`;
 				contents += `		},\n`;
 				contents += `		handleResetCur() {\n`;
-				contents += `			this.$store.commit('${pagingType}', { type: this.type });\n`;
+				contents += `			this.$store.commit('${pagingType}_RESET', { type: this.type });\n`;
 				contents += `		},\n`;
 				contents += `	},\n`;
 				contents += `};\n`;

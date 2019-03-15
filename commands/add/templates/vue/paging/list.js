@@ -14,7 +14,8 @@ var list = exports.list = function list(content) {
 	    project = opts.project,
 	    obj = opts.obj,
 	    mode = opts.pagingMode,
-	    type = opts.pagingType;
+	    type = opts.pagingType,
+	    route = opts.route;
 
 	var extra = pathArr.slice(1).map(function (item) {
 		return '' + item[0].toUpperCase() + item.slice(1);
@@ -96,7 +97,6 @@ var list = exports.list = function list(content) {
 				contents += '\t\tref="tableTarget"\n';
 				switch (mode) {
 					case 'native':
-					case 'table':
 						contents += '\t\t:columns="columns"\n';
 						break;
 					default:
@@ -210,7 +210,7 @@ var list = exports.list = function list(content) {
 				contents += '\t\t\t\ttype,\n';
 				contents += '\t\t\t\tpage: this.current[type]\n';
 				contents += '\t\t\t};\n';
-				contents += '\t\t\tthis.$router.replace(URL.merge({ path: \'/' + pathArr.join('/') + '\' , query }));\n';
+				contents += '\t\t\tthis.$router.replace(URL.merge({ path: \'' + route + '\', query }));\n';
 				contents += '\t\t},\n';
 			default:
 

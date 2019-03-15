@@ -204,7 +204,7 @@ var routeForVue = exports.routeForVue = function routeForVue(_ref, force) {
 				if (typeof pagingTpl[key] === 'function') {
 					log((0, _chalk2.default)(_templateObject4, key, _fsExtra2.default.existsSync(fullpath) ? 'override' : 'created'));
 
-					_fsExtra2.default.outputFileSync(fullpath, pagingTpl[key](_fsExtra2.default.existsSync(fullpath) ? _fsExtra2.default.readFileSync(fullpath, 'utf-8') : '', { mutation: mutation, pathArr: pathArr, project: project, module: module, pagingMode: pagingMode, pagingType: pagingType, extra: extra, title: title }));
+					_fsExtra2.default.outputFileSync(fullpath, pagingTpl[key](_fsExtra2.default.existsSync(fullpath) ? _fsExtra2.default.readFileSync(fullpath, 'utf-8') : '', { mutation: mutation, pathArr: pathArr, project: project, module: module, pagingMode: pagingMode, pagingType: pagingType, extra: extra, title: title, route: route }));
 				}
 			});
 		}
