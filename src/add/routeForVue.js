@@ -118,7 +118,7 @@ export const routeForVue = ({ path, dir, project, template, pagingMode, pagingTy
 				fs.outputFileSync(
 					fullpath,
 					typeof tpl[key] === 'function'
-						? tpl[key]({ mutation, pathArr, project, module, extra, title  })
+						? tpl[key]({ mutation, path, pathArr, project, module, extra, title  })
 						: content
 				);
 			} else if (typeof tpl[`${key}Override`] === 'function') {
@@ -128,7 +128,7 @@ export const routeForVue = ({ path, dir, project, template, pagingMode, pagingTy
 					fullpath,
 					tpl[`${key}Override`](
 						fs.readFileSync(fullpath, 'utf-8'),
-						{ mutation, pathArr, project, module, extra, title  }
+						{ mutation, path, pathArr, project, module, extra, title  }
 					)
 				);
 			}
@@ -196,7 +196,6 @@ export const routeForVue = ({ path, dir, project, template, pagingMode, pagingTy
 		}
 
 	};
-	console.log(force);
 	return force 
 		? fn()
 		: prompt(question)

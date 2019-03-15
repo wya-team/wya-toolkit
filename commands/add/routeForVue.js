@@ -168,11 +168,11 @@ var routeForVue = exports.routeForVue = function routeForVue(_ref, force) {
 			if (!_fsExtra2.default.existsSync(fullpath)) {
 				// 文件不存在的情况下操作
 				log((0, _chalk2.default)(_templateObject2, key));
-				_fsExtra2.default.outputFileSync(fullpath, typeof tpl[key] === 'function' ? tpl[key]({ mutation: mutation, pathArr: pathArr, project: project, module: module, extra: extra, title: title }) : content);
+				_fsExtra2.default.outputFileSync(fullpath, typeof tpl[key] === 'function' ? tpl[key]({ mutation: mutation, path: path, pathArr: pathArr, project: project, module: module, extra: extra, title: title }) : content);
 			} else if (typeof tpl[key + 'Override'] === 'function') {
 				// 文件存在，重写相关
 				log((0, _chalk2.default)(_templateObject3, key));
-				_fsExtra2.default.outputFileSync(fullpath, tpl[key + 'Override'](_fsExtra2.default.readFileSync(fullpath, 'utf-8'), { mutation: mutation, pathArr: pathArr, project: project, module: module, extra: extra, title: title }));
+				_fsExtra2.default.outputFileSync(fullpath, tpl[key + 'Override'](_fsExtra2.default.readFileSync(fullpath, 'utf-8'), { mutation: mutation, path: path, pathArr: pathArr, project: project, module: module, extra: extra, title: title }));
 			}
 		});
 
@@ -219,7 +219,6 @@ var routeForVue = exports.routeForVue = function routeForVue(_ref, force) {
 			});
 		}
 	};
-	console.log(force);
 	return force ? fn() : (0, _inquirer.prompt)(question).then(function (res) {
 		if (!res.sure) return null;
 		fn();
