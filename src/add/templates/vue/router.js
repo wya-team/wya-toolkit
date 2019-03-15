@@ -1,7 +1,7 @@
 import { getNewContent } from './utils/helper';
 
 export const router = (opts = {}) => {
-	const { mutation, pathArr, project, obj, title, extra, path } = opts;
+	const { mutation, pathArr, project, obj, title, extra, route } = opts;
 	let contents = '';
 
 	contents += `export const ${mutation}Config = [\n`;
@@ -11,7 +11,7 @@ export const router = (opts = {}) => {
 	contents += `	},\n`;
 
 	contents += `	{\n`;
-	contents += `		path: '${path}${extra || ''}',\n`;
+	contents += `		path: '${route}${extra || ''}',\n`;
 	contents += `		name: '${pathArr.join('-')}',\n`;
 	contents += `		meta: { title: '${title}' },\n`;
 	contents += `		component: () => import('./modules/${pathArr.join('-')}.vue')\n`;
@@ -21,12 +21,12 @@ export const router = (opts = {}) => {
 };
 
 export const routerOverride = (content, opts = {}) => {
-	const { mutation, pathArr, project, obj, title, extra, path } = opts;
+	const { mutation, pathArr, project, obj, title, extra, route } = opts;
 	try {
 		let importContent = undefined;
 		let injectContent = '';
 		injectContent += `	{\n`;
-		injectContent += `		path: '/${path}',\n`;
+		injectContent += `		path: '${route}${extra || ''}',\n`;
 		injectContent += `		name: '${pathArr.join('-')}',\n`;
 		injectContent += `		meta: { title: '${title}' },\n`;
 		injectContent += `		component: () => import('./modules/${pathArr.join('-')}.vue')\n`;
@@ -43,6 +43,7 @@ export const routerOverride = (content, opts = {}) => {
 			injectSplit
 		});
 	} catch (e) {
+		console.log(e);
 		return content;
 	}
 };

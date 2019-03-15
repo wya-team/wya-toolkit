@@ -16,10 +16,15 @@ export const routeForVue = ({ path, dir, project, template, pagingMode, pagingTy
 		.split('-')
 		.filter(item => item && !item.includes(':'));
 
+	// 路由temp
+	let route = path;
 	// 0
 	if (pathArr.length === 0) return;
 	// 1
-	if (pathArr.length === 1) pathArr[1] = 'main';
+	if (pathArr.length === 1) {
+		pathArr[1] = 'main';
+		route = `${path}/main`;
+	};
 
 	/**
 	 * container mutation reducer component
@@ -118,7 +123,7 @@ export const routeForVue = ({ path, dir, project, template, pagingMode, pagingTy
 				fs.outputFileSync(
 					fullpath,
 					typeof tpl[key] === 'function'
-						? tpl[key]({ mutation, path, pathArr, project, module, extra, title  })
+						? tpl[key]({ mutation, route, pathArr, project, module, extra, title  })
 						: content
 				);
 			} else if (typeof tpl[`${key}Override`] === 'function') {
@@ -128,7 +133,7 @@ export const routeForVue = ({ path, dir, project, template, pagingMode, pagingTy
 					fullpath,
 					tpl[`${key}Override`](
 						fs.readFileSync(fullpath, 'utf-8'),
-						{ mutation, path, pathArr, project, module, extra, title  }
+						{ mutation, route, pathArr, project, module, extra, title  }
 					)
 				);
 			}

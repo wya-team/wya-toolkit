@@ -15,7 +15,7 @@ var router = exports.router = function router() {
 	    obj = opts.obj,
 	    title = opts.title,
 	    extra = opts.extra,
-	    path = opts.path;
+	    route = opts.route;
 
 	var contents = '';
 
@@ -26,7 +26,7 @@ var router = exports.router = function router() {
 	contents += '\t},\n';
 
 	contents += '\t{\n';
-	contents += '\t\tpath: \'' + path + (extra || '') + '\',\n';
+	contents += '\t\tpath: \'' + route + (extra || '') + '\',\n';
 	contents += '\t\tname: \'' + pathArr.join('-') + '\',\n';
 	contents += '\t\tmeta: { title: \'' + title + '\' },\n';
 	contents += '\t\tcomponent: () => import(\'./modules/' + pathArr.join('-') + '.vue\')\n';
@@ -43,13 +43,13 @@ var routerOverride = exports.routerOverride = function routerOverride(content) {
 	    obj = opts.obj,
 	    title = opts.title,
 	    extra = opts.extra,
-	    path = opts.path;
+	    route = opts.route;
 
 	try {
 		var importContent = undefined;
 		var injectContent = '';
 		injectContent += '\t{\n';
-		injectContent += '\t\tpath: \'/' + path + '\',\n';
+		injectContent += '\t\tpath: \'' + route + (extra || '') + '\',\n';
 		injectContent += '\t\tname: \'' + pathArr.join('-') + '\',\n';
 		injectContent += '\t\tmeta: { title: \'' + title + '\' },\n';
 		injectContent += '\t\tcomponent: () => import(\'./modules/' + pathArr.join('-') + '.vue\')\n';
@@ -66,6 +66,7 @@ var routerOverride = exports.routerOverride = function routerOverride(content) {
 			injectSplit: injectSplit
 		});
 	} catch (e) {
+		console.log(e);
 		return content;
 	}
 };

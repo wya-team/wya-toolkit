@@ -130,7 +130,6 @@ const transform = (arr = []) => {
 		pagingType: ['tabs', 'basic'].includes(arr[1]) ? arr[1] : undefined,
 		pagingMode: ['native', 'piece', 'table'].includes(arr[2]) ? arr[2] : undefined,
 	};
-	console.log(result, arr);
 	return result; ;
 };
 
