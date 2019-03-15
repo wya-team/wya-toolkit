@@ -50,13 +50,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 var log = console.log;
-var routeForVue = exports.routeForVue = function routeForVue(_ref) {
+var routeForVue = exports.routeForVue = function routeForVue(_ref, force) {
 	var path = _ref.path,
 	    dir = _ref.dir,
 	    project = _ref.project,
 	    template = _ref.template,
 	    pagingMode = _ref.pagingMode,
-	    pagingType = _ref.pagingType;
+	    pagingType = _ref.pagingType,
+	    _ref$extra = _ref.extra,
+	    extra = _ref$extra === undefined ? '' : _ref$extra,
+	    _ref$title = _ref.title,
+	    title = _ref$title === undefined ? '' : _ref$title;
 
 	var pathArr = path.replace(/\({0,}\//g, '-').replace(/([a-z\dA-Z])([A-Z])/g, '$1-$2').toLowerCase().split('-').filter(function (item) {
 		return item && !item.includes(':');
@@ -150,8 +154,7 @@ var routeForVue = exports.routeForVue = function routeForVue(_ref) {
 		message: 'Please make sure ~',
 		default: false
 	};
-	return (0, _inquirer.prompt)(question).then(function (res) {
-		if (!res.sure) return null;
+	var fn = function fn() {
 		log((0, _chalk2.default)('waiting...'));
 		Object.keys(basicConfig).forEach(function (key) {
 			var path = basicConfig[key].path;
@@ -165,11 +168,11 @@ var routeForVue = exports.routeForVue = function routeForVue(_ref) {
 			if (!_fsExtra2.default.existsSync(fullpath)) {
 				// 文件不存在的情况下操作
 				log((0, _chalk2.default)(_templateObject2, key));
-				_fsExtra2.default.outputFileSync(fullpath, typeof tpl[key] === 'function' ? tpl[key]({ mutation: mutation, pathArr: pathArr, project: project, module: module }) : content);
+				_fsExtra2.default.outputFileSync(fullpath, typeof tpl[key] === 'function' ? tpl[key]({ mutation: mutation, pathArr: pathArr, project: project, module: module, extra: extra, title: title }) : content);
 			} else if (typeof tpl[key + 'Override'] === 'function') {
 				// 文件存在，重写相关
 				log((0, _chalk2.default)(_templateObject3, key));
-				_fsExtra2.default.outputFileSync(fullpath, tpl[key + 'Override'](_fsExtra2.default.readFileSync(fullpath, 'utf-8'), { mutation: mutation, pathArr: pathArr, project: project, module: module }));
+				_fsExtra2.default.outputFileSync(fullpath, tpl[key + 'Override'](_fsExtra2.default.readFileSync(fullpath, 'utf-8'), { mutation: mutation, pathArr: pathArr, project: project, module: module, extra: extra, title: title }));
 			}
 		});
 
@@ -183,7 +186,7 @@ var routeForVue = exports.routeForVue = function routeForVue(_ref) {
 				// 文件存在，重写相关
 				log((0, _chalk2.default)(_templateObject3, key));
 
-				_fsExtra2.default.outputFileSync(fullpath, rootTpl[_key](_fsExtra2.default.readFileSync(fullpath, 'utf-8'), { mutation: mutation, pathArr: pathArr, project: project, module: module }));
+				_fsExtra2.default.outputFileSync(fullpath, rootTpl[_key](_fsExtra2.default.readFileSync(fullpath, 'utf-8'), { mutation: mutation, pathArr: pathArr, project: project, module: module, extra: extra, title: title }));
 			}
 		});
 		if (template === 'paging') {
@@ -196,7 +199,7 @@ var routeForVue = exports.routeForVue = function routeForVue(_ref) {
 				if (typeof pagingTpl[key] === 'function') {
 					log((0, _chalk2.default)(_templateObject4, key, _fsExtra2.default.existsSync(fullpath) ? 'override' : 'created'));
 
-					_fsExtra2.default.outputFileSync(fullpath, pagingTpl[key](_fsExtra2.default.existsSync(fullpath) ? _fsExtra2.default.readFileSync(fullpath, 'utf-8') : '', { mutation: mutation, pathArr: pathArr, project: project, module: module, pagingMode: pagingMode, pagingType: pagingType }));
+					_fsExtra2.default.outputFileSync(fullpath, pagingTpl[key](_fsExtra2.default.existsSync(fullpath) ? _fsExtra2.default.readFileSync(fullpath, 'utf-8') : '', { mutation: mutation, pathArr: pathArr, project: project, module: module, pagingMode: pagingMode, pagingType: pagingType, extra: extra, title: title }));
 				}
 			});
 		}
@@ -211,10 +214,15 @@ var routeForVue = exports.routeForVue = function routeForVue(_ref) {
 				if (typeof formTpl[key] === 'function') {
 					log((0, _chalk2.default)(_templateObject4, key, _fsExtra2.default.existsSync(fullpath) ? 'override' : 'created'));
 
-					_fsExtra2.default.outputFileSync(fullpath, formTpl[key](_fsExtra2.default.existsSync(fullpath) ? _fsExtra2.default.readFileSync(fullpath, 'utf-8') : '', { mutation: mutation, pathArr: pathArr, project: project, module: module }));
+					_fsExtra2.default.outputFileSync(fullpath, formTpl[key](_fsExtra2.default.existsSync(fullpath) ? _fsExtra2.default.readFileSync(fullpath, 'utf-8') : '', { mutation: mutation, pathArr: pathArr, project: project, module: module, extra: extra, title: title }));
 				}
 			});
 		}
+	};
+	console.log(force);
+	return force ? fn() : (0, _inquirer.prompt)(question).then(function (res) {
+		if (!res.sure) return null;
+		fn();
 	}).catch(function (e) {
 		log((0, _chalk2.default)(_templateObject5, e));
 	});

@@ -1,10 +1,10 @@
 export const component = (opts = {}) => {
-	const { mutation, pathArr, project, obj } = opts;
+	const { mutation, pathArr, project, obj, title } = opts;
 	let contents = '';
 
 	contents += `<template>\n`;
 	contents += `	<div>\n`;
-	contents += `		__tpl__, ${pathArr.join('-')}\n`;
+	contents += `		__tpl__, ${pathArr.join('-')} ${title}\n`;
 	contents += `	</div>\n`;
 	contents += `</template>\n\n`;
 

@@ -59,10 +59,7 @@ var filter = exports.filter = function filter(content) {
 		contents += '\t\t\t\t@click="handleToggle"\n';
 		contents += '\t\t\t>\n';
 		contents += '\t\t\t\t{{ show ? \'\u6536\u8D77\' : \'\u5C55\u5F00\' }}\n';
-		contents += '\t\t\t\t<i\n';
-		contents += '\t\t\t\t\t:class="show ? \'icon-triangle-up\' : \'icon-triangle-down\'"\n';
-		contents += '\t\t\t\t\tclass="iconfont g-fs-12 g-c-black-dark"\n';
-		contents += '\t\t\t\t/>\n';
+		contents += '\t\t\t\t<vc-icon :type="show ? \'triangle-up\' : \'triangle-down\'" class="g-fs-12" />\n';
 		contents += '\t\t\t</span>\n';
 		contents += '\t\t</div>\n';
 		contents += '\t\t<vc-expand \n';

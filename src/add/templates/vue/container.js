@@ -1,9 +1,9 @@
 export const container = (opts = {}) => {
-	const { mutation, pathArr, project, obj } = opts;
+	const { mutation, pathArr, project, obj, title } = opts;
 	let contents = '';
 
 	contents += `<template>\n`;
-	contents += `	<set-title title="${pathArr.join("-")}">\n`;
+	contents += `	<set-title title="${title}">\n`;
 	contents += `		<${project}-tpl />\n`;
 	contents += `	</set-title>\n`;
 	contents += `</template>\n\n`;

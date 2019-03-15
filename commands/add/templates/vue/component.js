@@ -8,13 +8,14 @@ var component = exports.component = function component() {
 	var mutation = opts.mutation,
 	    pathArr = opts.pathArr,
 	    project = opts.project,
-	    obj = opts.obj;
+	    obj = opts.obj,
+	    title = opts.title;
 
 	var contents = '';
 
 	contents += '<template>\n';
 	contents += '\t<div>\n';
-	contents += '\t\t__tpl__, ' + pathArr.join('-') + '\n';
+	contents += '\t\t__tpl__, ' + pathArr.join('-') + ' ' + title + '\n';
 	contents += '\t</div>\n';
 	contents += '</template>\n\n';
 

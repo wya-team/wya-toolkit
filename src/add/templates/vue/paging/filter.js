@@ -44,10 +44,7 @@ export const filter = (content, opts = {}) => {
 		contents += `				@click="handleToggle"\n`;
 		contents += `			>\n`;
 		contents += `				{{ show ? '收起' : '展开' }}\n`;
-		contents += `				<i\n`;
-		contents += `					:class="show ? 'icon-triangle-up' : 'icon-triangle-down'"\n`;
-		contents += `					class="iconfont g-fs-12 g-c-black-dark"\n`;
-		contents += `				/>\n`;
+		contents += `				<vc-icon :type="show ? 'triangle-up' : 'triangle-down'" class="g-fs-12" />\n`;
 		contents += `			</span>\n`;
 		contents += `		</div>\n`;
 		contents += `		<vc-expand \n`;

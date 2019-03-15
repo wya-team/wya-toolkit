@@ -2,6 +2,8 @@ import { prompt, Separator } from 'inquirer';
 import chalk from 'chalk';
 import shell from 'shelljs';
 import upath from 'upath';
+import { resolve } from 'path';
+
 import { routeForReact, routeForVue } from './add/index';
 const log = console.log;
 const question = [
@@ -102,19 +104,44 @@ const question = [
 	
 ];
 
-const stream = prompt(question).then((res) => {
-	switch (res.type) {
-		case "routeForReact":
-			routeForReact(res);
-			break;
-		case "routeForVue":
-			routeForVue(res);
-			break;
-		default:
-			log('need to do!');
-			break;
+const fn = (res, force) => {
+	try {
+		switch (res.type) {
+			case "routeForReact":
+				routeForReact(res);
+				break;
+			case "routeForVue":
+				routeForVue(res, force);
+				break;
+			default:
+				log('need to do!');
+				break;
+		}
+	} catch (e) {
+		console.log(e);
 	}
 
-});
+};
+
+const transform = (arr = []) => {
+	return {
+		template: ['form', 'basic', 'paging'].includes(arr[0]) ? arr[0] : undefined,
+		pagingType: ['tabs', 'basic'].includes(arr[1]) ? arr[1] : undefined,
+		pagingMode: ['native', 'piece', 'table'].includes(arr[2]) ? arr[2] : undefined,
+	};
+};
+
+const loopMake = (opts) => {
+	let config = require(resolve(process.cwd(), opts.config));
+	const { routes, ...rest } = config.default || config;
+	config.routes.forEach((item, index) => {
+		fn({ ...rest, ...item, ...transform(item) }, true);
+	});
+};
+const stream = (opts) => {
+	return opts.config
+		? loopMake(opts)
+		: prompt(question).then(fn);
+};
 
 export default stream;

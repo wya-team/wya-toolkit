@@ -16,7 +16,7 @@ export const item = (content, opts = {}) => {
 		switch (mode) {
 			case 'table':
 				contents += `<template>\n`;
-				contents += `	<section>\n`;
+				contents += `	<vc-table-item>\n`;
 				contents += `		<vc-table-column\n`;
 				contents += `			prop="orders_id"\n`;
 				contents += `			label="ID"\n`;
@@ -34,7 +34,7 @@ export const item = (content, opts = {}) => {
 				contents += `			<div @click="handleResetFirst">回到首页刷新</div>\n`;
 				contents += `			<div @click="handleResetCur">当前页刷新</div>\n`;
 				contents += `		</vc-table-column>\n`;
-				contents += `	</section>\n`;
+				contents += `	</vc-table-item>\n`;
 				contents += `</template>\n`;
 				contents += `\n`;
 				contents += `<script>\n`;

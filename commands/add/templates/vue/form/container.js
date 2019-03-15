@@ -8,11 +8,12 @@ var container = exports.container = function container(content) {
 	var mutation = opts.mutation,
 	    pathArr = opts.pathArr,
 	    project = opts.project,
-	    obj = opts.obj;
+	    obj = opts.obj,
+	    title = opts.title;
 
 	var contents = '';
 	contents += "<template>\n";
-	contents += "\t<set-title title=\"" + pathArr.join("-") + "\" style=\"padding: 20px\">\n";
+	contents += "\t<set-title title=\"" + title + "\" style=\"padding: 20px\">\n";
 	contents += "\t\t<" + project + "-content />\n";
 	contents += "\t</set-title>\n";
 	contents += "</template>\n";

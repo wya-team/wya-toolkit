@@ -12,7 +12,9 @@ var router = exports.router = function router() {
 	var mutation = opts.mutation,
 	    pathArr = opts.pathArr,
 	    project = opts.project,
-	    obj = opts.obj;
+	    obj = opts.obj,
+	    title = opts.title,
+	    extra = opts.extra;
 
 	var contents = '';
 
@@ -23,8 +25,9 @@ var router = exports.router = function router() {
 	contents += '\t},\n';
 
 	contents += '\t{\n';
-	contents += '\t\tpath: \'/' + pathArr.join('/') + '\',\n';
+	contents += '\t\tpath: \'/' + pathArr.join('/') + (extra || '') + '\',\n';
 	contents += '\t\tname: \'' + pathArr.join('-') + '\',\n';
+	contents += '\t\tmeta: { title: \'' + title + '\' },\n';
 	contents += '\t\tcomponent: () => import(\'./modules/' + pathArr.join('-') + '.vue\')\n';
 	contents += '\t}';
 	contents += '\n];\n';
@@ -36,7 +39,9 @@ var routerOverride = exports.routerOverride = function routerOverride(content) {
 	var mutation = opts.mutation,
 	    pathArr = opts.pathArr,
 	    project = opts.project,
-	    obj = opts.obj;
+	    obj = opts.obj,
+	    title = opts.title,
+	    extra = opts.extra;
 
 	try {
 		var importContent = undefined;
@@ -44,6 +49,7 @@ var routerOverride = exports.routerOverride = function routerOverride(content) {
 		injectContent += '\t{\n';
 		injectContent += '\t\tpath: \'/' + pathArr.join('/') + '\',\n';
 		injectContent += '\t\tname: \'' + pathArr.join('-') + '\',\n';
+		injectContent += '\t\tmeta: { title: \'' + title + '\' },\n';
 		injectContent += '\t\tcomponent: () => import(\'./modules/' + pathArr.join('-') + '.vue\')\n';
 		injectContent += '\t}';
 

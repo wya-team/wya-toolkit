@@ -9,11 +9,12 @@ var container = exports.container = function container(content) {
 	    pathArr = opts.pathArr,
 	    project = opts.project,
 	    obj = opts.obj,
-	    type = opts.pagingType;
+	    type = opts.pagingType,
+	    title = opts.title;
 
 	var contents = '';
 	contents += '<template>\n';
-	contents += '\t<set-title title="' + pathArr.join("-") + '"  style="padding: 16px 24px 24px">\n';
+	contents += '\t<set-title title="' + title + '"  style="padding: 16px 24px 24px">\n';
 	contents += '\t\t<' + project + '-filter />\n';
 	contents += '\t\t<' + project + '-' + (type === 'tabs' ? 'tabs-' : '') + 'list />\n';
 	contents += '\t</set-title>\n';

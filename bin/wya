@@ -23,7 +23,8 @@ program
 	.action((cmd, opts) => {
 		log(chalk`__tpl__ {red ${cmd}} using {red ${opts.test_mode}} mode`);
 		try {
-			require(res('__tpl__'))(cmd, opts);
+			let fn = require(res('__tpl__'));
+			typeof fn === 'function' ? fn(cmd, opts) : fn.default(cmd, opts);
 		} catch (e) {
 			log(chalk`{red ${e}}`);
 		}
@@ -55,7 +56,16 @@ program
 	.command('add')
 	.alias('a')
 	.description('Add a new Route')
-	.action((opts) => require(res('add')));
+	.option('-c, --config <mode>', 'file to build')
+	.action((opts) => {
+		log(chalk`{yellow ${opts.config ? "Config" : 'Input' }} mode`);
+		try {
+			let fn = require(res('add'));
+			typeof fn === 'function' ? fn(opts) : fn.default(opts);
+		} catch (e) {
+			log(chalk`{red ${e}}`);
+		}
+	});
 
 // 任意匹配
 program

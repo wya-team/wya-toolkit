@@ -31,7 +31,7 @@ var item = exports.item = function item(content) {
 		switch (mode) {
 			case 'table':
 				contents += '<template>\n';
-				contents += '\t<section>\n';
+				contents += '\t<vc-table-item>\n';
 				contents += '\t\t<vc-table-column\n';
 				contents += '\t\t\tprop="orders_id"\n';
 				contents += '\t\t\tlabel="ID"\n';
@@ -49,7 +49,7 @@ var item = exports.item = function item(content) {
 				contents += '\t\t\t<div @click="handleResetFirst">\u56DE\u5230\u9996\u9875\u5237\u65B0</div>\n';
 				contents += '\t\t\t<div @click="handleResetCur">\u5F53\u524D\u9875\u5237\u65B0</div>\n';
 				contents += '\t\t</vc-table-column>\n';
-				contents += '\t</section>\n';
+				contents += '\t</vc-table-item>\n';
 				contents += '</template>\n';
 				contents += '\n';
 				contents += '<script>\n';

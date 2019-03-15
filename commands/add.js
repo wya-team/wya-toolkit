@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _inquirer = require('inquirer');
 
 var _chalk = require('chalk');
@@ -18,9 +20,13 @@ var _upath = require('upath');
 
 var _upath2 = _interopRequireDefault(_upath);
 
+var _path = require('path');
+
 var _index = require('./add/index');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 var log = console.log;
 var question = [{
@@ -106,18 +112,47 @@ var question = [{
 	}
 }];
 
-var stream = (0, _inquirer.prompt)(question).then(function (res) {
-	switch (res.type) {
-		case "routeForReact":
-			(0, _index.routeForReact)(res);
-			break;
-		case "routeForVue":
-			(0, _index.routeForVue)(res);
-			break;
-		default:
-			log('need to do!');
-			break;
+var fn = function fn(res, force) {
+	try {
+		switch (res.type) {
+			case "routeForReact":
+				(0, _index.routeForReact)(res);
+				break;
+			case "routeForVue":
+				(0, _index.routeForVue)(res, force);
+				break;
+			default:
+				log('need to do!');
+				break;
+		}
+	} catch (e) {
+		console.log(e);
 	}
-});
+};
+
+var transform = function transform() {
+	var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+	return {
+		template: ['form', 'basic', 'paging'].includes(arr[0]) ? arr[0] : undefined,
+		pagingType: ['tabs', 'basic'].includes(arr[1]) ? arr[1] : undefined,
+		pagingMode: ['native', 'piece', 'table'].includes(arr[2]) ? arr[2] : undefined
+	};
+};
+
+var loopMake = function loopMake(opts) {
+	var config = require((0, _path.resolve)(process.cwd(), opts.config));
+
+	var _ref = config.default || config,
+	    routes = _ref.routes,
+	    rest = _objectWithoutProperties(_ref, ['routes']);
+
+	config.routes.forEach(function (item, index) {
+		fn(_extends({}, rest, item, transform(item)), true);
+	});
+};
+var stream = function stream(opts) {
+	return opts.config ? loopMake(opts) : (0, _inquirer.prompt)(question).then(fn);
+};
 
 exports.default = stream;

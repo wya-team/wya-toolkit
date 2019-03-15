@@ -9,7 +9,7 @@ import * as rootTpl from './templates/vue/root/index';
 import * as pagingTpl from './templates/vue/paging/index';
 import * as formTpl from './templates/vue/form/index';
 
-export const routeForVue = ({ path, dir, project, template, pagingMode, pagingType }) => {
+export const routeForVue = ({ path, dir, project, template, pagingMode, pagingType, extra = '', title = '' }, force) => {
 	let pathArr = path.replace(/\({0,}\//g, '-')
 		.replace(/([a-z\dA-Z])([A-Z])/g, '$1-$2')
 		.toLowerCase()
@@ -102,103 +102,109 @@ export const routeForVue = ({ path, dir, project, template, pagingMode, pagingTy
 		message: 'Please make sure ~',
 		default: false
 	};
-	return prompt(question)
-		.then((res) => {
-			if (!res.sure) return null;
-			log(chalk('waiting...'));
-			Object.keys(basicConfig).forEach(key => {
-				let { path } = basicConfig[key];
+	let fn = () => {
+		log(chalk('waiting...'));
+		Object.keys(basicConfig).forEach(key => {
+			let { path } = basicConfig[key];
+			let fullpath = join(path);
+
+			let content = '';
+			content += `/**\n`;
+			content += ` * 请注释相关信息\n`;
+			content += ` */`;
+			if (!fs.existsSync(fullpath)) {
+				// 文件不存在的情况下操作
+				log(chalk`{green ${key}}: {rgb(255,131,0) created}`);
+				fs.outputFileSync(
+					fullpath,
+					typeof tpl[key] === 'function'
+						? tpl[key]({ mutation, pathArr, project, module, extra, title  })
+						: content
+				);
+			} else if (typeof tpl[`${key}Override`] === 'function') {
+				// 文件存在，重写相关
+				log(chalk`{yellow ${key}}: {rgb(255,131,0) override}`);
+				fs.outputFileSync(
+					fullpath,
+					tpl[`${key}Override`](
+						fs.readFileSync(fullpath, 'utf-8'),
+						{ mutation, pathArr, project, module, extra, title  }
+					)
+				);
+			}
+		});
+
+		Object.keys(rootConfig).forEach(key => {
+			let { path } = rootConfig[key];
+			let _key = key.replace(/\_/g, '');
+
+			let fullpath = join(path);
+			if (fs.existsSync(fullpath) && typeof rootTpl[_key] === 'function') {
+				// 文件存在，重写相关
+				log(chalk`{yellow ${key}}: {rgb(255,131,0) override}`);
+
+				fs.outputFileSync(
+					fullpath,
+					rootTpl[_key](
+						fs.readFileSync(fullpath, 'utf-8'),
+						{ mutation, pathArr, project, module, extra, title  }
+					)
+				);
+				
+			}
+		});
+		if (template === 'paging') {
+			fs.removeSync(basicConfig.component.path);
+
+			Object.keys(pagingConfig).forEach(key => {
+				let { path } = pagingConfig[key];
 				let fullpath = join(path);
-
-				let content = '';
-				content += `/**\n`;
-				content += ` * 请注释相关信息\n`;
-				content += ` */`;
-				if (!fs.existsSync(fullpath)) {
-					// 文件不存在的情况下操作
-					log(chalk`{green ${key}}: {rgb(255,131,0) created}`);
-					fs.outputFileSync(
-						fullpath,
-						typeof tpl[key] === 'function'
-							? tpl[key]({ mutation, pathArr, project, module })
-							: content
-					);
-				} else if (typeof tpl[`${key}Override`] === 'function') {
-					// 文件存在，重写相关
-					log(chalk`{yellow ${key}}: {rgb(255,131,0) override}`);
-					fs.outputFileSync(
-						fullpath,
-						tpl[`${key}Override`](
-							fs.readFileSync(fullpath, 'utf-8'),
-							{ mutation, pathArr, project, module }
-						)
-					);
-				}
-			});
-
-			Object.keys(rootConfig).forEach(key => {
-				let { path } = rootConfig[key];
-				let _key = key.replace(/\_/g, '');
-
-				let fullpath = join(path);
-				if (fs.existsSync(fullpath) && typeof rootTpl[_key] === 'function') {
-					// 文件存在，重写相关
-					log(chalk`{yellow ${key}}: {rgb(255,131,0) override}`);
+				if (typeof pagingTpl[key] === 'function') {
+					log(chalk`{yellow ${key}}: {rgb(255,131,0) ${fs.existsSync(fullpath) ? 'override' : 'created'}}`);
 
 					fs.outputFileSync(
 						fullpath,
-						rootTpl[_key](
-							fs.readFileSync(fullpath, 'utf-8'),
-							{ mutation, pathArr, project, module }
+						pagingTpl[key](
+							fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
+							{ mutation, pathArr, project, module, pagingMode, pagingType, extra, title }
 						)
 					);
 					
 				}
 			});
-			if (template === 'paging') {
-				fs.removeSync(basicConfig.component.path);
+		}
 
-				Object.keys(pagingConfig).forEach(key => {
-					let { path } = pagingConfig[key];
-					let fullpath = join(path);
-					if (typeof pagingTpl[key] === 'function') {
-						log(chalk`{yellow ${key}}: {rgb(255,131,0) ${fs.existsSync(fullpath) ? 'override' : 'created'}}`);
+		if (template === 'form') {
+			fs.removeSync(basicConfig.component.path);
 
-						fs.outputFileSync(
-							fullpath,
-							pagingTpl[key](
-								fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
-								{ mutation, pathArr, project, module, pagingMode, pagingType }
-							)
-						);
-						
-					}
-				});
-			}
+			Object.keys(formConfig).forEach(key => {
+				let { path } = formConfig[key];
+				let fullpath = join(path);
+				if (typeof formTpl[key] === 'function') {
+					log(chalk`{yellow ${key}}: {rgb(255,131,0) ${fs.existsSync(fullpath) ? 'override' : 'created'}}`);
 
-			if (template === 'form') {
-				fs.removeSync(basicConfig.component.path);
+					fs.outputFileSync(
+						fullpath,
+						formTpl[key](
+							fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
+							{ mutation, pathArr, project, module, extra, title  }
+						)
+					);
+					
+				}
+			});
+		}
 
-				Object.keys(formConfig).forEach(key => {
-					let { path } = formConfig[key];
-					let fullpath = join(path);
-					if (typeof formTpl[key] === 'function') {
-						log(chalk`{yellow ${key}}: {rgb(255,131,0) ${fs.existsSync(fullpath) ? 'override' : 'created'}}`);
-
-						fs.outputFileSync(
-							fullpath,
-							formTpl[key](
-								fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
-								{ mutation, pathArr, project, module }
-							)
-						);
-						
-					}
-				});
-			}
-
-		})
-		.catch(e => {
-			log(chalk`{red ${e}}`);
-		});
+	};
+	console.log(force);
+	return force 
+		? fn()
+		: prompt(question)
+			.then((res) => {
+				if (!res.sure) return null;
+				fn();
+			})
+			.catch(e => {
+				log(chalk`{red ${e}}`);
+			});
 };
