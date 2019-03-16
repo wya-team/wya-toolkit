@@ -5,7 +5,7 @@ export const component = (content, opts = {}) => {
 	contents += `	<div class="v-tpl-form g-pd-lr-24 g-pd-t-24" style="padding-bottom: 70px">\n`;
 	contents += `		<!-- 表单 -->\n`;
 	contents += `		<div class="g-m-b-32">\n`;
-	contents += `			<${project}-section-title title="表单样式" class="g-m-b-24" />\n`;
+	contents += `			<h3 class="g-m-b-24">表单样式</h3>\n`;
 	contents += `			<!-- 96位所有label中最宽的长度 -->\n`;
 	contents += `			<vc-form \n`;
 	contents += `				ref="form" \n`;
@@ -149,7 +149,7 @@ export const component = (content, opts = {}) => {
 	contents += `		</div>\n`;
 	contents += `		<!-- 展示 -->\n`;
 	contents += `		<div class="g-m-b-32">\n`;
-	contents += `			<${project}-section-title title="弹框内上下边距16px" class="g-m-b-24" />\n`;
+	contents += `			<h3 class="g-m-b-24">弹框内上下边距16px</h3>\n`;
 	contents += `			<!-- 小弹框居中 |  中弹框距离左侧120 | 大弹框24，有进度条的距离左侧24-->\n`;
 	contents += `			<div class="g-pd-l-56">\n`;
 	contents += `				<div class="g-flex g-m-b-16">\n`;
@@ -174,10 +174,8 @@ export const component = (content, opts = {}) => {
 	contents += `				</div>\n`;
 	contents += `			</div>\n`;
 	contents += `		</div>\n`;
-	contents += `		<${project}-footer \n`;
-	contents += `			@cancel="$router.back()"\n`;
-	contents += `			@ok="handleSubmit" \n`;
-	contents += `		/>\n`;
+	contents += `		<vc-button @click="$router.back()">取消</vc-button>\n`;
+	contents += `		<vc-button type="primary" @click="handleSubmit">确定</vc-button>\n`;
 	contents += `	</div>\n`;
 	contents += `</template>\n`;
 	contents += `\n`;
@@ -188,8 +186,6 @@ export const component = (content, opts = {}) => {
 	contents += `export default {\n`;
 	contents += `	name: 'v-tpl-form',\n`;
 	contents += `	components: {\n`;
-	contents += `		'${project}-section-title': SectionTitle,\n`;
-	contents += `		'${project}-footer': Footer,\n`;
 	contents += `	},\n`;
 	contents += `	data() {\n`;
 	contents += `		return {\n`;
