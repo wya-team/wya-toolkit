@@ -259,13 +259,11 @@ export const component = (content, opts = {}) => {
 	contents += `			});\n`;
 	contents += `		},\n`;
 	contents += `		handleSubmit(name) {\n`;
-	contents += `			this.$refs.form.validate((isValid) => {\n`;
-	contents += `				if (isValid) {\n`;
-	contents += `					Message.success('Success!');\n`;
-	contents += `				} else {\n`;
-	contents += `					Message.error('Fail!');\n`;
-	contents += `				}\n`;
-	contents += `			});\n`;
+	contents += `			this.$refs[name].validate().then((res) => {\n`;
+	contents += `					// ..\n`;
+	contents += `				}).catch((res) => {\n`;
+	contents += `					console.log(res);\n`;
+	contents += `				});\n`;
 	contents += `		},\n`;
 	contents += `		handleSet() {\n`;
 	contents += `			this.setShow = !this.setShow;\n`;
