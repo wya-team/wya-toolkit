@@ -47,10 +47,7 @@ export const filter = (content, opts = {}) => {
 		contents += `				<vc-icon :type="show ? 'triangle-up' : 'triangle-down'" class="g-fs-12" />\n`;
 		contents += `			</span>\n`;
 		contents += `		</div>\n`;
-		contents += `		<vc-expand \n`;
-		contents += `			ref="expand"\n`;
-		contents += `			v-model="show"\n`;
-		contents += `		>\n`;
+		contents += `		<vc-expand v-model="show">\n`;
 		contents += `			<div class="g-pd-t-16">\n`;
 		contents += `				<div\n`;
 		contents += `					class="g-search-form g-lh-50 g-bg-f4"\n`;
@@ -115,7 +112,7 @@ export const filter = (content, opts = {}) => {
 		contents += `			this.$store.commit('${pagingType}_INIT');\n`;
 		contents += `		}, 300),\n`;
 		contents += `		handleToggle() {\n`;
-		contents += `			this.$refs.expand.toggle();\n`;
+		contents += `			this.show = !this.show;\n`;
 		contents += `		},\n`;
 		contents += `		handleChange(obj) {\n`;
 		contents += `			let type = Object.keys(obj)[0];\n`;

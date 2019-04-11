@@ -180,8 +180,6 @@ export const component = (content, opts = {}) => {
 	contents += `</template>\n`;
 	contents += `\n`;
 	contents += `<script>\n`;
-	contents += `import SectionTitle from '@components/_common/section-title/section-title';\n`;
-	contents += `import Footer from '@components/_common/footer/footer';\n`;
 	contents += `\n`;
 	contents += `export default {\n`;
 	contents += `	name: 'v-tpl-form',\n`;
