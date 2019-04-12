@@ -22,6 +22,16 @@ const question = [
 		default: 'routeForVue'
 	},
 	{
+		type: 'list',
+		name: 'env',
+		message: 'Select env:',
+		choices: [
+			'pc',
+			'mobile',
+		],
+		default: 'pc'
+	},
+	{
 		type: 'input',
 		name: 'project',
 		message: 'Project Name:',

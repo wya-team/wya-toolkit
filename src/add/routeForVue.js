@@ -9,7 +9,7 @@ import * as rootTpl from './templates/vue/root/index';
 import * as pagingTpl from './templates/vue/paging/index';
 import * as formTpl from './templates/vue/form/index';
 
-export const routeForVue = ({ path, dir, project, template, pagingMode, pagingType, extra = '', title = '' }, force) => {
+export const routeForVue = ({ env, path, dir, project, template, pagingMode, pagingType, extra = '', title = '' }, force) => {
 	let pathArr = path.replace(/\({0,}\//g, '-')
 		.replace(/([a-z\dA-Z])([A-Z])/g, '$1-$2')
 		.toLowerCase()
@@ -192,7 +192,7 @@ export const routeForVue = ({ path, dir, project, template, pagingMode, pagingTy
 						fullpath,
 						formTpl[key](
 							fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
-							{ mutation, pathArr, project, module, extra, title  }
+							{ mutation, pathArr, project, module, extra, title, env  }
 						)
 					);
 					
