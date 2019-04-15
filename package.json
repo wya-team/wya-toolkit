@@ -1,6 +1,6 @@
 {
   "name": "@wya/toolkit",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "wya-toolkit for js",
   "main": "index.js",
   "files": [

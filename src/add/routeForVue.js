@@ -8,6 +8,7 @@ import * as tpl from './templates/vue/index';
 import * as rootTpl from './templates/vue/root/index';
 import * as pagingTpl from './templates/vue/paging/index';
 import * as formTpl from './templates/vue/form/index';
+import * as scrollTpl from './templates/vue/scroll/index';
 
 export const routeForVue = ({ env, path, dir, project, template, pagingMode, pagingType, extra = '', title = '' }, force) => {
 	let pathArr = path.replace(/\({0,}\//g, '-')
@@ -83,6 +84,19 @@ export const routeForVue = ({ env, path, dir, project, template, pagingMode, pag
 		filter: {
 			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/filter.vue`)
 		},
+		item: {
+			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/item.vue`)
+		},
+		list: {
+			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/${pagingType === 'tabs' ? 'tabs-' : ''}list.vue`)
+		}
+	};
+
+	let scrollConfig = {
+		// mutation: basicConfig.mutation,
+		api: basicConfig.api,
+		module: basicConfig.module,
+		container: basicConfig.container,
 		item: {
 			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/item.vue`)
 		},
@@ -172,6 +186,27 @@ export const routeForVue = ({ env, path, dir, project, template, pagingMode, pag
 						pagingTpl[key](
 							fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
 							{ mutation, pathArr, project, module, pagingMode, pagingType, extra, title, route }
+						)
+					);
+					
+				}
+			});
+		}
+
+		if (template === 'scroll') {
+			fs.removeSync(basicConfig.component.path);
+
+			Object.keys(scrollConfig).forEach(key => {
+				let { path } = scrollConfig[key];
+				let fullpath = join(path);
+				if (typeof scrollTpl[key] === 'function') {
+					log(chalk`{yellow ${key}}: {rgb(255,131,0) ${fs.existsSync(fullpath) ? 'override' : 'created'}}`);
+
+					fs.outputFileSync(
+						fullpath,
+						scrollTpl[key](
+							fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
+							{ mutation, pathArr, project, module, pagingMode, pagingType, extra, title, route, env }
 						)
 					);
 					

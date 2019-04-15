@@ -53,6 +53,7 @@ const question = [
 			new Separator(' = For template = '),
 			'basic',
 			'paging',
+			'scroll',
 			'form'
 		],
 		default: 'basic'
@@ -61,7 +62,7 @@ const question = [
 		type: 'list',
 		name: 'pagingType',
 		message: 'Select type:',
-		when: (answers) => answers.template === 'paging',
+		when: (answers) => /(paging|scroll)/.test(answers.template),
 		choices: [
 			new Separator(' = For template = '),
 			'basic',
@@ -73,7 +74,7 @@ const question = [
 		type: 'list',
 		name: 'pagingMode',
 		message: 'Select mode:',
-		when: (answers) => answers.template === 'paging',
+		when: (answers) => /(paging)/.test(answers.template),
 		choices: [
 			new Separator(' = For template = '),
 			'table',
@@ -136,7 +137,7 @@ const fn = (res, force) => {
 
 const transform = (arr = []) => {
 	let result = {
-		template: ['form', 'basic', 'paging'].includes(arr[0]) ? arr[0] : undefined,
+		template: ['form', 'basic', 'paging', 'scroll'].includes(arr[0]) ? arr[0] : undefined,
 		pagingType: ['tabs', 'basic'].includes(arr[1]) ? arr[1] : undefined,
 		pagingMode: ['native', 'piece', 'table'].includes(arr[2]) ? arr[2] : undefined,
 	};
