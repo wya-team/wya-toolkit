@@ -23,7 +23,7 @@ export const rootModuleOverride = (content, opts = {}) => {
 		let moduleName = `${mutation}${extra}`;
 		
 		let importContent = `import { ${moduleName} } from './${pathName}';`;
-		let injectContent = `	${moduleName}`;
+		let injectContent = `	${moduleName},`;
 
 		let importSplit = `\nexport default {\n`;
 		let injectSplit = `\n};\n`;
