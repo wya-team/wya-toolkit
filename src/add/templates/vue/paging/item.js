@@ -76,8 +76,8 @@ export const item = (content, opts = {}) => {
 				break;
 			case 'piece':
 				contents += `<template>\n`;
-				contents += `	<div :key="id">\n`;
-				contents += `		<div>{{ name }}</div>\n`;
+				contents += `	<div :key="it.id">\n`;
+				contents += `		<div>{{ it.title }}</div>\n`;
 				contents += `		<div @click="handleResetFirst">回到首页刷新</div>\n`;
 				contents += `		<div @click="handleResetCur">当前页刷新</div>\n`;
 				contents += `	</div>\n`;
@@ -87,8 +87,7 @@ export const item = (content, opts = {}) => {
 				contents += `export default {\n`;
 				contents += `	name: "${project}-item",\n`;
 				contents += `	props: {\n`;
-				contents += `		id: [String, Number],\n`;
-				contents += `		name: String\n`;
+				contents += `		it: Object\n`;
 				contents += `	},\n`;
 				contents += `	methods: {\n`;
 				contents += `		handleResetFirst() {\n`;
@@ -104,7 +103,7 @@ export const item = (content, opts = {}) => {
 			case 'native':
 				contents += `<template>\n`;
 				contents += `	<tbody>\n`;
-				contents += `		<template v-for="item in data">\n`;
+				contents += `		<template v-for="item in dataSource">\n`;
 				contents += `			<vc-fragment :key="item.id">\n`;
 				contents += `				<tr>\n`;
 				contents += `					<td colspan="4">\n`;
@@ -158,8 +157,7 @@ export const item = (content, opts = {}) => {
 				contents += `		'vc-fragment': Fragment\n`;
 				contents += `	},\n`;
 				contents += `	props: {\n`;
-				contents += `		it: [Object, Array],\n`;
-				contents += `		data: {\n`;
+				contents += `		dataSource: {\n`;
 				contents += `			type: Array,\n`;
 				contents += `			default: () => ([])\n`;
 				contents += `		},\n`;

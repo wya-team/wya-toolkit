@@ -30,13 +30,6 @@ export const list = (content, opts = {}) => {
 				contents += `			:name="item.value"\n`;
 				contents += `		>\n`;
 				contents += `			<vc${m}-pull-scroll\n`;
-				switch (mode) {
-					case 'native':
-						contents += `				:columns="columns"\n`;
-						break;
-					default :
-						
-				}
 				contents += `				:show="item.value == type" \n`;
 				contents += `				:type="item.value"\n`;
 				contents += `				:data-source="listInfo[item.value].data"\n`;
@@ -47,10 +40,10 @@ export const list = (content, opts = {}) => {
 				contents += `				:history="true"\n`;
 				contents += `				:load-data="loadData"\n`;
 				contents += `			>\n`;
-				contents += `				<${project}-item \n`;
-				contents += `					slot-scope="{ it }"\n`;
-				contents += `					:it="it"\n`;
-				contents += `				/> \n`;
+
+				contents += `				<template #default="it">\n`;
+				contents += `					<${project}-item :it="it" class="_item"/>\n`;
+				contents += `				</template>\n`;
 				contents += `			</vc${m}-pull-scroll>\n`;
 				contents += `		</vc${m}-tabs-pane>\n`;
 				contents += `	</vc${m}-tabs>\n`;
@@ -66,11 +59,9 @@ export const list = (content, opts = {}) => {
 				contents += `		:history="true"\n`;
 				contents += `		:load-data="loadData"\n`;
 				contents += `	>\n`;
-				contents += `		<${project}-item \n`;
-				contents += `			slot-scope="{ it }"\n`;
-				contents += `			:it="it"\n`;
-				contents += `			class="_item"\n`;
-				contents += `		/> \n`;
+				contents += `		<template #default="it">\n`;
+				contents += `			<${project}-item :it="it" class="_item"/>\n`;
+				contents += `		</template>\n`;
 				contents += `	</vc${m}-pull-scroll>\n`;
 				contents += `</template>\n`;
 				break;

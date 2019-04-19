@@ -53,18 +53,22 @@ export const list = (content, opts = {}) => {
 
 				switch (mode) {
 					case 'table':
-						contents += `				<${project}-item />\n`;
+						contents += `				<template #default="{ dataSource }">\n`;
+						contents += `					<${project}-item :data-source="dataSource" />\n`;
+						contents += `				</template>\n`;
 						break;
 					case 'piece':
-						contents += `				<${project}-item \n`;
-						contents += `					slot-scope="it"\n`;
-						contents += `					v-bind="it"\n`;
-						contents += `					class="_item"\n`;
-						contents += `				/> \n`;
+						contents += `				<template #default="{ it }">\n`;
+						contents += `					<${project}-item \n`;
+						contents += `						:it="it"\n`;
+						contents += `						class="_item"\n`;
+						contents += `					/> \n`;
+						contents += `				</template>\n`;
 						break;
 					case 'native':
-						contents += `			>\n`;
-						contents += `				<${project}-item slot-scope="it" v-bind="it" />\n`;
+						contents += `				<template #default="{ it }">\n`;
+						contents += `					<${project}-item :it="it" />\n`;
+						contents += `				</template>\n`;
 						break;
 					default :
 						
@@ -97,18 +101,22 @@ export const list = (content, opts = {}) => {
 
 				switch (mode) {
 					case 'table':
-						contents += `		<${project}-item />\n`;
+						contents += `		<template #default="{ dataSource }">\n`;
+						contents += `			<${project}-item :data-source="dataSource" />\n`;
+						contents += `		</template>\n`;
 						break;
 					case 'piece':
-						contents += `		<${project}-item \n`;
-						contents += `			slot-scope="it"\n`;
-						contents += `			v-bind="it"\n`;
-						contents += `			class="_item"\n`;
-						contents += `		/> \n`;
+						contents += `		<template #default="{ it }">\n`;
+						contents += `			<${project}-item \n`;
+						contents += `				:it="it"\n`;
+						contents += `				class="_item"\n`;
+						contents += `			/> \n`;
+						contents += `		</template>\n`;
 						break;
 					case 'native':
-						contents += `	>\n`;
-						contents += `		<${project}-item slot-scope="it" v-bind="it" />\n`;
+						contents += `		<template #default="{ it }">\n`;
+						contents += `			<${project}-item :it="it" />\n`;
+						contents += `		</template>\n`;
 						break;
 					default :
 						
