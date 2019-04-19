@@ -48,8 +48,8 @@ export const list = (content, opts = {}) => {
 				contents += `				:load-data="loadData"\n`;
 				contents += `			>\n`;
 				contents += `				<${project}-item \n`;
-				contents += `					slot-scope="it"\n`;
-				contents += `					v-bind="it"\n`;
+				contents += `					slot-scope="{ it }"\n`;
+				contents += `					:it="it"\n`;
 				contents += `				/> \n`;
 				contents += `			</vc${m}-pull-scroll>\n`;
 				contents += `		</vc${m}-tabs-pane>\n`;
@@ -67,8 +67,8 @@ export const list = (content, opts = {}) => {
 				contents += `		:load-data="loadData"\n`;
 				contents += `	>\n`;
 				contents += `		<${project}-item \n`;
-				contents += `			slot-scope="it"\n`;
-				contents += `			v-bind="it"\n`;
+				contents += `			slot-scope="{ it }"\n`;
+				contents += `			:it="it"\n`;
 				contents += `			class="_item"\n`;
 				contents += `		/> \n`;
 				contents += `	</vc${m}-pull-scroll>\n`;

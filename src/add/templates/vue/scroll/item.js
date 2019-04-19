@@ -15,7 +15,7 @@ export const item = (content, opts = {}) => {
 	try {
 		contents += `<template>\n`;
 		contents += `	<div>\n`;
-		contents += `		<div>{{ id }}</div>\n`;
+		contents += `		<div>{{ it }}</div>\n`;
 		contents += `		<div>占位</div>\n`;
 		contents += `		<div>占位</div>\n`;
 		contents += `		<div>占位</div>\n`;
@@ -30,8 +30,7 @@ export const item = (content, opts = {}) => {
 		contents += `export default {\n`;
 		contents += `	name: "${project}-item",\n`;
 		contents += `	props: {\n`;
-		contents += `		id: [String, Number],\n`;
-		contents += `		name: String\n`;
+		contents += `		it: Object,\n`;
 		contents += `	},\n`;
 		contents += `	methods: {\n`;
 		contents += `		handleInit() {\n`;
