@@ -14,7 +14,7 @@ export const item = (content, opts = {}) => {
 	let contents = '';
 	try {
 		contents += `<template>\n`;
-		contents += `	<div>\n`;
+		contents += `	<div :key="it.id">\n`;
 		contents += `		<div>{{ it }}</div>\n`;
 		contents += `		<div>占位</div>\n`;
 		contents += `		<div>占位</div>\n`;
