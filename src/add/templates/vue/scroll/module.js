@@ -59,16 +59,24 @@ export const module = (content, opts = {}) => {
 		}
 		contents += `		};\n`;
 		contents += `	},\n`;
-		contents += `	${pagingType}_REFRESH(state, { type }) {\n`;
+		contents += `	${pagingType}_GET_REFRESH(state, { type, page }) {\n`;
 		contents += `		state.listInfo = {\n`;
 		contents += `			...initialState.listInfo,\n`;
 		switch (type) {
 			case 'tabs':
-				contents += `			[type]: [\n`;
-				contents += `				...initScroll,\n`;
-				contents += `			]\n`;
+				contents += `			[type]: {\n`;
+				contents += `				...state.listInfo[type],\n`;
+				contents += `				...data.page,\n`;
+				contents += `				data: [\n`;
+				contents += `					...data.list\n`;
+				contents += `				]\n`;
+				contents += `			}\n`;
 				break;
 			default :
+				contents += `			...data.page,\n`;
+				contents += `			data: [\n`;
+				contents += `				...data.list\n`;
+				contents += `			]\n`;
 				break;
 				
 		}
