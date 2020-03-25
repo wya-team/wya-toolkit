@@ -1,16 +1,18 @@
-import { prompt } from 'inquirer';
-import fs, { readFileSync } from 'fs-extra';
-import chalk from 'chalk';
+const { prompt } = require('inquirer');
+const fs = require('fs-extra');
+const chalk = require('chalk');
 
-import connect from 'connect';
-import http from 'http';
-import https from 'https';
-import serveStatic from 'serve-static';
-import serveIndex from 'serve-index';
-import history from 'connect-history-api-fallback';
-import { resolve, join } from 'path';
+const connect = require('connect');
+const http = require('http');
+const https = require('https');
+const serveStatic = require('serve-static');
+const serveIndex = require('serve-index');
+const history = require('connect-history-api-fallback');
+const { resolve, join } = require('path');
 
-import { localIp, openURL } from './utils';
+const { readFileSync } = fs;
+
+const { localIp, openURL } = require('./utils');
 
 const log = console.log;
 const question = [
@@ -43,7 +45,7 @@ const question = [
 		name: 'fallback',
 		message: 'enable html5 history mode:',
 		default: false
-	},
+	}
 
 ];
 
@@ -98,4 +100,4 @@ const stream = prompt(question)
 		log(chalk`{red ${e}}`);
 	});
 
-export default stream;
+module.exports = stream;

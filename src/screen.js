@@ -1,13 +1,14 @@
-import { prompt } from 'inquirer';
-import chalk from 'chalk';
-import http from 'http';
-import fs from 'fs';
-import path from 'path';
-import { resolve } from 'path';
-import screenshot from 'screenshot-desktop';
-import WebSocket from 'ws';
+const { prompt } = require('inquirer');
+const chalk = require('chalk');
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
 
-import { localIp, openURL } from './utils';
+const { resolve } = path;
+const screenshot = require('screenshot-desktop');
+const WebSocket = require('ws');
+
+const { localIp, openURL } = require('./utils');
 
 const log = console.log;
 const question = [
@@ -27,7 +28,6 @@ const question = [
 		type: 'input',
 		name: 'delay',
 		message: 'Screen refresh delay(s):',
-		default: localIp,
 		default: 2
 	}
 
@@ -80,7 +80,8 @@ const stream = prompt(question)
 					case 'server-event-sub':
 						// 发布 -> 客服端
 						// 每个都发送
-					default :
+						break;
+					default:
 						return;
 				}
 			});
@@ -114,4 +115,4 @@ const stream = prompt(question)
 		log(chalk`{red ${e}}`);
 	});
 
-export default stream;
+module.exports = stream;

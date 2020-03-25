@@ -24,7 +24,6 @@ node ./bin/wya
 - `wya server`: 随启随用的静态文件服务器
 - `wya screen`: 屏幕共享（使用截图）
 - `wya init`: 初始化下载`wya`脚手架或者其他仓库
-- `wya add`: 新建`wya`脚手架路由规则下，自动创建文件(待开发：`AST`)
 
 ## 待开发
 

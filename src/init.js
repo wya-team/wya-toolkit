@@ -1,17 +1,18 @@
-import { prompt, Separator } from 'inquirer';
-import fs, { writeFile } from 'fs-extra';
-import chalk from 'chalk';
-import download from 'download-git-repo';
-import ora from 'ora';
-import { resolve, join } from 'path';
+const { prompt, Separator } = require('inquirer');
+const fs = require('fs-extra');
+const chalk = require('chalk');
+const download = require('download-git-repo');
+const ora = require('ora');
+const { resolve, join } = require('path');
 
+const { writeFile } = fs;
 const log = console.log;
 const question = [
 	{
 		type: 'input',
 		name: 'project',
 		message: 'Project name:',
-		validate (val) {
+		validate(val) {
 			if (val !== '') {
 				return true;
 			}
@@ -54,7 +55,7 @@ const question = [
 		name: 'repository',
 		message: 'Input repository',
 		when: (answers) => answers.repository === 'none',
-		validate (val) {
+		validate(val) {
 			if (val.includes("#") && val.includes("/")) {
 				return true;
 			}
@@ -86,4 +87,4 @@ const stream = prompt(question)
 		log(chalk`{red ${e}}`);
 	});
 
-export default stream;
+module.exports = stream;

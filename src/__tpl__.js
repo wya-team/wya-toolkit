@@ -1,10 +1,11 @@
 import { prompt } from 'inquirer';
+
 const question = [
 	{
 		type: 'input',
 		name: 'name',
 		message: 'Name is required:',
-		validate (val) {
+		validate(val) {
 			if (val === '') {
 				return 'Name is required!';
 			} else {

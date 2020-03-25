@@ -1,11 +1,11 @@
-import { exec, spawn } from 'child_process';
-import os from 'os';
+const { exec, spawn } = require('child_process');
+const os = require('os');
 
 /**
  * 打开网页（部分兼容）
  * http://stackoverflow.com/a/16099450/222893
  */
-export const openURL =  (url) => {
+exports.openURL = (url) => {
 	switch (process.platform) {
 		case 'darwin':
 			exec(`open ${url}`);
@@ -18,7 +18,7 @@ export const openURL =  (url) => {
 	}
 };
 
-export const localIp = (() => {
+exports.localIp = (() => {
 	let ips = [];
 	let ntwk = os.networkInterfaces();
 	for (let k in ntwk) {

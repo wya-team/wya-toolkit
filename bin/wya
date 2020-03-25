@@ -1,14 +1,16 @@
 #!/usr/bin/env node
-process.env.NODE_PATH = __dirname + '/../node_modules/';
 
 const chalk = require('chalk');
 const program = require('commander');
 const { resolve } = require('path');
-const res = command => resolve(__dirname, '../commands/', command);
+
+process.env.NODE_PATH = resolve(__dirname, '../node_modules/');
+
+const res = command => resolve(__dirname, process.versions.node > '12' ? '../src/' : '../commands/', command);
 const log = console.log;
 
 program
-	.version(require('../package').version );
+	.version(require('../package').version);
 
 // 使用指令参数 如 wya server;
 program
@@ -58,7 +60,7 @@ program
 	.description('Add a new Route')
 	.option('-c, --config <mode>', 'file to build')
 	.action((opts) => {
-		log(chalk`{yellow ${opts.config ? "Config" : 'Input' }} mode`);
+		log(chalk`{yellow ${opts.config ? "Config" : 'Input'}} mode`);
 		try {
 			let fn = require(res('add'));
 			typeof fn === 'function' ? fn(opts) : fn.default(opts);
@@ -74,6 +76,6 @@ program
 
 program.parse(process.argv);
 
-if (!program.args.length){
+if (!program.args.length) {
 	program.help();
 }
