@@ -37,6 +37,21 @@ program
 	.description('Create a new project')
 	.action((opts) => require(res('init')));
 
+// 辅助项目检查
+program
+	.command('lint')
+	.alias('l')
+	.description('Check the rules')
+	.option('-m, --mode <mode>', 'select rule mode')
+	.action((opts) => {
+		log(chalk`{yellow ${opts.mode ? opts.mode : 'commit'}} rule`);
+		try {
+			let fn = require(res('lint'));
+			typeof fn === 'function' ? fn(opts) : fn.default(opts);
+		} catch (e) {
+			log(chalk`{red ${e}}`);
+		}
+	});
 
 // 任意匹配
 program
