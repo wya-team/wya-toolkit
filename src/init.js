@@ -1,9 +1,9 @@
 const { prompt, Separator } = require('inquirer');
 const fs = require('fs-extra');
 const chalk = require('chalk');
-const download = require('download-git-repo');
 const ora = require('ora');
 const { resolve, join } = require('path');
+const github = require('./init/github');
 
 const { writeFile } = fs;
 const log = console.log;
@@ -23,38 +23,25 @@ const question = [
 		type: 'input',
 		name: 'place',
 		message: 'Where to init the project:',
-		default: './'
+		default: process.cwd()
 	},
 	{
 		type: 'list',
-		name: 'repository',
+		name: 'repo',
 		message: 'Select repository:',
 		choices: [
 			new Separator(' = For js project = '),
-			'wya-team/vue-env#master',
-			'wya-team/react-env#master',
-			'wya-team/rn-env#master',
-			'wya-team/wechat-env#master',
-			'wya-team/wya-webpack#master',
-			'wya-team/wya-rollup#master',
-
-			new Separator(' = For native project = '),
-			'wya-team/android-env#master',
-			'wya-team/android-template#master',
-			'wya-team/WYAiOSEnv#master',
-			'wya-team/WYAiOSTemplate#master',
-			'wya-team/WYASwiftEnv#master',
-			'wya-team/WYASwiftTemplate#master',
-
+			'wya-team/vue-env#master?path=templates',
+			'wya-team/wechat-env#master?path=templates',
 			'none'
 		],
 		default: 'none'
 	},
 	{
 		type: 'input',
-		name: 'repository',
+		name: 'repo',
 		message: 'Input repository',
-		when: (answers) => answers.repository === 'none',
+		when: (answers) => answers.repo === 'none',
 		validate(val) {
 			if (val.includes("#") && val.includes("/")) {
 				return true;
@@ -67,21 +54,17 @@ const question = [
 const stream = prompt(question)
 	.then((opts = {}) => {
 		// options
-		let { project, repository, place } = opts;
-		const spinner = ora('Downloading repository...');
+		let { project, place, repo } = opts;
 		
-		spinner.start();
-
-		download(`${repository}`, `${place}/${project}`, (err) => {
-			if (err) {
-				log(chalk.red(err));
-				process.exit();
-			}
-			spinner.stop();
-			log(chalk.green('New project has been initialized successfully!'));
-		});
-		
-
+		let options = {
+			owner: repo.replace(/([^/]+).*/, '$1'),
+			repo: repo.replace(/.*\/([^#]+).*/, '$1'),
+			ref: repo.replace(/.*#([^?]+).*/, '$1'),
+			path: repo.replace(/.*path=([\s\S]+)/, '$1'),
+			dest: `${place}/${project}`
+		};
+		log(chalk`{yellow ${JSON.stringify(options, null, '\t')}}`);
+		github(options);
 	})
 	.catch(e => {
 		log(chalk`{red ${e}}`);
