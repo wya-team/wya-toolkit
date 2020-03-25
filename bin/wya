@@ -16,22 +16,6 @@ program
 program
 	.usage('<cmd>');
 
-// 设计模版 终端执行：wya _ cc -t test
-program
-	.command('__tpl__ <cmd>')
-	.alias('_')
-	.description('Just a new template')
-	.option('-t, --test_mode <mode>', 'add pepper')
-	.action((cmd, opts) => {
-		log(chalk`__tpl__ {red ${cmd}} using {red ${opts.test_mode}} mode`);
-		try {
-			let fn = require(res('__tpl__'));
-			typeof fn === 'function' ? fn(cmd, opts) : fn.default(cmd, opts);
-		} catch (e) {
-			log(chalk`{red ${e}}`);
-		}
-	});
-
 // 局域网共享屏幕 终端执行：wya screen
 program
 	.command('screen')
@@ -53,21 +37,6 @@ program
 	.description('Create a new project')
 	.action((opts) => require(res('init')));
 
-// 初始化项目 终端执行：wya add
-program
-	.command('add')
-	.alias('a')
-	.description('Add a new Route')
-	.option('-c, --config <mode>', 'file to build')
-	.action((opts) => {
-		log(chalk`{yellow ${opts.config ? "Config" : 'Input'}} mode`);
-		try {
-			let fn = require(res('add'));
-			typeof fn === 'function' ? fn(opts) : fn.default(opts);
-		} catch (e) {
-			log(chalk`{red ${e}}`);
-		}
-	});
 
 // 任意匹配
 program
