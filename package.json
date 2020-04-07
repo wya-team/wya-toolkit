@@ -36,6 +36,7 @@
     "commander": "^5.0.0",
     "connect": "^3.7.0",
     "connect-history-api-fallback": "^1.6.0",
+    "current-git-branch": "^1.1.0",
     "fs-extra": "^9.0.0",
     "inquirer": "^7.1.0",
     "ora": "^4.0.3",
@@ -73,7 +74,8 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "commit-msg": "./bin/wya lint --mode commit"
+      "commit-msg": "./bin/wya lint --mode commit",
+      "pre-push": "./bin/wya lint --mode pre-push"
     }
   },
   "lint-staged": {
