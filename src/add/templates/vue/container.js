@@ -4,16 +4,16 @@ export const container = (opts = {}) => {
 
 	contents += `<template>\n`;
 	contents += `	<set-title title="${title}">\n`;
-	contents += `		<${project}-tpl />\n`;
+	contents += `		<${project}-content />\n`;
 	contents += `	</set-title>\n`;
 	contents += `</template>\n\n`;
 
 	contents += `<script>\n\n`;
-	contents += `import Tpl from '@components/${pathArr[0]}/${pathArr.slice(1).join("-")}/__tpl__';\n\n`;
+	contents += `import Content from '@components/${pathArr[0]}/${pathArr.slice(1).join("-")}/content';\n\n`;
 	contents += `export default {\n`;
 	contents += `	name: '${project}-${pathArr.join("-")}',\n`;
 	contents += `	components: {\n`;
-	contents += `		'${project}-tpl': Tpl\n`;
+	contents += `		'${project}-content': Content\n`;
 	contents += `	},\n`;
 	contents += `	data() {\n`;
 	contents += `		return {\n`;

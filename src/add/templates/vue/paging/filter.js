@@ -53,7 +53,7 @@ export const filter = (content, opts = {}) => {
 		contents += `					class="g-search-form g-lh-50 g-bg-f4"\n`;
 		contents += `					style="padding-top: 5px; padding-bottom: 5px"\n`;
 		contents += `				>\n`;
-		contents += `					<div class="g-flex g-fw-w" style="min-width: 796px">\n`;
+		contents += `					<div class="g-flex g-fw-w" style="min-width: 720px">\n`;
 		contents += `						<div>\n`;
 		contents += `							<span class="g-c-333 g-w-100">退款方式：</span>\n`;
 		contents += `							<vc-input\n`;

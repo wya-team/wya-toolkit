@@ -42,7 +42,7 @@ export const routeForVue = ({ env, path, dir, project, template, pagingMode, pag
 			path: upath.normalize(`${dir}containers/${pathArr[0]}/modules/${container}.vue`)
 		},
 		component: {
-			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/__tpl__.vue`)
+			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/content.vue`)
 		},
 		/**
 		 * strore
