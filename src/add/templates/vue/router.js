@@ -1,9 +1,8 @@
 import { getNewContent } from './utils/helper';
 
 export const router = (opts = {}) => {
-	const { mutation, pathArr, project, obj, title, extra, route, dynamic, components } = opts;
+	const { mutation, pathArr, project, obj, title, extra, route, components } = opts;
 	let contents = '';
-	const componentPath = `() => import('./modules/${pathArr.join('-')}.vue')\n`;
 
 	contents += `export const ${mutation}Config = [\n`;
 	contents += `	{\n`;
@@ -15,11 +14,14 @@ export const router = (opts = {}) => {
 	contents += `		path: '${route}${extra || ''}',\n`;
 	contents += `		name: '${pathArr.join('-')}',\n`;
 	contents += `		meta: { title: '${title}' },\n`;
-	if (dynamic && components) {
-		components[0] = componentPath;
-		contents += `		components: ${JSON.stringify(components, null, '\t')}\n`;
+	if (components) {
+		contents += `		components: [\n`;
+		contents += `			() => import('./modules/${pathArr.join('-')}.vue'),\n`;
+		components[1] && (contents += `			"${components[1]}",\n`);
+		components[2] && (contents += `			"${components[2]}"\n`);
+		contents += `		]\n`;
 	} else {
-		contents += `		component: ${componentPath}\n`;
+		contents += `		component: () => import('./modules/${pathArr.join('-')}.vue')\n`;
 	}
 	contents += `	}`;
 	contents += `\n];\n`;
@@ -27,8 +29,8 @@ export const router = (opts = {}) => {
 };
 
 export const routerOverride = (content, opts = {}) => {
-	const { mutation, pathArr, project, obj, title, extra, route, dynamic, components } = opts;
-	const componentPath = `() => import('./modules/${pathArr.join('-')}.vue')\n`;
+	const { mutation, pathArr, project, obj, title, extra, route, components } = opts;
+	const componentPath = `() => import('./modules/${pathArr.join('-')}.vue')`;
 	try {
 		let importContent = undefined;
 		let injectContent = '';
@@ -36,11 +38,14 @@ export const routerOverride = (content, opts = {}) => {
 		injectContent += `		path: '${route}${extra || ''}',\n`;
 		injectContent += `		name: '${pathArr.join('-')}',\n`;
 		injectContent += `		meta: { title: '${title}' },\n`;
-		if (dynamic && components) {
-			components[0] = componentPath;
-			injectContent += `		components: ${JSON.stringify(components, null, '\t')}\n`;
+		if (components) {
+			injectContent += `		components: [\n`;
+			injectContent += `			() => import('./modules/${pathArr.join('-')}.vue'),\n`;
+			components[1] && (injectContent += `			"${components[1]}",\n`);
+			components[2] && (injectContent += `			"${components[2]}"\n`);
+			injectContent += `		]\n`;
 		} else {
-			injectContent += `		component: ${componentPath}\n`;
+			injectContent += `		component: () => import('./modules/${pathArr.join('-')}.vue')\n`;
 		}
 		injectContent += `	}`;
 

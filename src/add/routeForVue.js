@@ -10,7 +10,7 @@ import * as pagingTpl from './templates/vue/paging/index';
 import * as formTpl from './templates/vue/form/index';
 import * as scrollTpl from './templates/vue/scroll/index';
 
-export const routeForVue = ({ env, path, dir, project, template, pagingMode, pagingType, extra = '', title = '' }, force) => {
+export const routeForVue = ({ env, path, dir, project, template, pagingMode, pagingType, extra = '', title = '', components }, force) => {
 	let pathArr = path.replace(/\({0,}\//g, '-')
 		.replace(/([a-z\dA-Z])([A-Z])/g, '$1-$2')
 		.toLowerCase()
@@ -137,7 +137,7 @@ export const routeForVue = ({ env, path, dir, project, template, pagingMode, pag
 				fs.outputFileSync(
 					fullpath,
 					typeof tpl[key] === 'function'
-						? tpl[key]({ mutation, route, pathArr, project, module, extra, title  })
+						? tpl[key]({ mutation, route, pathArr, project, module, extra, title, components  })
 						: content
 				);
 			} else if (typeof tpl[`${key}Override`] === 'function') {
@@ -147,7 +147,7 @@ export const routeForVue = ({ env, path, dir, project, template, pagingMode, pag
 					fullpath,
 					tpl[`${key}Override`](
 						fs.readFileSync(fullpath, 'utf-8'),
-						{ mutation, route, pathArr, project, module, extra, title  }
+						{ mutation, route, pathArr, project, module, extra, title, components  }
 					)
 				);
 			}
@@ -166,7 +166,7 @@ export const routeForVue = ({ env, path, dir, project, template, pagingMode, pag
 					fullpath,
 					rootTpl[_key](
 						fs.readFileSync(fullpath, 'utf-8'),
-						{ mutation, pathArr, project, module, extra, title  }
+						{ mutation, pathArr, project, module, extra, title, components  }
 					)
 				);
 				
@@ -185,7 +185,7 @@ export const routeForVue = ({ env, path, dir, project, template, pagingMode, pag
 						fullpath,
 						pagingTpl[key](
 							fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
-							{ mutation, pathArr, project, module, pagingMode, pagingType, extra, title, route }
+							{ mutation, pathArr, project, module, pagingMode, pagingType, extra, title, route, components }
 						)
 					);
 					
@@ -206,7 +206,7 @@ export const routeForVue = ({ env, path, dir, project, template, pagingMode, pag
 						fullpath,
 						scrollTpl[key](
 							fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
-							{ mutation, pathArr, project, module, pagingMode, pagingType, extra, title, route, env }
+							{ mutation, pathArr, project, module, pagingMode, pagingType, extra, title, route, env, components }
 						)
 					);
 					
@@ -227,7 +227,7 @@ export const routeForVue = ({ env, path, dir, project, template, pagingMode, pag
 						fullpath,
 						formTpl[key](
 							fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
-							{ mutation, pathArr, project, module, extra, title, env  }
+							{ mutation, pathArr, project, module, extra, title, env, components  }
 						)
 					);
 					
