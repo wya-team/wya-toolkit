@@ -4,7 +4,7 @@ import shell from 'shelljs';
 import upath from 'upath';
 import { resolve } from 'path';
 
-import { routeForReact, routeForVue } from './add/index';
+import { routeForReact, routeForVue, routeForMp } from './add/index';
 const log = console.log;
 const question = [
 	{
@@ -15,7 +15,7 @@ const question = [
 			new Separator(' = For project = '),
 			'routeForVue',
 			'routeForReact',
-			// 'routeForWechat',
+			'routeForMp',
 			// 'routeForRN'
 			'none'
 		],
@@ -25,6 +25,7 @@ const question = [
 		type: 'list',
 		name: 'env',
 		message: 'Select env:',
+		when: (answers) => answers.type !== 'routeForMp',
 		choices: [
 			'pc',
 			'mobile',
@@ -35,7 +36,7 @@ const question = [
 		type: 'input',
 		name: 'project',
 		message: 'Project Name:',
-		when: (answers) => answers.type === 'routeForVue',
+		when: (answers) => ['routeForVue', 'routeForMp'].includes(answers.type),
 		validate (val) {
 			if (val === '') {
 				return 'Project Name is required!';
@@ -48,7 +49,7 @@ const question = [
 		type: 'list',
 		name: 'template',
 		message: 'Select template:',
-		when: (answers) => answers.type === 'routeForVue',
+		when: (answers) => ['routeForVue', 'routeForMp'].includes(answers.type),
 		choices: [
 			new Separator(' = For template = '),
 			'basic',
@@ -123,6 +124,10 @@ const fn = (res, force) => {
 				break;
 			case "routeForVue":
 				routeForVue(res, force);
+				// console.log(res);
+				break;
+			case "routeForMp":
+				routeForMp(res, force);
 				// console.log(res);
 				break;
 			default:
