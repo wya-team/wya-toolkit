@@ -27,7 +27,7 @@ export const page = (content, opts = {}) => {
 				contents += `				show="{{ item.value == type }}"\n`;
 				contents += `				height="100%"\n`;
 				contents += `				total="{{ listInfo[item.value].total }}"\n`;
-				contents += `				bind:load-data="loadData"\n`;
+				contents += `				bind:loadData="loadData"\n`;
 				contents += `			>\n`;
 				contents += `				<${project}-item \n`;
 				contents += `					wx:for="{{ listInfo.data }}"\n`;
@@ -69,7 +69,7 @@ export const page = (content, opts = {}) => {
 		contents += `	data: {\n`;
 		switch (type) {
 			case 'tabs':
-				contents += `		type: '0',\n`;
+				contents += `		type: '1',\n`;
 				contents += `		tabs: [\n`;
 				contents += `			{ label: '标签一', value: '1' }, \n`;
 				contents += `			{ label: '标签二', value: '2' }, \n`;
@@ -83,7 +83,7 @@ export const page = (content, opts = {}) => {
 		switch (type) {
 			case 'tabs':
 				contents += `	onLoad(query) {\n`;
-				contents += `		const { type = '0' } = query || {};\n`;
+				contents += `		const { type = '1' } = query || {};\n`;
 				contents += `		this.setData({ type });\n`;
 				contents += `	},\n`;
 				break;
