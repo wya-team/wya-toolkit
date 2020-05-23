@@ -1,14 +1,14 @@
-import { getNewContent } from '../utils/helper';
+import { getNewContent, getExtra } from '../utils/helper';
 
 export const rootApi = (content, opts = {}) => {
-	const { mutation, pathArr, componentArr, obj } = opts;
+	const { mutation, humpMutation, pathArr, componentArr, obj } = opts;
 	try {
-		let extra = pathArr.slice(1).map(item => `${item[0].toUpperCase()}${item.slice(1)}`).join('');
+		let extra = getExtra(pathArr);
 		let pathName = `${pathArr.slice(1).join('-')}`;
-		let moduleName = `${mutation}${extra}`;
+		let moduleName = `${humpMutation}${extra}`;
 
-		let importContent = `import ${mutation} from './${mutation}';`;
-		let injectContent = `	...${mutation}`;
+		let importContent = `import ${humpMutation} from './${mutation}';`;
+		let injectContent = `	...${humpMutation}`;
 
 		let importSplit = `\nconst API = {\n`;
 		let injectSplit = `\n};\n`;

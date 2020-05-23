@@ -1,11 +1,11 @@
-import { getNewContent } from './utils/helper';
+import { getNewContent, getExtra } from './utils/helper';
 
 export const rootModule = (opts = {}) => {
-	const { mutation, pathArr, componentArr, obj } = opts;
+	const { mutation, humpMutation, pathArr, componentArr, obj } = opts;
 
-	let extra = pathArr.slice(1).map(item => `${item[0].toUpperCase()}${item.slice(1)}`).join('');
+	let extra = getExtra(pathArr);
 	let pathName = `${pathArr.slice(1).join('-')}`;
-	let moduleName = `${mutation}${extra}`;
+	let moduleName = `${humpMutation}${extra}`;
 
 	let contents = '';
 	contents += `import { ${moduleName} } from './${pathName}';\n`;
@@ -16,11 +16,11 @@ export const rootModule = (opts = {}) => {
 };
 
 export const rootModuleOverride = (content, opts = {}) => {
-	const { mutation, pathArr, componentArr, obj } = opts;
+	const { mutation, humpMutation, pathArr, componentArr, obj } = opts;
 	try {
-		let extra = pathArr.slice(1).map(item => `${item[0].toUpperCase()}${item.slice(1)}`).join('');
+		let extra = getExtra(pathArr);
 		let pathName = `${pathArr.slice(1).join('-')}`;
-		let moduleName = `${mutation}${extra}`;
+		let moduleName = `${humpMutation}${extra}`;
 		
 		let importContent = `import { ${moduleName} } from './${pathName}';`;
 		let injectContent = `	${moduleName},`;

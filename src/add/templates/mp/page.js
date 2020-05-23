@@ -1,6 +1,8 @@
+import { getNewContent } from './utils/helper';
+
 export const page = (opts = {}) => {
-	const { mutation, pathArr, project, obj, title } = opts;
-	let extra = pathArr.slice(1).map(item => `${item[0].toUpperCase()}${item.slice(1)}`).join('');
+	const { mutation, humpMutation, pathArr, project, obj, title } = opts;
+	let extra = getExtra(pathArr);
 	let contents = '';
 
 	contents += `<template>\n`;
@@ -14,7 +16,7 @@ export const page = (opts = {}) => {
 	contents += `Page({\n`;
 	contents += `	mapState(state) {\n`;
 	contents += `		return {\n`;
-	contents += `			...state.${mutation}${extra}\n`;
+	contents += `			...state.${humpMutation}${extra}\n`;
 	contents += `		};\n`;
 	contents += `	},\n`;
 	contents += `	data: {\n`;

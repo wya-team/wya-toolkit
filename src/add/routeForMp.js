@@ -7,12 +7,13 @@ import { resolve, join } from 'path';
 import * as tpl from './templates/mp/index';
 import * as rootTpl from './templates/mp/root/index';
 import * as scrollTpl from './templates/mp/scroll/index';
+import * as formTpl from './templates/mp/form/index';
 
 export const routeForMp = ({ env, path, dir, project, template, pagingMode, pagingType, extra = '', title = '' }, force) => {
-	let pathArr = path.replace(/\({0,}\//g, '-')
-		.replace(/([a-z\dA-Z])([A-Z])/g, '$1-$2')
+	let pathArr = path.replace(/\({0,}\//g, '#')
+		.replace(/([a-z\dA-Z])([A-Z])/g, '$1#$2')
 		.toLowerCase()
-		.split('-')
+		.split('#')
 		.filter(item => item && !item.includes(':'));
 
 	// 路由temp
@@ -29,6 +30,7 @@ export const routeForMp = ({ env, path, dir, project, template, pagingMode, pagi
 	 * container mutation reducer component
 	 */
 	let mutation = pathArr[0];
+	let humpMutation = pathArr[0].split('-').map((it, index) => index === 0 ? it : `${it[0].toUpperCase()}${it.slice(1)}`).join('');
 	let module = pathArr.slice(1).join('-');
 
 	let basicConfig = {
@@ -56,6 +58,10 @@ export const routeForMp = ({ env, path, dir, project, template, pagingMode, pagi
 		rootApp: {
 			path: upath.normalize(`${dir}app.json`)
 		}
+	};
+
+	let formConfig = {
+		page: basicConfig.page,
 	};
 
 
@@ -95,7 +101,7 @@ export const routeForMp = ({ env, path, dir, project, template, pagingMode, pagi
 				fs.outputFileSync(
 					fullpath,
 					typeof tpl[key] === 'function'
-						? tpl[key]({ mutation, route, pathArr, project, module, extra, title  })
+						? tpl[key]({ mutation, humpMutation, route, pathArr, project, module, extra, title  })
 						: content
 				);
 			} else if (typeof tpl[`${key}Override`] === 'function') {
@@ -105,7 +111,7 @@ export const routeForMp = ({ env, path, dir, project, template, pagingMode, pagi
 					fullpath,
 					tpl[`${key}Override`](
 						fs.readFileSync(fullpath, 'utf-8'),
-						{ mutation, route, pathArr, project, module, extra, title  }
+						{ mutation, humpMutation, route, pathArr, project, module, extra, title  }
 					)
 				);
 			}
@@ -124,7 +130,7 @@ export const routeForMp = ({ env, path, dir, project, template, pagingMode, pagi
 					fullpath,
 					rootTpl[_key](
 						fs.readFileSync(fullpath, 'utf-8'),
-						{ mutation, pathArr, project, module, extra, title, route  }
+						{ mutation, humpMutation, pathArr, project, module, extra, title, route  }
 					)
 				);
 				
@@ -132,7 +138,7 @@ export const routeForMp = ({ env, path, dir, project, template, pagingMode, pagi
 		});
 
 		if (template === 'scroll') {
-			fs.removeSync(basicConfig.page.path);
+			fs.removeSync(scrollConfig.page.path);
 
 			Object.keys(scrollConfig).forEach(key => {
 				let { path } = scrollConfig[key];
@@ -144,7 +150,28 @@ export const routeForMp = ({ env, path, dir, project, template, pagingMode, pagi
 						fullpath,
 						scrollTpl[key](
 							fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
-							{ mutation, pathArr, project, module, pagingMode, pagingType, extra, title, route, env }
+							{ mutation, humpMutation, pathArr, project, module, pagingMode, pagingType, extra, title, route, env }
+						)
+					);
+					
+				}
+			});
+		}
+		if (template === 'form') {
+			fs.removeSync(formConfig.page.path);
+
+			Object.keys(formConfig).forEach(key => {
+				let { path } = formConfig[key];
+				let fullpath = join(path);
+				console.log(formTpl, typeof formTpl[key] === 'function');
+				if (typeof formTpl[key] === 'function') {
+					log(chalk`{yellow ${key}}: {rgb(255,131,0) ${fs.existsSync(fullpath) ? 'override' : 'created'}}`);
+
+					fs.outputFileSync(
+						fullpath,
+						formTpl[key](
+							fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
+							{ mutation, humpMutation, pathArr, project, module, extra, title, env  }
 						)
 					);
 					

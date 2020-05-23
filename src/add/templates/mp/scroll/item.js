@@ -1,6 +1,8 @@
+import { getExtra } from '../utils/helper';
+
 export const item = (content, opts = {}) => {
 	const { mutation, pathArr, project, obj, title } = opts;
-	let extra = pathArr.slice(1).map(item => `${item[0].toUpperCase()}${item.slice(1)}`).join('');
+	let extra = getExtra(pathArr);
 	let contents = '';
 
 	contents += `<template>\n`;

@@ -1,10 +1,10 @@
 import { getNewContent } from '../utils/helper';
 
 export const rootModules = (content, opts = {}) => {
-	const { mutation, pathArr, componentArr, obj } = opts;
+	const { mutation, humpMutation, pathArr, componentArr, obj } = opts;
 	try {
-		let importContent = `import ${mutation} from './${mutation}/root';`;
-		let injectContent = `	...${mutation}`;
+		let importContent = `import ${humpMutation} from './${mutation}/root';`;
+		let injectContent = `	...${humpMutation}`;
 
 		let importSplit = `\nexport default {\n`;
 		let injectSplit = `\n};\n`;

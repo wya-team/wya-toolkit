@@ -58,3 +58,13 @@ export const getNewContent = (opts = {}) => {
 		return content;
 	}
 };
+
+export const getExtra = (pathArr) => {
+	return pathArr.slice(1).map(item => {
+		return item.split('-').map((it) => `${it[0].toUpperCase()}${it.slice(1)}`).join('');
+	}).join('');
+};
+
+export const getMutationType = (pathArr) => {
+	return pathArr.join('_').replace(/-/g, '_').toUpperCase();
+};

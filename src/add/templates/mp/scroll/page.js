@@ -1,10 +1,10 @@
-import { getNewContent } from '../utils/helper';
+import { getNewContent, getExtra, getMutationType } from '../utils/helper';
 
 export const page = (content, opts = {}) => {
-	const { mutation, pathArr, project, obj, pagingMode: mode, pagingType: type, route, title } = opts;
-	let extra = pathArr.slice(1).map(item => `${item[0].toUpperCase()}${item.slice(1)}`).join('');
+	const { mutation, humpMutation, pathArr, project, obj, pagingMode: mode, pagingType: type, route, title } = opts;
+	let extra = getExtra(pathArr);
 
-	let mutationType = `${pathArr.join('_').toUpperCase()}`;
+	let mutationType = `${getMutationType(pathArr)}`;
 	let pagingType = mutationType + '_LIST';
 
 	try {
@@ -61,9 +61,9 @@ export const page = (content, opts = {}) => {
 		contents += `\n`;
 		contents += `Page({\n`;
 		contents += `	mapState(state) {\n`;
-		contents += `		const { ${mutation}${extra} } = state;\n`;
+		contents += `		const { ${humpMutation}${extra} } = state;\n`;
 		contents += `		return {\n`;
-		contents += `			listInfo: ${mutation}${extra}.listInfo\n`;
+		contents += `			listInfo: ${humpMutation}${extra}.listInfo\n`;
 		contents += `		};\n`;
 		contents += `	},\n`;
 		contents += `	data: {\n`;
@@ -115,7 +115,7 @@ export const page = (content, opts = {}) => {
 		switch (type) {
 			case 'tabs':
 				contents += `	handleChange(event) {\n`;
-				contents += `		this.setData({ type: event.detail.name});\n`;
+				contents += `		this.setData({ type: event.detail.name });\n`;
 				contents += `	},\n`;
 			default :
 				break;

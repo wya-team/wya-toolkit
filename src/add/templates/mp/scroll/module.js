@@ -1,10 +1,10 @@
-import { getNewContent } from '../utils/helper';
+import { getNewContent, getExtra, getMutationType } from '../utils/helper';
 
 export const module = (content, opts = {}) => {
-	const { mutation, pathArr, project, obj, pagingType: type } = opts;
+	const { mutation, humpMutation, pathArr, project, obj, pagingType: type } = opts;
 	try {
-		let extra = pathArr.slice(1).map(item => `${item[0].toUpperCase()}${item.slice(1)}`).join('');
-		let mutationType = `${pathArr.join('_').toUpperCase()}`;
+		let extra = getExtra(pathArr);
+		let mutationType = `${getMutationType(pathArr)}`;
 		let pagingType = mutationType;
 
 		if (pathArr.includes('list') === false) {
@@ -94,7 +94,7 @@ export const module = (content, opts = {}) => {
 		contents += `		};\n`;
 		contents += `	},\n`;
 		contents += `};\n\n`;
-		contents += `export const ${mutation}${extra} = {\n`;
+		contents += `export const ${humpMutation}${extra} = {\n`;
 		contents += `	state: { ...initialState },\n`;
 		contents += `	mutations,\n`;
 		contents += `};\n`;

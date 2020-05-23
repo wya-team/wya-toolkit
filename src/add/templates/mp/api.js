@@ -1,4 +1,4 @@
-import { getNewContent } from './utils/helper';
+import { getNewContent, getMutationType } from './utils/helper';
 
 export const api = (opts = {}) => {
 	const { mutation, pathArr, project, obj } = opts;
@@ -8,7 +8,7 @@ export const api = (opts = {}) => {
 	contents += `	/**\n`;
 	contents += `	 * 请注释模块内容\n`;
 	contents += `	 */\n`;
-	contents += `	${pathArr.join('_').toUpperCase()}_GET: ''`;
+	contents += `	${getMutationType(pathArr)}_GET: ''`;
 	contents += `\n};\n`;
 	contents += `export default api;\n`;
 	return contents;
@@ -19,7 +19,7 @@ export const apiOverride = (content, opts = {}) => {
 	
 	try {
 		let importContent = undefined;
-		let injectContent = `	${pathArr.join('_').toUpperCase()}_GET: ''`;
+		let injectContent = `	${getMutationType(pathArr)}_GET: ''`;
 
 		let importSplit = undefined;
 		let injectSplit = `\n};\n`;
