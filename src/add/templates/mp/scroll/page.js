@@ -44,7 +44,7 @@ export const page = (content, opts = {}) => {
 				contents += `	<mc-recycle-list\n`;
 				contents += `		height="100%"\n`;
 				contents += `		total="{{ listInfo.total }}"\n`;
-				contents += `		bind:load-data="loadData"\n`;
+				contents += `		bind:loadData="loadData"\n`;
 				contents += `	>\n`;
 				contents += `		<${project}-item \n`;
 				contents += `			wx:for="{{ listInfo.data }}"\n`;
