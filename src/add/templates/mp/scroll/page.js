@@ -30,7 +30,7 @@ export const page = (content, opts = {}) => {
 				contents += `				bind:loadData="loadData"\n`;
 				contents += `			>\n`;
 				contents += `				<${project}-item \n`;
-				contents += `					wx:for="{{ listInfo.data }}"\n`;
+				contents += `					wx:for="{{ listInfo[item.value].data }}"\n`;
 				contents += `					wx:key="index"\n`;
 				contents += `					it="{{ item }}}"\n`;
 				contents += `				/>\n`;

@@ -1,4 +1,4 @@
-import { getNewContent } from './utils/helper';
+import { getNewContent, getExtra } from './utils/helper';
 
 export const page = (opts = {}) => {
 	const { mutation, humpMutation, pathArr, project, obj, title } = opts;
