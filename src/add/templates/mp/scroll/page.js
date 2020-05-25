@@ -132,7 +132,9 @@ export const page = (content, opts = {}) => {
 		contents += `	"navigationBarTitleText": "${title}",\n`;
 		contents += `	"usingComponents": {\n`;
 		contents += `		"${project}-item": "../../components/${mutation}/${pathArr[1]}/item"\n`;
-		contents += `	}\n`;
+		contents += `	},\n`;
+		contents += `	"enablePullDownRefresh": false,\n`;
+		contents += `	"disableScroll": true\n`;
 		contents += `}\n`;
 		contents += `</config>\n`;
 		return contents;

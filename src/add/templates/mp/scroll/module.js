@@ -61,7 +61,7 @@ export const module = (content, opts = {}) => {
 		contents += `	},\n`;
 		contents += `	${pagingType}_GET_REFRESH(state, { data, param: { type, page } }) {\n`;
 		contents += `		state.listInfo = {\n`;
-		contents += `			...initialState.listInfo,\n`;
+		contents += `			...state.listInfo,\n`;
 		switch (type) {
 			case 'tabs':
 				contents += `			[type]: {\n`;

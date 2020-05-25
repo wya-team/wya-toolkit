@@ -103,7 +103,7 @@ const question = [
 		name: 'dir',
 		message: 'Where to in the project:',
 		when: (answers) => answers.type !== 'none',
-		default: upath.normalize(`${process.cwd()}/src/pages/`),
+		default: (answers) => upath.normalize(`${process.cwd()}/src/${answers.type !== 'routeForMp' ? 'pages/' : ''}`),
 		// default: upath.normalize(`${process.cwd()}/tmp/`),
 		// default: upath.normalize(`${process.cwd()}/tmp/src/pages/`),
 		validate (val) {
