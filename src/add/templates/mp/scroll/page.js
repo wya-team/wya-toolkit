@@ -49,7 +49,7 @@ export const page = (content, opts = {}) => {
 				contents += `		<${project}-item \n`;
 				contents += `			wx:for="{{ listInfo.data }}"\n`;
 				contents += `			wx:key="index"\n`;
-				contents += `			it="{{ item }}}"\n`;
+				contents += `			it="{{ item }}"\n`;
 				contents += `		/>\n`;
 				contents += `	</mc-recycle-list>\n`;
 				contents += `</template>\n`;
