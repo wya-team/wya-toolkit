@@ -91,6 +91,7 @@ export const list = (content, opts = {}) => {
 				}
 				contents += `		:data-source="listInfo.data" \n`;
 				contents += `		:total="listInfo.total"\n`;
+				contents += `		:count="listInfo.count"\n`;
 				contents += `		:reset="listInfo.reset"\n`;
 				contents += `		:history="true"\n`;
 				contents += `		:load-data="loadData"\n`;
