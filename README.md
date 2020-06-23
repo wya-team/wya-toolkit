@@ -24,10 +24,16 @@ node ./bin/wya
 - `wya server`: 随启随用的静态文件服务器
 - `wya screen`: 屏幕共享（使用截图）
 - `wya init`: 初始化下载`wya`脚手架或者其他仓库
+- `wya lint`: 检查工具
+
+
+## 废除
+
+- `wya add`: 由单独的模版自行开发，如`wya-mp add` , `wya-vue add`
+
 
 ## 待开发
 
-- `wya delete`: 对应add的删除
 - `wya live`: 直播（屏幕共享的增强，录屏缓冲直播流）
 - `wya live ....`
 - ...

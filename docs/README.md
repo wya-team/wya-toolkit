@@ -23,7 +23,7 @@ $ npm install @wya/toolkit --save
 $ wya server
 $ wya screen
 $ wya init
-$ wya add
+$ wya lint
 $ ...
 ```
 
@@ -83,21 +83,14 @@ $ npm run build
 
 ---
 
-### `add` 
+### `lint` 
 
-`wya add`
+`wya lint --mode commit`
 
-新建`wya`脚手架路由规则下，自动创建文件(待开发：`AST`)
-
----
-
-### `delete` 
-
-`wya delete`
-
-TODO: 同add规则
+lint工具
 
 ---
+
 
 ### `live` 
 
