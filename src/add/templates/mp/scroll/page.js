@@ -1,11 +1,12 @@
 import { getNewContent, getExtra, getMutationType } from '../utils/helper';
 
 export const page = (content, opts = {}) => {
-	const { mutation, humpMutation, pathArr, project, obj, pagingMode: mode, pagingType: type, route, title } = opts;
+	const { mutation, humpMutation, pathArr, project, packageName, obj, pagingMode: mode, pagingType: type, route, title } = opts;
 	let extra = getExtra(pathArr);
 
 	let mutationType = `${getMutationType(pathArr)}`;
 	let pagingType = mutationType + '_LIST';
+	const relativePath = packageName !== 'pages' ? '../' : '';
 
 	try {
 		let contents = '';
@@ -57,7 +58,7 @@ export const page = (content, opts = {}) => {
 		}
 		contents += `\n`;
 		contents += `<script>\n`;
-		contents += `import Page from '../../common/page';\n`;
+		contents += `import Page from '../../${relativePath}common/page';\n`;
 		contents += `\n`;
 		contents += `Page({\n`;
 		contents += `	mapState(state) {\n`;

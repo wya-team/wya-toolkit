@@ -9,7 +9,7 @@ import * as rootTpl from './templates/mp/root/index';
 import * as scrollTpl from './templates/mp/scroll/index';
 import * as formTpl from './templates/mp/form/index';
 
-export const routeForMp = ({ env, path, dir, project, template, pagingMode, pagingType, extra = '', title = '' }, force) => {
+export const routeForMp = ({ env, path, dir, project, template, packageName, pagingMode, pagingType, extra = '', title = '' }, force) => {
 	let pathArr = path.replace(/\({0,}\//g, '#')
 		.replace(/([a-z\dA-Z])([A-Z])/g, '$1#$2')
 		.toLowerCase()
@@ -33,9 +33,10 @@ export const routeForMp = ({ env, path, dir, project, template, pagingMode, pagi
 	let humpMutation = pathArr[0].split('-').map((it, index) => index === 0 ? it : `${it[0].toUpperCase()}${it.slice(1)}`).join('');
 	let module = pathArr.slice(1).join('-');
 
+	const packageRoute = packageName === 'pages' ? packageName : `${packageName}/pages`;
 	let basicConfig = {
 		page: {
-			path: upath.normalize(`${dir}pages/${pathArr[0]}/${module}.wya`)
+			path: upath.normalize(`${dir}${packageRoute}/${pathArr[0]}/${module}.wya`)
 		},
 		api: {
 			path: upath.normalize(`${dir}stores/apis/${mutation}.js`)
@@ -65,11 +66,12 @@ export const routeForMp = ({ env, path, dir, project, template, pagingMode, pagi
 	};
 
 
+	const itemRoute = packageName === 'pages' ? '' : packageName;
 	let scrollConfig = {
 		// mutation: basicConfig.mutation,
 		page: basicConfig.page,
 		item: {
-			path: upath.normalize(`${dir}components/${pathArr[0]}/${module}/item.wya`)
+			path: upath.normalize(`${dir}${itemRoute}/components/${pathArr[0]}/${module}/item.wya`)
 		},
 		api: basicConfig.api,
 		module: basicConfig.module,
@@ -130,7 +132,7 @@ export const routeForMp = ({ env, path, dir, project, template, pagingMode, pagi
 					fullpath,
 					rootTpl[_key](
 						fs.readFileSync(fullpath, 'utf-8'),
-						{ mutation, humpMutation, pathArr, project, module, extra, title, route  }
+						{ mutation, humpMutation, pathArr, project, packageName, module, extra, title, route  }
 					)
 				);
 				

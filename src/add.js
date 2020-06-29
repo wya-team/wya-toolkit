@@ -46,6 +46,20 @@ const question = [
 		}
 	},
 	{
+		type: 'input',
+		name: 'packageName',
+		message: 'Package Name:',
+		when: (answers) => ['routeForMp'].includes(answers.type),
+		validate(val) {
+			if (val === '') {
+				return 'Package Name is required!';
+			} else {
+				return true;
+			}
+		},
+		default: 'pages'
+	},
+	{
 		type: 'list',
 		name: 'template',
 		message: 'Select template:',

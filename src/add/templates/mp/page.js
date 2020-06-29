@@ -1,7 +1,7 @@
 import { getNewContent, getExtra } from './utils/helper';
 
 export const page = (opts = {}) => {
-	const { mutation, humpMutation, pathArr, project, obj, title } = opts;
+	const { mutation, humpMutation, pathArr, project, packageName, obj, title } = opts;
 	let extra = getExtra(pathArr);
 	let contents = '';
 
@@ -12,7 +12,7 @@ export const page = (opts = {}) => {
 	contents += `</template>\n\n`;
 
 	contents += `<script>\n`;
-	contents += `import Page from '../../common/page';\n\n`;
+	contents += `import Page from '../../${packageName !== 'pages' ? '../' : ''}common/page';\n\n`;
 	contents += `Page({\n`;
 	contents += `	mapState(state) {\n`;
 	contents += `		return {\n`;
