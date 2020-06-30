@@ -65,6 +65,11 @@ export const getExtra = (pathArr) => {
 	}).join('');
 };
 
-export const getMutationType = (pathArr) => {
-	return pathArr.join('_').replace(/-/g, '_').toUpperCase();
+export const getMutationType = (pathArr, packageName) => {
+	const arr = [...pathArr];
+	if (packageName !== 'pages') {
+		const extra = packageName.split('-')[1];
+		arr.unshift(extra);
+	}
+	return arr.join('_').replace(/-/g, '_').toUpperCase();
 };

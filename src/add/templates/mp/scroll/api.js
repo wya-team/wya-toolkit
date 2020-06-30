@@ -1,12 +1,12 @@
 import { getNewContent, getMutationType } from '../utils/helper';
 
 export const api = (content, opts = {}) => {
-	const { mutation, pathArr, project, obj } = opts;
+	const { mutation, pathArr, packageName, project, obj } = opts;
 	
 	try {
 		if (pathArr.includes('list') === false) {
 			let importContent = undefined;
-			let injectContent = `	${getMutationType(pathArr)}_LIST_GET: '/test'`;
+			let injectContent = `	${getMutationType(pathArr, packageName)}_LIST_GET: '/test'`;
 
 			let importSplit = undefined;
 			let injectSplit = `\n};\n`;

@@ -29,8 +29,8 @@ export const routeForMp = ({ env, path, dir, project, template, packageName, pag
 	/**
 	 * container mutation reducer component
 	 */
-	let mutation = pathArr[0];
-	let humpMutation = pathArr[0].split('-').map((it, index) => index === 0 ? it : `${it[0].toUpperCase()}${it.slice(1)}`).join('');
+	let mutation = packageName === 'pages' ? pathArr[0] : `${packageName.split('-')[1]}-${pathArr[0]}`;
+	let humpMutation = mutation.split('-').map((it, index) => index === 0 ? it : `${it[0].toUpperCase()}${it.slice(1)}`).join('');
 	let module = pathArr.slice(1).join('-');
 
 	const packageRoute = packageName === 'pages' ? packageName : `${packageName}/pages`;
@@ -103,7 +103,7 @@ export const routeForMp = ({ env, path, dir, project, template, packageName, pag
 				fs.outputFileSync(
 					fullpath,
 					typeof tpl[key] === 'function'
-						? tpl[key]({ mutation, humpMutation, route, pathArr, project, module, extra, title  })
+						? tpl[key]({ mutation, humpMutation, route, packageName, pathArr, project, module, extra, title  })
 						: content
 				);
 			} else if (typeof tpl[`${key}Override`] === 'function') {
@@ -113,7 +113,7 @@ export const routeForMp = ({ env, path, dir, project, template, packageName, pag
 					fullpath,
 					tpl[`${key}Override`](
 						fs.readFileSync(fullpath, 'utf-8'),
-						{ mutation, humpMutation, route, pathArr, project, module, extra, title  }
+						{ mutation, humpMutation, route, packageName, pathArr, project, module, extra, title  }
 					)
 				);
 			}
@@ -152,7 +152,7 @@ export const routeForMp = ({ env, path, dir, project, template, packageName, pag
 						fullpath,
 						scrollTpl[key](
 							fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
-							{ mutation, humpMutation, pathArr, project, module, pagingMode, pagingType, extra, title, route, env }
+							{ mutation, humpMutation, pathArr, project, packageName, module, pagingMode, pagingType, extra, title, route, env }
 						)
 					);
 					
@@ -173,7 +173,7 @@ export const routeForMp = ({ env, path, dir, project, template, packageName, pag
 						fullpath,
 						formTpl[key](
 							fs.existsSync(fullpath) ? fs.readFileSync(fullpath, 'utf-8') : '',
-							{ mutation, humpMutation, pathArr, project, module, extra, title, env  }
+							{ mutation, humpMutation, pathArr, packageName, project, module, extra, title, env  }
 						)
 					);
 					

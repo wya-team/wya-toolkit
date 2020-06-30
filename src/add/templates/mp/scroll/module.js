@@ -1,10 +1,10 @@
 import { getNewContent, getExtra, getMutationType } from '../utils/helper';
 
 export const module = (content, opts = {}) => {
-	const { mutation, humpMutation, pathArr, project, obj, pagingType: type } = opts;
+	const { mutation, humpMutation, pathArr, packageName, project, obj, pagingType: type } = opts;
 	try {
 		let extra = getExtra(pathArr);
-		let mutationType = `${getMutationType(pathArr)}`;
+		let mutationType = `${getMutationType(pathArr, packageName)}`;
 		let pagingType = mutationType;
 
 		if (pathArr.includes('list') === false) {
