@@ -42,13 +42,13 @@ export const routeForMp = ({ env, path, dir, project, template, packageName, pag
 			path: upath.normalize(`${dir}${packagePath}pages/${pathArr[0]}/${module}.wya`)
 		},
 		api: {
-			path: upath.normalize(`${dir}stores/apis/${mutation}.js`)
+			path: upath.normalize(`${dir}stores/apis/${mutationWithPackage}.js`)
 		},
 		module: {
-			path: upath.normalize(`${dir}stores/modules/${mutation}/${module}.js`)
+			path: upath.normalize(`${dir}stores/modules/${mutationWithPackage}/${module}.js`)
 		},
 		rootModule: {
-			path: upath.normalize(`${dir}stores/modules/${mutation}/root.js`)
+			path: upath.normalize(`${dir}stores/modules/${mutationWithPackage}/root.js`)
 		}
 	};
 
@@ -133,7 +133,7 @@ export const routeForMp = ({ env, path, dir, project, template, packageName, pag
 					fullpath,
 					rootTpl[_key](
 						fs.readFileSync(fullpath, 'utf-8'),
-						{ mutation, humpMutation, pathArr, project, packageName, module, extra, title, route  }
+						{ mutation, humpMutation, mutationWithPackage, pathArr, project, packageName, module, extra, title, route  }
 					)
 				);
 				
