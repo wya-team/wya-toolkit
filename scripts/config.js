@@ -13,11 +13,11 @@ const builds = {
 	cli: {
 		script: 'babel packages/cli/src --out-dir packages/cli/dist --copy-files --ignore **.test.js,**.md,examples/**',
 	},
-	git: {
-		script: 'babel packages/git/src --out-dir packages/git/dist --copy-files --ignore **.test.js,**.md,examples/**',
+	utils: {
+		script: 'babel packages/utils/src --out-dir packages/utils/dist --copy-files --ignore **.test.js,**.md,examples/**',
 		rollup: {
-			entry: 'packages/git/src/index.js',
-			dest: 'packages/git/dist/git.min.js',
+			entry: 'packages/utils/src/index.js',
+			dest: 'packages/utils/dist/utils.min.js',
 			format: 'cjs'
 		}
 	}
