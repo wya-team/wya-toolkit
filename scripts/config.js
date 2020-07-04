@@ -14,12 +14,7 @@ const builds = {
 		script: 'babel packages/cli/src --out-dir packages/cli/dist --copy-files --ignore **.test.js,**.md,examples/**',
 	},
 	utils: {
-		script: 'babel packages/utils/src --out-dir packages/utils/dist --copy-files --ignore **.test.js,**.md,examples/**',
-		rollup: {
-			entry: 'packages/utils/src/index.js',
-			dest: 'packages/utils/dist/utils.min.js',
-			format: 'cjs'
-		}
+		script: 'babel packages/utils/src --out-dir packages/utils/dist --copy-files --ignore **.test.js,**.md,examples/**'
 	}
 };
 
