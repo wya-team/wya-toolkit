@@ -3,7 +3,7 @@ const fs = require('fs-extra');
 const chalk = require('chalk');
 const ora = require('ora');
 const { resolve, join } = require('path');
-const github = require('./init/github');
+const { downloadFromGithub } = require('@wya/toolkit-utils');
 
 const { writeFile } = fs;
 const log = console.log;
@@ -64,7 +64,7 @@ const stream = prompt(question)
 			dest: `${place}/${project}`
 		};
 		log(chalk`{yellow ${JSON.stringify(options, null, '\t')}}`);
-		github(options);
+		downloadFromGithub(options);
 	})
 	.catch(e => {
 		log(chalk`{red ${e}}`);

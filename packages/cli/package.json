@@ -1,0 +1,57 @@
+{
+  "name": "@wya/toolkit-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "files": [
+    "dist/**",
+    "src/**",
+    "bin/**"
+  ],
+  "scripts": {
+    "test": "mocha ./__tests__/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wya-team/wechat-env"
+  },
+  "keywords": [],
+  "author": "wya-team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wya-team/wya-toolkit"
+  },
+  "bugs": {
+    "url": "https://github.com/wya-team/wya-toolkit/issues"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.8.4",
+    "@wya/toolkit-utils": "^1.0.0",
+    "chalk": "^3.0.0",
+    "commander": "^5.0.0",
+    "connect": "^3.7.0",
+    "connect-history-api-fallback": "^1.6.0",
+    "current-git-branch": "^1.1.0",
+    "fs-extra": "^9.0.0",
+    "inquirer": "^7.1.0",
+    "screenshot-desktop": "^1.12.0",
+    "serve-index": "^1.9.1",
+    "serve-static": "^1.14.1",
+    "shelljs": "^0.8.2",
+    "pem": "^1.14.4",
+    "upath": "^1.2.0",
+    "ws": "^7.2.3"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "esm": "^3.2.25",
+    "mocha": "^7.0.1"
+  },
+  "bin": {
+    "wya": "bin/cli"
+  }
+}

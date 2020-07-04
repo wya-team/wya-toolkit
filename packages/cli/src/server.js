@@ -9,7 +9,10 @@ const serveStatic = require('serve-static');
 const serveIndex = require('serve-index');
 const history = require('connect-history-api-fallback');
 const { resolve, join } = require('path');
+const pem = require('pem');
+const { promisify } = require('util');
 
+const createCertificate = promisify(pem.createCertificate);
 const { readFileSync } = fs;
 
 const { localIp, openURL } = require('./utils');
@@ -85,15 +88,19 @@ const stream = prompt(question)
 			open && openURL(url);
 		});
 
-		// create https server
-		let options = {
-			key: readFileSync(resolve(__dirname, '../keys', 'key.pem')),
-			cert: readFileSync(resolve(__dirname, '../keys', 'cert.pem'))
-		};
+		/**
+		 * 当Safari打开时，继续访问，将签名标记为信任
+		 * 当Chrome打开时，直接键盘敲入这12个字符：`thisisunsafe` 
+		 * 注意：鼠标点击当前页面任意位置，让页面处于最上层即可输入
+		 */
+		createCertificate({ days: 1, selfSigned: true }).then((options) => {
+			const { serviceKey: key, certificate: cert } = options;
 
-		https.createServer(options, app).listen(secure, function () {
-			let url = `https://${hostname}${secure != 80 ? `:${secure}` : ''}/`;
-			log(`${chalk.rgb(255, 255, 255)('Also Running at')} ${chalk.hex("#deaded")(url)}`);
+			https.createServer({ key, cert }, app).listen(secure, function () {
+				let url = `https://${hostname}${secure != 80 ? `:${secure}` : ''}/`;
+				log(`${chalk.rgb(255, 255, 255)('Also Running at')} ${chalk.hex("#deaded")(url)}`);
+			});
+
 		});
 	})
 	.catch(e => {
