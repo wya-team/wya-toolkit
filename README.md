@@ -47,5 +47,5 @@ node ./bin/wya
 [changelog-image]: https://img.shields.io/badge/changelog-md-blue.svg
 [changelog-url]: CHANGELOG.md
 
-[npm-image]: https://img.shields.io/npm/v/@wya/toolkit.svg
-[npm-url]: https://www.npmjs.com/package/@wya/toolkit
+[npm-image]: https://img.shields.io/npm/v/@wya/toolkit-cli.svg
+[npm-url]: https://www.npmjs.com/package/@wya/toolkit-cli
