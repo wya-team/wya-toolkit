@@ -2,13 +2,13 @@
 [![npm][npm-image]][npm-url] [![changelog][changelog-image]][changelog-url]
 - 安装
 ```vim
-npm i @wya/toolkit -g
+npm i @wya/toolkit-cli -g
 ```
 
 - 本地调试的时候，在根目录下执行
 ```vim
 " 1
-npm link
+npm run link
 
 " 2
 node ./bin/wya
