@@ -1,13 +1,14 @@
 {
   "name": "@wya/toolkit",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0",
   "description": "wya-toolkit for js",
   "main": "index.js",
   "files": [
     "commands/**",
     "bin/**",
     "keys/**",
-    "templates/**"
+    "templates/**",
+    "src/**"
   ],
   "scripts": {
     "start": "npm run dev",
